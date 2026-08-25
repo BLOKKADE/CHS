@@ -75,12 +75,18 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. Summons start with Envenomed Weapons (level based on 0.2* hero level, capped at L30).")
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
         call InitHeroDesc(ABOMINATION_UNIT_ID, HeroPassive_SummonLimit, "24")
+
+        call InitHeroDesc(ELEMENT_LORD_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
+        call InitHeroDesc(ELEMENT_LORD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp" )
+        call InitHeroDesc(ELEMENT_LORD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Disease Cloud: Deals |cffff00ffmagic damage|r to nearby enemies every second. Summons start with Envenomed Weapons (level based on 0.2* hero level, capped at L30).")
+        call InitHeroDesc(ELEMENT_LORD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Disease Cloud: +40 damage." )
+        call InitHeroDesc(ELEMENT_LORD_UNIT_ID, HeroPassive_SummonLimit, "24")
         
-        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cffff0000HARD|r" )
+        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp" )
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Animal Affection: Summon attack damage, armor, physical power, evasion, block, luck, magic power and magic resistance are increased by a percentage of the Hero's amount. [|cff9e5d07Summon|r] spells have 50% reduced cooldown. ")
         call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +1% Animal Affection summon stat increase." )
-        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_SummonLimit, "24")
+        call InitHeroDesc(DRUID_OF_THE_CLAY_UNIT_ID, HeroPassive_SummonLimit, "18")
         
         call InitHeroDesc(MAULER_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
         call InitHeroDesc(MAULER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroPaladin.blp" )
@@ -136,7 +142,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(TAUREN_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Spirit Mage: +0.0025 Rune Power per active spell. +0.05% damage per [Element]")
         call InitHeroDesc(TAUREN_UNIT_ID, HeroPassive_SummonLimit, "24")
 
-        call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cffff0000HARD|r" )
+        call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp" )
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Faerie Friend: At the start of every round the Mystic summons a Faerie Dragon to aid it in battle [|cff80ffffChronus|r]. |cffc0c0c0The Faerie Dragon can be targeted but cannot be damaged.|r")
         call InitHeroDesc(MYSTIC_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +40 summon damage. Faerie Dragon: Bonus attack speed. (|cff68eef3Every 3 levels|r) increases Faerie Dragon damage." )
@@ -182,12 +188,12 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(TINKER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp" )
         call InitHeroDesc(TINKER_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Quick Learner: Gains double the round clear experience bonus.")
         call InitHeroDesc(TINKER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Gains 55 * hero level experience." )
-        call InitHeroDesc(TINKER_UNIT_ID, HeroPassive_SummonLimit, "24")
+        call InitHeroDesc(TINKER_UNIT_ID, HeroPassive_SummonLimit, "18")
 
-        call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
+        call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
         call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBeastMaster.blp" )
         call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 4 levels|r) Increases the level of all summons by 1." )
-        call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_SummonLimit, "24")
+        call InitHeroDesc(BEAST_MASTER_UNIT_ID, HeroPassive_SummonLimit, "18")
 
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
         call InitHeroDesc(FALLEN_RANGER_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBansheeRanger.blp" )
@@ -197,11 +203,11 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNHuntress.blp" )
-        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies once every second when the Hero attacks, dealing 25% of her attack damage as |cffff00ffmagic damage|r. ")
+        call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Moon Chakrum: Damages 8 nearby enemies once every second when the Hero attacks, dealing 25% of her attack damage as |cffff00ffmagic damage|r. 610 range. ")
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Moon Chakrum: +0.5% of her attack damage" )
         call InitHeroDesc(HUNTRESS_UNIT_ID, HeroPassive_SummonLimit, "24")
 
-        call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cffff0000HARD|r" )
+        call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNSkeletalOrc.blp" )
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Reinforced Bone: When the Hero takes 20% or more of its max HP in damage at once it cannot take damage again for 1 second. 10s cooldown. [|cff96ffffStable|r]. When one of its summons dies the Hero restores 2% of its max HP and the summon explodes, dealing 50% of its attack damage as |cffff00ffmagic damage|r to enemies.")
         call InitHeroDesc(SKELETON_BRUTE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Reinforced Bone: +0.01 second invulnerability. +0.05% of maximum hit points restored. +1% of attack damage explosion damage." )
@@ -375,7 +381,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +200 glory." )
         call InitHeroDesc(ARENA_MASTER_UNIT_ID, HeroPassive_SummonLimit, "24")
 
-        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cffff0000HARD|r" )
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive triple damage from [|cffff0000Fire|r] and cannot buy stat-per-level Tomes and Manuscripts.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades.") //(|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")

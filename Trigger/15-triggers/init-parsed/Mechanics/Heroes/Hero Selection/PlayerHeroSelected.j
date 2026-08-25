@@ -8,6 +8,15 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
         private integer GameStartWaitTime = 7
     endglobals
 
+        private function ShopTextLarge takes integer x, integer y, string text, integer r, integer g, integer b returns texttag
+            local texttag floatingtext = CreateTextTag()
+            call SetTextTagText(floatingtext, text, 0.046)
+            call SetTextTagPos(floatingtext, x, y, 100.0)
+            call SetTextTagColor(floatingtext, r, g, b, 255)
+            call SetTextTagPermanent(floatingtext, true)
+            return floatingtext
+        endfunction
+
     private function CreateShops takes nothing returns nothing
         local player p = Player(PLAYER_NEUTRAL_PASSIVE)
     
@@ -30,6 +39,7 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VI_UNIT_ID, 868, 707 + 248, 270.00))
             call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VII_UNIT_ID, 620, 707 + 248, 270.00))
             call SetShopIndex(CreateUnit(p, PASSIVE_SPELLS_VIII_UNIT_ID, 372, 707 + 248, 270.00))
+            call ShopText(- 160, OffsetY, "Choose an Absolute ability", 0, 255, 100)
         endif
         
  // call SetShopIndex(CreateUnit(p, SUMMON_BUFFS_SHOP_UNIT_ID, -868, -1152, 270.00))
@@ -46,6 +56,12 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call SetShopIndex(CreateUnit(p, DEFENSIVE_ITEMS_2_SHOP_UNIT_ID, 0, -1152 - 256, 270.00)) //defensive 2
             call SetShopIndex(CreateUnit(p, DEFENSIVE_ITEMS_3_SHOP_UNIT_ID, 256, -1152 - 256, 270.00)) //defensive 3
             call SetShopIndex(CreateUnit(p, MISC_ITEMS_SHOP_UNIT_ID, 868, -1152 - 256, 270.00)) //miscellaneous items
+            call ShopTextLarge(- 850, -1250, "Starter items", 0, 255, 100)
+
+            //call SetShopIndex(CreateUnit(p, INFO_SHOP_1_UNIT_ID, 800, -1587, 0.00)) //info shop 1
+            //call SetShopIndex(CreateUnit(p, INFO_SHOP_2_UNIT_ID, 1000, -1587, 0.00)) //info shop 2
+            //call SetShopIndex(CreateUnit(p, INFO_SHOP_3_UNIT_ID, 1200, -1587, 0.00)) //info shop 3
+            //call SetShopIndex(CreateUnit(p, INFO_SHOP_4_UNIT_ID, 1400, -1587, 0.00)) //info shop 4
 
         set ShopsCreated = true
 

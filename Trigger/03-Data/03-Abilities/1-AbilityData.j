@@ -373,6 +373,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //23 - Life Drain 
         call SaveAbilData(LIFE_DRAIN_ABILITY_ID, LIFE_DRAIN_ITEM_ID, false, 0, 0, true, Order_Target, "drain")
+        call SetLastObjectElement(Element_Blood, 1)
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastAbilityNotReplaceable()
 
@@ -405,8 +406,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //30 - Drain Aura 
         call SaveAbilData(DRAIN_AURA_ABILITY_ID, DRAIN_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Blood, 1)
+        call SetLastObjectElement(Element_Dark, 1)
 
         //31 - Trueshot Aura 
         call SaveAbilData(TRUESHOT_AURA_ABILITY_ID, TRUESHOT_AURA_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1202,6 +1203,16 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //204 - Overload
         call SaveAbilData(OVERLOAD_ABILITY_ID, OVERLOAD_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Arcane, 1)
+
+        //205 Arcane Carapace
+        call SaveAbilData(ARCANE_CARAPACE_ABILITY_ID, ARCANE_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Arcane, 1)
+
+        //206 - Chaos Ward 
+        //call SaveAbilData(SUMMON_CHAOS_WARD_ABILITY_ID, CHAOS_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
+        //call SetLastObjectElement(Element_Arcane, 1)
+        //call SetLastObjectElement(Element_Summon, 1)
+        
     endfunction
 
     function InitItemAbilities takes nothing returns nothing
@@ -1345,6 +1356,17 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(DARK_HUNTER_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(ABOMINATION_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(ABOMINATION_UNIT_ID, Element_Poison, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Water, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Cold, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Fire, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Earth, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Dark, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Light, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Blood, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Wind, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Poison, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Arcane, 1)
+        call SetObjectElement(ELEMENT_LORD_UNIT_ID, Element_Wild, 1)
         call SetObjectElement(DEADLORD_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(DEADLORD_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(TROLL_HEADHUNTER_UNIT_ID, Element_Dark, 1)

@@ -607,7 +607,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         // Stomp Fire Weakness
-        if DamageTargetTypeId == STOMP_TREE_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) then
+        if DamageTargetTypeId == STOMP_TREE_UNIT_ID and IsSpellElement(DamageSource, DamageSourceAbility, Element_Fire) or DamageSourceAbility == 'A0FW' or DamageSourceAbility == 'A0G3' then
             set Damage.index.amount = Damage.index.amount * 3
         endif
 

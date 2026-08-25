@@ -151,6 +151,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         integer RoundCreepChanceBerserk = 0
         integer RoundCreepChanceFlameStrike = 0
         integer RoundCreepChanceMagneticOscillation = 0
+        integer RoundCreepChanceArcaneCarapace = 0
 
         integer RoundCreepChanceAbsoluteDark = 0
         integer RoundCreepChanceAbsolutePoison = 0
@@ -393,6 +394,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         set RoundCreepChanceBerserk = 0
         set RoundCreepChanceFlameStrike = 0
         set RoundCreepChanceMagneticOscillation = 0
+        set RoundCreepChanceArcaneCarapace = 0
 
         set RoundCreepChanceAbsoluteDark = 0
         set RoundCreepChanceAbsolutePoison = 0
@@ -1366,6 +1368,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set s = ConcatAbility(s, "|cffff00ffFlame Strike")
             call AddRoundAbility(FLAME_STRIKE_ABILITY_ID)
         endif
+
+        if RoundCreepChanceArcaneCarapace == 1 then
+            set s = ConcatAbility(s, "|cffff00ffArcane Carapace")
+            call AddRoundAbility(ARCANE_CARAPACE_ABILITY_ID)
+        endif
     
         if s == "" then
             set RoundAbilities = "|cff77fc94No abilities|r"
@@ -1498,7 +1505,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChanceBloodlust == 1 then
             call UnitAddAbility(u, BLOODLUST_CREEP_ABILITY_ID)
-            call SetUnitAbilityLevel(u, BLOODLUST_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+            call SetUnitAbilityLevel(u, BLOODLUST_CREEP_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.3), 30))
         endif
 
         if RoundCreepChanceBrillianceAura == 1 then
@@ -1859,7 +1866,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
         if RoundCreepChanceRainOfFire == 1 then
             call UnitAddAbility(u, RAIN_OF_FIRE_ABILITY_ID)
-            call SetUnitAbilityLevel(u, RAIN_OF_FIRE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+            call SetUnitAbilityLevel(u, RAIN_OF_FIRE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.4), 30))
         endif
 
         /* if RoundCreepChanceRandomSpell == 1 then
@@ -2256,7 +2263,14 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         if RoundCreepChanceFlameStrike == 1 then
             call UnitAddAbility(u, FLAME_STRIKE_ABILITY_ID)
             call SetUnitAbilityLevel(u, FLAME_STRIKE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
-        endif    
+        endif  
+        
+        if RoundCreepChanceArcaneCarapace == 1 then
+            call UnitAddAbility(u, ARCANE_CARAPACE_ABILITY_ID)
+            call SetUnitAbilityLevel(u, ARCANE_CARAPACE_ABILITY_ID, IMinBJ(R2I(RoundNumber * 0.6), 30))
+            call AddUnitCustomState(u, BONUS_MAGICRES, RoundNumber * 0.3 * 3)
+        endif
+
     endfunction
 
     private function GenerateNextCreepLevelActions takes nothing returns nothing
@@ -2549,6 +2563,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceReaction                = GetRandomInt(1, 200)  
             set RoundCreepChanceDevotionAura            = GetRandomInt(1, 100) 
             set RoundCreepChanceMagneticOscillation     = GetRandomInt(1, 2000) 
+            set RoundCreepChanceArcaneCarapace          = GetRandomInt(1, 140) 
 
             //Chaos magic works in principle, but had one round that froze until an invisible dummy could be killed with fire shield
             //set RoundCreepChanceChaosMagic          = GetRandomInt(1, 35) 
@@ -3081,9 +3096,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         call BlzSetUnitAttackCooldown(creep, BlzGetUnitAttackCooldown(creep, 0) * (0.45 + 0.55 * (I2R(RoundCreepNumber) - 2.0) / 23.0), 0)
                     endif
 
-                    if RoundNumber > 10 then
-                        // 2 creeps → 100 physpow, 25+ creeps → 0 physpow
-                        call SetUnitCustomState(creep, BONUS_PHYSPOW, R2I(RMaxBJ(0.0, 100.0 - ((I2R(RoundCreepNumber) - 2.0) * 100.0 / 23.0))))
+                    if RoundNumber > 10 and RoundCreepNumber > 0 then
+                        call SetUnitCustomState(creep, BONUS_PHYSPOW, R2I(250.0 / I2R(RoundCreepNumber)))
                     endif
 
                     if RoundCreepTypeId == STOMP_TREE_UNIT_ID then  

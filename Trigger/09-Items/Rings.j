@@ -8,7 +8,7 @@ library Rings initializer init requires Table, CustomGameEvent, UnitItems, Custo
     endfunction
 
     private function RingBlockLoss takes EventInfo eventInfo returns nothing
-        local integer blockLoss = (GetUnitItemTypeCount(eventInfo.hero, 'I0AF') * 30)
+        local integer blockLoss = (GetUnitItemTypeCount(eventInfo.hero, 'I0AF') * 0)
         set RingTable[GetHandleId(eventInfo.hero)] = blockLoss
         call AddUnitCustomState(eventInfo.hero, BONUS_BLOCK,0 - blockLoss)
     endfunction

@@ -12,6 +12,7 @@ scope ModifyDamageAfterArmor initializer init
         local integer i = 0
         local integer i1 = 0
         local integer i2 = 0
+        local integer k = 0
 
         local integer vampCount = 0
         local real vampAmount = 0
@@ -72,10 +73,10 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Medal of Honor
-        if UnitHasItemType(DamageTargetHero, 'I04U') or UnitHasItemType(DamageSourceHero, 'I04U') then
+        if UnitHasItemType(DamageTargetHero, 'I04U') or (UnitHasItemType(DamageSourceHero, 'I04U') and LoadInteger(HT, GetHandleId(DamageSourceHero), 941561) != 0) then
             set Damage.index.amount = Damage.index.amount * 0.67
         endif
-
+        
         //Decaying Scythe
         if GetUnitAbilityLevel(DamageTarget, DECAYING_SCYTHE_BUFF2_ID) > 0 then
             set Damage.index.damage = Damage.index.damage * 0.5
@@ -437,7 +438,7 @@ scope ModifyDamageAfterArmor initializer init
                 endif
             endif
 
-            //Spiked Carapaces
+            //Spiked Carapace
             set i = GetUnitAbilityLevel(DamageTarget, SPIKED_CARAPACE_ABILITY_ID)
             if i > 0 and Damage.index.isAttack then
                 set udg_NextDamageType = DamageType_Onhit
@@ -445,6 +446,15 @@ scope ModifyDamageAfterArmor initializer init
                 //set r3 = (Damage.index.amount * (0.03 + (GetUnitAbilityLevel(DamageTargetHero, SPIKED_CARAPACE_ABILITY_ID) * 0.009))) * r2
                 set r3 = ((BlzGetUnitArmor(DamageTarget) * 0.10) * i)
                 //call BJDebugMsg("sc: r1:" + R2S(r1) + "ss bonus: " + R2S(r2) + " total: " + R2S(r3))
+                call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+            endif  
+
+            //Arcane Carapace
+            set k = GetUnitAbilityLevel(DamageTarget, ARCANE_CARAPACE_ABILITY_ID)
+            if k > 0 and IsMagicDamage() and not Damage.index.isAttack then
+                set udg_NextDamageType = DamageType_Onhit
+                set udg_NextDamageAbilitySource = ARCANE_CARAPACE_ABILITY_ID
+                set r3 = ((GetUnitCustomState(DamageTarget, BONUS_MAGICRES) * 0.15 * k))
                 call Damage.apply(DamageTarget, DamageSource, r3, false, true, null, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
             endif  
 

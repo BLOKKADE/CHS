@@ -213,6 +213,11 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
                 endif
             endif
 
+            //Staff of Power Crit Negate
+            if UnitHasItemType(DamageSource,'I080') then
+                set critDmg = 0
+            endif
+
             if DamageTargetTypeId == GNOME_MASTER_UNIT_ID then
                 call GnomeIncreaseCharge(DamageTarget)
             endif

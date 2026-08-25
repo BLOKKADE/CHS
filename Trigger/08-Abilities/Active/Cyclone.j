@@ -35,7 +35,7 @@ library Cyclone requires AreaDamage, KnockbackHelper, AllowCasting
             set this.pid = GetPlayerId(GetOwningPlayer(this.source))
             set this.x = x
             set this.y = y
-            set this.damage = level * 15 + (GetHeroLevel(PlayerHeroes[this.pid]) * (level - 1))
+            set this.damage = level * 15 + (GetHeroLevel(PlayerHeroes[this.pid]) * (level))
             set this.fx = AddLocalizedSpecialEffect("Abilities\\Spells\\NightElf\\Cyclone\\CycloneTarget.mdl", this.x, this.y)
             set this.auraFx = AddLocalizedSpecialEffect("war3mapImported\\TornadoAura_noTC.mdx", this.x, this.y)
             call BlzSetSpecialEffectScale(this.auraFx, 2.5)

@@ -53,6 +53,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set UpgradeU = UpgradeU + R2I(GetHeroLevel(hero) * 0.25)
         endif
 
+        //Book of Necromancy
+        if UnitHasItemType(hero, BOOK_OF_NECROMANCY_ITEM_ID) then
+            set UpgradeU = UpgradeU + 10
+        endif
+
         //Ranger critical strike summons
         if GetUnitTypeId(hero) == RANGER_UNIT_ID then
             call UnitAddAbility(u, 'A0FD')
@@ -302,11 +307,11 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         elseif GetUnitTypeId(hero) == ARENA_MASTER_UNIT_ID then
             set summonlimit = 24
         elseif GetUnitTypeId(hero) == BEAST_MASTER_UNIT_ID then
-            set summonlimit = 24
+            set summonlimit = 18
         elseif GetUnitTypeId(hero) == MYSTIC_UNIT_ID then
             set summonlimit = 24
         elseif GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
-            set summonlimit = 24
+            set summonlimit = 18
         elseif GetUnitTypeId(hero) == SEER_UNIT_ID then
             set summonlimit = 24
         elseif GetUnitTypeId(hero) == MURLOC_WARRIOR_UNIT_ID then
@@ -374,7 +379,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         elseif GetUnitTypeId(hero) == GREEDY_GOBLIN_UNIT_ID then
             set summonlimit = 24
         elseif GetUnitTypeId(hero) == TINKER_UNIT_ID then
-            set summonlimit = 24
+            set summonlimit = 18
         else
             // fallback (if not one of the defined heroes)
             set summonlimit = 24
@@ -593,6 +598,109 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
                 call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID, u)
                 call AddHeroMaxAbsoluteAbility(u)
                 set NagaSirenBonus[hid] = 1
+            endif
+        endif
+
+        if GetUnitTypeId(u) == 'BBEL' then
+            call UnitAddAbility(u, ABSOLUTE_ARCANE_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_ARCANE_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_ARCANE_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_ARCANE_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_WIND_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_WIND_ABILITY_ID,false,true)
+
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WIND_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WIND_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_WATER_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_WATER_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WATER_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WATER_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_FIRE_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_FIRE_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_FIRE_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_FIRE_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_COLD_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_COLD_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_COLD_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_COLD_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_DARK_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_DARK_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_DARK_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_DARK_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_LIGHT_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_LIGHT_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_LIGHT_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_LIGHT_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_EARTH_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_EARTH_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_EARTH_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_EARTH_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_BLOOD_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_BLOOD_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_BLOOD_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_BLOOD_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_POISON_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_POISON_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_POISON_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_POISON_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
+            endif
+
+            call UnitAddAbility(u, ABSOLUTE_WILD_ABILITY_ID)
+            call BlzUnitDisableAbility(u,ABSOLUTE_WILD_ABILITY_ID,false,true)
+            if realUnit then
+                call SaveInteger(HT, hid, 941561, 1)
+                call UpdateHeroSpellList(ABSOLUTE_WILD_ABILITY_ID, u, 1)
+                call FuncEditParam(ABSOLUTE_WILD_ABILITY_ID, u)
+                call AddHeroMaxAbsoluteAbility(u)
             endif
         endif
 

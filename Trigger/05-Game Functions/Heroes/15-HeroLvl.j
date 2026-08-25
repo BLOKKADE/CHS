@@ -2,6 +2,7 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
     
     globals
         integer array LastLvlHero
+        integer array SummonUpgradeRemainder
     endglobals
 
     private function UpdateAbilityDescriptionLevelup takes unit h, player p, integer heroLvl returns nothing
@@ -29,6 +30,8 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         local integer hid = GetHandleId(u)
         local integer i = 0
         local integer randBonus = GetRandomInt(0, 2)
+        local integer total = levelsGained * 7 + SummonUpgradeRemainder[pid]  // 1.75 = 7/4
+        local integer add   = total / 4
 
         if u == null then
             set u = null
@@ -54,6 +57,13 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
         endloop
 
         call ResourseRefresh(p) 
+
+        // Summon upgrades: +1.75 of each per level gained
+        set SummonUpgradeRemainder[pid] = total - add * 4
+
+        set SummonDamage[pid]     = SummonDamage[pid]     + add
+        set SummonArmor[pid]      = SummonArmor[pid]      + add
+        set SummonHitPoints[pid]  = SummonHitPoints[pid]  + add
 
         call UpdateStatsOnLevelup(u, levelsGained)
         

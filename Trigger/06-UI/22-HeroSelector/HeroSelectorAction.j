@@ -222,6 +222,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[50] = WITCH_DOCTOR_UNIT_ID
         set HeroSelectorUnitCode[51] = WOLF_RIDER_UNIT_ID
         set HeroSelectorUnitCode[52] = YETI_UNIT_ID
+        //set HeroSelectorUnitCode[53] = ELEMENT_LORD_UNIT_ID
         //set HeroSelectorUnitCode[52] = NYX_UNIT_ID
 
         //set HeroSelectorUnitCode[52] = GNOLL_WARDEN_UNIT_ID

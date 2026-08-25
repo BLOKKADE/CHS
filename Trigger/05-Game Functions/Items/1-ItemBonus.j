@@ -195,17 +195,14 @@ library ItemBonus initializer init requires CustomState, ReplaceItem, RandomShit
 			//Ring of Musculature
 		elseif itemId == 'I071' then
 			call AddStatLevelBonus(u, BONUS_STRENGTH, 2 * ArenaMasterMultiplier(u) *diff)
-			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Ring of the Bookworm
 		elseif itemId == 'I072' then
 			call AddStatLevelBonus(u, BONUS_INTELLIGENCE, 2 * ArenaMasterMultiplier(u) *diff)
-			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Trainers Ring
 		elseif itemId == 'I073' then
 			call AddStatLevelBonus(u, BONUS_AGILITY, 2 * ArenaMasterMultiplier(u)*diff)
-			call AddUnitCustomState(u, BONUS_BLOCK, - 20 *diff)
 		
 			//Arena Ring
 		elseif itemId == 'I0AF' then

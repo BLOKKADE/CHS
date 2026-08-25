@@ -21,8 +21,9 @@ library SummonInfo initializer init requires Locust
 
     private function SetupSummonInfo takes nothing returns nothing
         call SetSummonInfo(WATER_ELEMENTAL_1_UNIT_ID, SUMMON_WATER_ELEMENTAL_ABILITY_ID, SummonStatCode.WaterElementalStats)
-        call SetSummonInfo(FERAL_SPIRIT_WOLF_1_UNIT_ID, SUMMON_CARRION_BEETLES_ABILITY_ID, SummonStatCode.SpiritWolfStats)
+        call SetSummonInfo(FERAL_SPIRIT_WOLF_1_UNIT_ID, SUMMON_FERAL_SPIRIT_ABILITY_ID, SummonStatCode.SpiritWolfStats)
         call SetSummonInfo(SERPENT_WARD_1_UNIT_ID, SUMMON_SERPENT_WARD_ABILITY_ID, SummonStatCode.SerpentWardStats)
+        call SetSummonInfo(CHAOS_WARD_1_UNIT_ID, SUMMON_CHAOS_WARD_ABILITY_ID, SummonStatCode.SerpentWardStats)
         call SetSummonInfo(MOUNTAIN_GIANT_1_UNIT_ID, SUMMON_MOUNTAIN_GIANT_ABILITY_ID, SummonStatCode.MountainGiantStats)
         call SetSummonInfo(BEAR_1_UNIT_ID, SUMMON_BEAR_ABILITY_ID, SummonStatCode.BearStats)
         call SetSummonInfo(HAWK_1_UNIT_ID, SUMMON_HAWK_ABILITY_ID, SummonStatCode.HawkStats)

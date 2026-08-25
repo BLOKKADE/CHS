@@ -103,6 +103,13 @@ library Functions initializer init requires ExtradimensionalCooperation, Sorcere
             call SaveInteger(HT, hid, abilId, i1)
         endif
 
+        if abilId == ARCANE_CARAPACE_ABILITY_ID then
+            set i1 = GetUnitAbilityLevel(u, abilId)
+            set i2 = LoadInteger(HT, hid, abilId)
+            call AddUnitCustomState(u, BONUS_MAGICRES, 1.5 * (i1 - i2))
+            call SaveInteger(HT, hid, abilId, i1)
+        endif
+
         if abilId == UNHOLY_AURA_ABILITY_ID then
             set i1 = GetSpellValue(10, 5, GetUnitAbilityLevel(u, abilId))
             set i2 = LoadInteger(HT, hid, abilId)

@@ -57,7 +57,7 @@ library UnitInfoPanel requires CustomState, RandomShit, RuneInit, Glory, LearnAb
 			set s = s + "|cff6ac8ffAbsolute Slots|r: " + I2S(GetHeroMaxAbsoluteAbility(u) + 1) + "\n"
 		endif
 
-		set s = s + "|cff6dc287Summon Upgrades|r: Dmg: " + I2S(SummonDamage[pid]) + "/Armor: " + I2S(SummonArmor[pid]) + "/HP: " + I2S(SummonHitPoints[pid]) + "\n"
+		set s = s + "|cff6dc287Summon Upgrades|r: Dmg: " + I2S(SummonDamage[pid]) + "/Armor: " + I2S(SummonArmor[pid]) + "/HP: " + I2S(SummonHitPoints[pid]) + " (+1.75 of each per Hero lvl)"+"\n" 
 		return s
 	endfunction
 

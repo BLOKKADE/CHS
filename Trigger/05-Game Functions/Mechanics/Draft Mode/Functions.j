@@ -16,6 +16,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         boolean DraftInitialised = false
         texttag FloatingTextBuy = null
         texttag FloatingTextUpgrade = null
+        texttag FloatingTextAbsolute = null
     endglobals
 
     function RemoveDraftSpells takes integer playerNumber, integer NOSpells returns nothing
@@ -93,8 +94,8 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
 
     function CreateDraftBuildingsLoop takes nothing returns nothing
         local integer pid = GetPlayerId(GetEnumPlayer())
-        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_BUY_UNIT_ID, 0 - OffsetX, OffsetY, 0)
-        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, OffsetX, OffsetY, 0)
+        set udg_Draft_DraftBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_BUY_UNIT_ID, 0 - OffsetX - 200, OffsetY, 0)
+        set udg_Draft_UpgradeBuildings[pid] = CreateUnit(GetEnumPlayer(), DRAFT_UPGRADE_UNIT_ID, OffsetX + 200, OffsetY, 0)
 
         call AddItemToStock(udg_Draft_DraftBuildings[pid], NON_LUCRATIVE_TOME_ITEM_ID, 1, 1)
 
@@ -132,12 +133,13 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
     function CreateDraftBuildings takes nothing returns nothing
         if DraftInitialised == false then
             set DraftInitialised = true
-            set circle1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n038', 0 - OffsetX, OffsetY, 0)
-            set FloatingTextBuy = ShopText(0 - OffsetX, OffsetY, "Buy abilities", 255, 100, 0)
-            set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX, OffsetY, 0)
-            set FloatingTextUpgrade = ShopText(OffsetX, OffsetY, "Upgrade abilities", 0, 255, 100)
-            set draftBuilding1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', 0 - OffsetX, OffsetY, 0)
-            set draftBuilding2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', OffsetX, OffsetY, 0)
+            set circle1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n038', 0 - OffsetX - 200, OffsetY, 0)
+            set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX + 200, OffsetY, 0)
+            set FloatingTextBuy = ShopText(0 - OffsetX - 270, OffsetY, "Buy abilities", 0, 255, 100)
+            set FloatingTextAbsolute = ShopText(- 160, OffsetY, "Choose an Absolute ability", 0, 255, 100)
+            set FloatingTextUpgrade = ShopText(OffsetX + 100, OffsetY, "Upgrade abilities", 0, 255, 100)
+            set draftBuilding1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', 0 - OffsetX - 200, OffsetY, 0)
+            set draftBuilding2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', OffsetX + 200, OffsetY, 0)
             call ForForce(PlayersWithHero, function CreateDraftBuildingsLoop)
             call ForForce(PlayersWithHero, function SetBuildingVisibleForOwningPlayers)
         endif

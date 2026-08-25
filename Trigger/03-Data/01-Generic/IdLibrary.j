@@ -76,6 +76,11 @@ library IdLibrary initializer init
         constant integer PVE_SHOP_II_UNIT_ID                            = 'n02W'
         constant integer ABSOLUTE_GLORY_UNIT_ID                         = 'n00M'
 
+        constant integer INFO_SHOP_1_UNIT_ID                            = 'n03H'
+        constant integer INFO_SHOP_2_UNIT_ID                            = 'n03I'
+        constant integer INFO_SHOP_3_UNIT_ID                            = 'n03J'
+        constant integer INFO_SHOP_4_UNIT_ID                            = 'n03K'
+
         // --- Summons ---
 
         StaticIdGroup SUMMONS
@@ -101,6 +106,7 @@ library IdLibrary initializer init
         constant integer LAVA_SPAWN_1_UNIT_ID                           = 'nlv1'
         constant integer QUILBEAST_1_UNIT_ID                            = 'nqb1'
         constant integer SERPENT_WARD_1_UNIT_ID                         = 'osp1'
+        constant integer CHAOS_WARD_1_UNIT_ID                           = 'o00F'
         constant integer WATER_ELEMENTAL_1_UNIT_ID                      = 'hwat'
         constant integer FAERIE_DRAGON_UNIT_ID                          = 'e001'
         constant integer INFERNAL_1_UNIT_ID                             = 'n01N'
@@ -167,6 +173,7 @@ library IdLibrary initializer init
         constant integer YETI_UNIT_ID                                   = 'O00B'
         constant integer STOMP_TREE_UNIT_ID                             = 'BBHH'
         constant integer WARLOCK_UNIT_ID                                = 'N027'
+        constant integer ELEMENT_LORD_UNIT_ID                           = 'BBEL'
 
         //Creepwave IDs
         //spellcaster creeps:
@@ -404,6 +411,7 @@ library IdLibrary initializer init
         constant integer SLOW_POISON_ABILITY_ID                         = 'Aspo'
         constant integer SOUL_BURN_ABILITY_ID                           = 'ANso'
         constant integer SPIKED_CARAPACE_ABILITY_ID                     = 'A0CC'
+        constant integer ARCANE_CARAPACE_ABILITY_ID                     = 'A0G5'
         constant integer SPIRIT_LINK_ABILITY_ID                         = 'A0B7'
         constant integer STAMPEDE_ABILITY_ID                            = 'ANst'
         constant integer STARFALL_ABILITY_ID                            = 'AEsf'
@@ -423,6 +431,7 @@ library IdLibrary initializer init
         constant integer SUMMON_PHOENIX_ABILITY_ID                      = 'AHpx'
         constant integer SUMMON_POCKET_FACTORY_ABILITY_ID               = 'ANsy'
         constant integer SUMMON_SERPENT_WARD_ABILITY_ID                 = 'AOsw'
+        constant integer SUMMON_CHAOS_WARD_ABILITY_ID                   = 'A0G6'
         constant integer SUMMON_QUILBEAST_ABILITY_ID                    = 'Arsq'
         constant integer SUMMON_WATER_ELEMENTAL_ABILITY_ID              = 'AHwe'
         constant integer TEMPORARY_INVISIBILITY_ABILITY_ID              = 'A03U'
@@ -701,12 +710,14 @@ library IdLibrary initializer init
         constant integer SAND_OF_TIME_ITEM_ID                           = 'I09K'
         constant integer SEARING_ARROWS_ITEM_ID                         = 'I02P'
         constant integer SERPENT_WARD_ITEM_ID                           = 'I00E'
+        constant integer CHAOS_WARD_ITEM_ID                             = 'I0EB'
         constant integer SHADOW_STRIKE_ITEM_ID                          = 'I00F'
         constant integer SHOCKWAVE_ITEM_ID                              = 'I00R'
         constant integer SILENCE_ITEM_ID                                = 'I03C'
         constant integer SLOW_AURA_ITEM_ID                              = 'I03G'
         constant integer SOUL_BURN_ITEM_ID                              = 'I062'
         constant integer SPIKED_CARAPACE_ITEM_ID                        = 'I00O'
+        constant integer ARCANE_CARAPACE_ITEM_ID                        = 'K0M0'
         constant integer SPIRIT_LINK_ITEM_ID                            = 'I035'
         constant integer STAFF_OF_POWER_ITEM_ID                         = 'I080'
         constant integer STAMPEDE_ITEM_ID                               = 'I026'
