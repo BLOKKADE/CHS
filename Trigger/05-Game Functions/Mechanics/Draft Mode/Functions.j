@@ -16,7 +16,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
         boolean DraftInitialised = false
         texttag FloatingTextBuy = null
         texttag FloatingTextUpgrade = null
-        texttag FloatingTextAbsolute = null
+        texttag FloatingTextAbsolute = null 
     endglobals
 
     function RemoveDraftSpells takes integer playerNumber, integer NOSpells returns nothing
@@ -136,7 +136,7 @@ library DraftModeFunctions requires TimerUtils, DisableSpells
             set circle1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n038', 0 - OffsetX - 200, OffsetY, 0)
             set circle2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n037', OffsetX + 200, OffsetY, 0)
             set FloatingTextBuy = ShopText(0 - OffsetX - 270, OffsetY, "Buy abilities", 0, 255, 100)
-            set FloatingTextAbsolute = ShopText(- 160, OffsetY, "Choose an Absolute ability", 0, 255, 100)
+            set FloatingTextAbsolute = ShopText(- 165, OffsetY -150, "Choose an Absolute ability", 0, 255, 100)
             set FloatingTextUpgrade = ShopText(OffsetX + 100, OffsetY, "Upgrade abilities", 0, 255, 100)
             set draftBuilding1 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', 0 - OffsetX - 200, OffsetY, 0)
             set draftBuilding2 = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00I', OffsetX + 200, OffsetY, 0)

@@ -554,7 +554,7 @@ library Tomes initializer init requires RandomShit, CustomState, NonLucrativeTom
                 call UnitAddItem(u,CreateItem(SWORD_OF_BLOODTHRIST_ITEM_ID,0,0))
                 
             else
-                call PlayerAddGold(GetOwningPlayer(u),10000)
+                call PlayerAddGold(GetOwningPlayer(u),15000)
             endif
             //Wisdom Chestplate
         elseif itemTypeId  == WISDOM_CHESTPLATE_TOME_ITEM_ID then   

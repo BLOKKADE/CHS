@@ -355,7 +355,7 @@ scope ShortPeriodCheck initializer init
 
                 //Doom Guard
             elseif unitTypeId == DOOM_GUARD_UNIT_ID then
-                if CheckProc(u, 600) then
+                if CheckProcHero(u, 600) then
                     call DoomGuardHellfire(u)
                 endif
 

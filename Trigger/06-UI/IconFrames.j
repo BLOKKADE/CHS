@@ -304,7 +304,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				endif
 
 			// Hero information
-			elseif NumButton == 100 then
+			elseif NumButton == 100 or NumButton == 200 then
 				set u = PlayerHeroes[selectedUnitPid]
 				set description = GetHeroTooltip(u)
 				set tooltipSize = GetTooltipSize(description)
@@ -495,7 +495,9 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				call BlzFrameSetVisible(ButtonParentId[39], true) // Win Counts
 				call BlzFrameSetVisible(ButtonParentId[40], true) // Player ready status
 				call BlzFrameSetVisible(ButtonParentId[100], true) // Hero passive/description
+				call BlzFrameSetVisible(ButtonParentId[200], true) //bottom right hero info
 				call BlzFrameSetTexture(ButtonId[100], abilIcon, 0, true) // Hero info
+				call BlzFrameSetTexture(ButtonId[200], abilIcon, 0, true) //bottom right hero info
 			endif
 		else
 			if (GetLocalPlayer() == p) then
@@ -503,6 +505,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				call BlzFrameSetVisible(ButtonParentId[39], false) // Win Counts
 				call BlzFrameSetVisible(ButtonParentId[40], false) // Player ready status
 				call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
+                call BlzFrameSetVisible(ButtonParentId[200], false) //bottom right hero info
 			endif
 		endif
 	endfunction
@@ -686,6 +689,7 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 		call CreateIconWorld(118, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 9 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH, true)
 		call CreateIconWorld(119, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 10 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH, true)
 		call CreateIconWorld(120, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", TOP_LEFT_ICON_ROW_X + 11 * SMALL_BUTTON_WIDTH, TOP_ICON_ROW_Y - SMALL_BUTTON_WIDTH, SMALL_BUTTON_WIDTH, true)
+		call CreateIconWorld(200, "ReplaceableTextures\\CommandButtons\\BTNSkillz.blp", 0.562, 0.167, SMALL_BUTTON_WIDTH, true)
 		// -- Top left buttons
 	endfunction
 
