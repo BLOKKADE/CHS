@@ -25,7 +25,6 @@ scope AttackController initializer init
         local integer baseAgi = GetHeroStatBJ(bj_HEROSTAT_AGI, attacker, true)
         local integer baseInt = GetHeroStatBJ(bj_HEROSTAT_INT, attacker, true)
         local integer currentStr = GetHeroStr(attacker, true)
-        local real scaleFactor = 1.0 + (currentStr / 30000.0) * 3.0
         local integer bonus = R2I(i3 * 1.5)
         
         if IsUnitEnemy(target, GetOwningPlayer(attacker)) == false then
@@ -43,55 +42,18 @@ scope AttackController initializer init
 
         // Murloc Warrior bonus logic
         if GetUnitTypeId(attacker) == MURLOC_WARRIOR_UNIT_ID then
-
-            // Track bonuses separately
-            if baseStr > baseAgi and baseStr > baseInt then
-                call AddUnitBonus(attacker, BONUS_STRENGTH, i3 * 3)
-                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + i3 * 3)
-            elseif baseAgi > baseStr and baseAgi > baseInt then
-                call AddUnitBonus(attacker, BONUS_AGILITY, i3 * 3)
-                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + i3 * 3)
-            elseif baseInt > baseStr and baseInt > baseAgi then
-                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i3 * 3)
-                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + i3 * 3)
-            elseif baseStr == baseAgi and baseStr > baseInt then
-                call AddUnitBonus(attacker, BONUS_STRENGTH, bonus)
-                call AddUnitBonus(attacker, BONUS_AGILITY, bonus)
-                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + bonus)
-                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + bonus)
-            elseif baseStr == baseInt and baseStr > baseAgi then
-                call AddUnitBonus(attacker, BONUS_STRENGTH, bonus)
-                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, bonus)
-                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + bonus)
-                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + bonus)
-            elseif baseAgi == baseInt and baseAgi > baseStr then
-                call AddUnitBonus(attacker, BONUS_AGILITY, bonus)
-                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, bonus)
-                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + bonus)
-                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + bonus)
-            elseif baseStr == baseAgi and baseStr == baseInt then
-                call AddUnitBonus(attacker, BONUS_STRENGTH, i3)
-                call AddUnitBonus(attacker, BONUS_AGILITY, i3)
-                call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i3)
-                call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + i3)
-                call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + i3)
-                call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + i3)
-            endif
-
-            // Dynamic scaling based on bonus Strength
-            if scaleFactor > 4.0 then
-                set scaleFactor = 4.0
-            endif
-
-            call SetUnitScale(attacker, scaleFactor, scaleFactor, scaleFactor)
+            // Grant an equal bonus to all three primary stats regardless of which one is highest.
+            call AddUnitBonus(attacker, BONUS_STRENGTH, i3)
+            call AddUnitBonus(attacker, BONUS_AGILITY, i3)
+            call AddUnitBonus(attacker, BONUS_INTELLIGENCE, i3)
+            call SaveInteger(HT, attackerId, 54021, LoadInteger(HT, attackerId, 54021) + i3)
+            call SaveInteger(HT, attackerId, 54022, LoadInteger(HT, attackerId, 54022) + i3)
+            call SaveInteger(HT, attackerId, 54023, LoadInteger(HT, attackerId, 54023) + i3)
         endif
-
-
-
 
         //Huntress
         if GetUnitTypeId(attacker) == HUNTRESS_UNIT_ID then
-            if BlzGetUnitAbilityCooldownRemaining(attacker, 'A0DW') == 0 then
+            if BlzGetUnitAbilityCooldownRemaining(attacker, 'A0DW') == 0 and not UnitHasBuffBJ(attacker, SILENCE_BUFF_ID) then
                 call ElemFuncStart(attacker, HUNTRESS_UNIT_ID)
                 call DummyInstantCast1(attacker, GetUnitX(attacker), GetUnitY(attacker), 'A035', "fanofknives",  RMaxBJ(7, GetAttackDamage(attackerHero)* (0.245 + (0.005 * GetHeroLevel(attackerHero)))) , ConvertAbilityRealLevelField('Ocl1'), 4)
                 call AbilStartCD(attacker, 'A0DW', 1)
@@ -128,7 +90,7 @@ scope AttackController initializer init
 
         //Reaction
         set i1 = GetUnitAbilityLevel(target, REACTION_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, REACTION_ABILITY_ID) == 0 then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, REACTION_ABILITY_ID) == 0 and not UnitHasBuffBJ(target, SILENCE_BUFF_ID) then
             call TempBonus.create(target, BONUS_EVASION, 10 * i1, 2.5, REACTION_ABILITY_ID).addBuffLink('A08D').activate()
             call TempAbil.create(target, 'A08D', 2.5)
             call AbilStartCD(target, REACTION_ABILITY_ID, 8)
@@ -136,13 +98,13 @@ scope AttackController initializer init
         
         //Cold Wind
         set i1 = GetUnitAbilityLevel(attacker, COLD_WIND_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(attacker, COLD_WIND_ABILITY_ID) == 0 then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(attacker, COLD_WIND_ABILITY_ID) == 0 and not UnitHasBuffBJ(attacker, SILENCE_BUFF_ID) then
             call CastColdWind(attacker, i1)
         endif
 
         //Fire Force
         set i1 = GetUnitAbilityLevel(target, FIRE_FORCE_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= (25 + LuckyTriggerBonusChance(target)) * targetLuck) then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(target, FIRE_FORCE_ABILITY_ID) == 0 and (GetRandomReal(1, 100) <= (25 + LuckyTriggerBonusChance(target)) * targetLuck) and not UnitHasBuffBJ(target, SILENCE_BUFF_ID) then
             call BlzStartUnitAbilityCooldown(target, FIRE_FORCE_ABILITY_ID, 0.3)
             call BlzStartUnitAbilityCooldown(target, GetDummySpell(target, FIRE_FORCE_ABILITY_ID), 0.3)
             call DummyInstantCast1(target, GetUnitX(target), GetUnitY(target), 'A0C0', "fanofknives", GetHeroStr(target,true) * (0.62 + (0.08 * i1)), ConvertAbilityRealLevelField('Ocl1'), 4)

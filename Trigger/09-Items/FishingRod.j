@@ -42,8 +42,8 @@ library FishingRod initializer init requires TempAbilSystem
 
             set this.source = source
             set this.target = target
-            set this.hookEndTick = T32_Tick + R2I(6 * 32)
-            set this.immuneEndTick = T32_Tick + R2I(9 * 32)
+            set this.hookEndTick = T32_Tick + R2I(5 * 32)
+            set this.immuneEndTick = T32_Tick + R2I(17 * 32)
 
             call this.startPeriodic()
             return this

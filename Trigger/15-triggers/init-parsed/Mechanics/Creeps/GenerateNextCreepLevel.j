@@ -2563,7 +2563,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceReaction                = GetRandomInt(1, 200)  
             set RoundCreepChanceDevotionAura            = GetRandomInt(1, 100) 
             set RoundCreepChanceMagneticOscillation     = GetRandomInt(1, 2000) 
-            set RoundCreepChanceArcaneCarapace          = GetRandomInt(1, 140) 
+            set RoundCreepChanceArcaneCarapace          = GetRandomInt(1, 160) 
 
             //Chaos magic works in principle, but had one round that froze until an invisible dummy could be killed with fire shield
             //set RoundCreepChanceChaosMagic          = GetRandomInt(1, 35) 

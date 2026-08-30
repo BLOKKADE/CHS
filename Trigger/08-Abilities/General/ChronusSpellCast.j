@@ -11,7 +11,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Hero Buff
         set abilId = GetDummySpell(u, HERO_BUFF_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, HERO_BUFF_ABILITY_ID)
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call HeroBuffCast(u, abilLevel, heroLevel, chronusBonus, (10 + (heroLevel * 0.02)) * chronusBonus)
             if UnitHasItemType(u, 'TSBB') then
                 call AbilStartCD(u, HERO_BUFF_ABILITY_ID, 60)
@@ -23,7 +23,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Temporary Inisibility
         set abilId = GetDummySpell(u, TEMPORARY_INVISIBILITY_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, TEMPORARY_INVISIBILITY_ABILITY_ID)    
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call TempInvisStruct.create(u, (1.8 + (0.2 * abilLevel)) * chronusBonus)
             if UnitHasItemType(u, 'TSBB') then
                 call AbilStartCD(u, TEMPORARY_INVISIBILITY_ABILITY_ID, 60)
@@ -35,7 +35,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Temporary Power
         set abilId = GetDummySpell(u, TEMPORARY_POWER_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, TEMPORARY_POWER_ABILITY_ID)    
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call TempPowerCast(u, (10 + (0.02 * heroLevel)) * chronusBonus)
                 if UnitHasItemType(u, 'TSBB') then
                     call AbilStartCD(u, TEMPORARY_POWER_ABILITY_ID, 60)
@@ -47,7 +47,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Cheater Magic
         set abilId = GetDummySpell(u, CHEATER_MAGIC_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, CHEATER_MAGIC_ABILITY_ID)    
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call CheaterMagicStruct.create(u, (2.75 + (0.25 * abilLevel) + (0.03 * heroLevel))  * chronusBonus)
                 if UnitHasItemType(u, 'TSBB') then
                     call AbilStartCD(u, CHEATER_MAGIC_ABILITY_ID, 60)
@@ -59,7 +59,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Blessed Protection
         set abilId = GetDummySpell(u, BLESSED_PROTECTION_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, BLESSED_PROTECTION_ABILITY_ID)    
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call BlessedProtectionStruct.create(u, (2.70 + (0.3 * abilLevel)) * chronusBonus)
             if UnitHasItemType(u, 'TSBB') then
                 call AbilStartCD(u, BLESSED_PROTECTION_ABILITY_ID, 60)
@@ -82,7 +82,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Fearless Defenders
         set abilId = GetDummySpell(u, FEARLESS_DEFENDERS_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u, FEARLESS_DEFENDERS_ABILITY_ID)   
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call StartFearlessDefenders(u, abilId, (8 + (heroLevel * 0.09)) * chronusBonus)
             if UnitHasItemType(u, 'TSBB') then
                 call AbilStartCD(u, FEARLESS_DEFENDERS_ABILITY_ID, 60)
@@ -94,7 +94,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Rapid Recovery
         set abilId = GetDummySpell(u, RAPID_RECOVERY_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u,RAPID_RECOVERY_ABILITY_ID)
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call ElemFuncStart(u,RAPID_RECOVERY_ABILITY_ID)
             call DummyInstantCast4(u, GetUnitX(u), GetUnitY(u), 'A03W', "battleroar", (BlzGetUnitMaxHP(u) * 0.002 * abilLevel) * (1 + 0.02 * heroLevel), ABILITY_RLF_LIFE_REGENERATION_RATE, (GetUnitState(u, UNIT_STATE_MAX_MANA) * 0.002 * abilLevel) * (1 + 0.02 * heroLevel), ABILITY_RLF_MANA_REGEN, (10 + (heroLevel * 0.02)) * chronusBonus, ABILITY_RLF_DURATION_HERO, (10 + (heroLevel * 0.02)) * chronusBonus, ABILITY_RLF_DURATION_NORMAL)
             if UnitHasItemType(u, 'TSBB') then
@@ -107,7 +107,7 @@ library ChronusSpellCast requires DummySpell, HeroBuff, AbilityCooldown, TempInv
         //Demon Curse
         set abilId = GetDummySpell(u, DEMONS_CURSE_ABILITY_ID)
         set abilLevel = GetUnitAbilityLevel(u,DEMONS_CURSE_ABILITY_ID)    
-        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) then
+        if abilLevel > 0 and (BlzGetUnitAbilityCooldownRemaining(u, abilId) == 0 or ignoreCd) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
             call CastDemonsCurse(u, chronusBonus, R2I(abilLevel), R2I(heroLevel))
         endif
     endfunction

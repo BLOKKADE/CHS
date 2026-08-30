@@ -16,9 +16,6 @@ library Murloc initializer init requires CustomGameEvent
         set agiBonus = LoadInteger(HT, hid, 54022)
         set intBonus = LoadInteger(HT, hid, 54023)
 
-        // Reset scale factor to default FIRST (disabled for now)
-        call SetUnitScale(hero, 1.0, 1.0, 1.0)
-
         // Remove bonuses if any were applied
         if strBonus != 0 or agiBonus != 0 or intBonus != 0 then
             call AddUnitBonus(hero, BONUS_STRENGTH, -strBonus)

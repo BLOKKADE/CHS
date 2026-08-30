@@ -702,6 +702,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.9.1", false) // 53 - Fixed lifesteal bug. 13 aug 2026
         call AddGameVersion("CHS v2.9.2", false) // 54 - Fixed numerous tooltips and display issues. Item and ability changes. Added arcane carapace and made summons upgrades scale with hero level. 25 aug 2026
         call AddGameVersion("CHS v2.9.3", false) // 55 - Quickfixes of some bugs and rescaling summon upgrades from previous. 28 aug 2026
+        call AddGameVersion("CHS v2.9.4", false) // 56 - Silence affects passive abilities. Fixed some bugs. Retuned some stuff. 30 aug 2026
     endfunction
 
     private function init takes nothing returns nothing

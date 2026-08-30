@@ -39,9 +39,9 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
 
         //Creep base xp
         if GameModeShort == false then
-            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0) * 1.3 * 0.5)
+            set expBounty = R2I(10.0 * Pow(I2R(RoundNumber), 1.35) * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 49.0)) * (15.0 / 17.0) * 1.3 * 0.85)
         else
-            set expBounty = R2I(I2R(RoundNumber * 42) * 0.50)
+            set expBounty = R2I(I2R(RoundNumber * 42) * 0.85)
         endif
         
         //Creep base gold
@@ -130,7 +130,7 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
             if pillageBonus == 0 then
                 set expBounty = expBounty + ((GetHeroLevel(killingHero)) * itemCount)
             else
-                set expBounty = expBounty + R2I((0.5 * GetHeroLevel(killingHero)) * itemCount)
+                set expBounty = expBounty + R2I((0.25 * GetHeroLevel(killingHero)) * itemCount)
             endif
         endif
 

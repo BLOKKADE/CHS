@@ -370,7 +370,7 @@ library IdLibrary initializer init
         constant integer MAGIC_CRITICAL_HIT_ABILITY_ID                  = 'A06U'
         constant integer MANA_BONUS_ABILITY_ID                          = 'A02X'
         constant integer MANA_SHIELD_ABILITY_ID                         = 'ANms'
-        constant integer MANA_STARVATION_ABILITY_ID                      = 'A09J'
+        constant integer MANA_STARVATION_ABILITY_ID                     = 'A09J'
         constant integer MARTIAL_RETRIBUTION_ABILITY_ID                 = 'A089'
         constant integer MEGA_LUCK_ABILITY_ID                           = 'A06V'
         constant integer MEGA_SPEED_ABILITY_ID                          = 'A02O'

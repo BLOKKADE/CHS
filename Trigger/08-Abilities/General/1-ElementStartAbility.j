@@ -120,6 +120,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Water
         if GetUnitAbilityLevel(u,ABSOLUTE_WATER_ABILITY_ID) > 0 and IsSpellElement(u,id, Element_Water) then
+            if GetPlayerName(GetOwningPlayer(u)) == "Sneed" then
+                call BJDebugMsg("Absolute Water was triggered by Sneed")
+            endif
             call SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA) + (GetUnitState(u,UNIT_STATE_MAX_MANA))* .02)
             call TempBonus.create(u, BONUS_INTELLIGENCE,20 /* (1 + GetUnitAbsoluteEffective(u,Element_Water))*/,9, ABSOLUTE_WATER_ABILITY_ID).activate()
         endif      
@@ -153,6 +156,9 @@ library ElementalAbility requires RandomShit, AbilityData, CustomState, RuneInit
         
         //Absolute Light
         if GetUnitAbilityLevel(u,ABSOLUTE_LIGHT_ABILITY_ID) > 0 and IsSpellElement(u,id,Element_Light) then
+            if GetPlayerName(GetOwningPlayer(u)) == "kobs" then
+                call BJDebugMsg("Absolute Light was triggered by a little goblin")
+            endif
             call SetUnitState(u,UNIT_STATE_LIFE,GetUnitState(u,UNIT_STATE_LIFE) + (GetUnitState(u,UNIT_STATE_LIFE))* .04 /** (1 + GetUnitAbsoluteEffective(u,Element_Light))*/)
         endif 
 

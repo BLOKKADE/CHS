@@ -32,10 +32,18 @@ scope ShortPeriodCheck initializer init
 
                 //Crypt Lord
                 if unitTypeId == CRYPT_LORD_UNIT_ID then
-                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0F3') == 0 then
+                    if BlzGetUnitAbilityCooldownRemaining(u, 'A0F3') == 0 and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
                         call ElemFuncStart(u, CRYPT_LORD_UNIT_ID)
                         call BlzStartUnitAbilityCooldown(u, 'A0F3', 10)
                         call SpawnLocustSwarm(u)
+                    endif
+                endif
+
+                //Power of Ice
+                if GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID) >= 1 and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
+                    if BlzGetUnitAbilityCooldownRemaining(u, POWER_OF_ICE_ABILITY_ID) == 0 and CheckProc(u, 600) then
+                        call DummyInstantCast1(u, GetUnitX(u), GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1'), 4)
+                        call AbilStartCD(u, POWER_OF_ICE_ABILITY_ID, 1)
                     endif
                 endif
                 
@@ -61,13 +69,6 @@ scope ShortPeriodCheck initializer init
                 if UnitHasItemType(u, 'I0A2') then
                     call VigourTokenHpLoss(u)
                 endif
-
-                //Power of Ice
-                if GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID) >= 1 then
-                    if CheckProc(u, 610) then
-                        call DummyInstantCast1(u, GetUnitX(u), GetUnitY(u),'A02Y',"fanofknives", (100 * GetUnitAbilityLevel(u, POWER_OF_ICE_ABILITY_ID)) * (1 + (GetHeroLevel(u)* 0.02)), ConvertAbilityRealLevelField('Ocl1'), 4)
-                    endif
-                endif
                 
                 //Absolute Blood
                 set i1 = GetUnitAbilityLevel(u,ABSOLUTE_BLOOD_ABILITY_ID)
@@ -91,7 +92,7 @@ scope ShortPeriodCheck initializer init
                 //Divine Gift
                 set i1 = GetUnitAbilityLevel(u,DIVINE_GIFT_ABILITY_ID)
                 if i1 > 0 then
-                    if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
+                    if BlzGetUnitAbilityCooldownRemaining(u,DIVINE_GIFT_ABILITY_ID) == 0 and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
                         call AbilStartCD(u, DIVINE_GIFT_ABILITY_ID, 12)
                         call SetWidgetLife(u, GetWidgetLife(u) + 2500 * i1)
                         call TempFx.target("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", u, "chest",3, false)
@@ -354,13 +355,17 @@ scope ShortPeriodCheck initializer init
                 endif
 
                 //Doom Guard
-            elseif unitTypeId == DOOM_GUARD_UNIT_ID then
-                if CheckProcHero(u, 600) then
+            elseif unitTypeId == DOOM_GUARD_UNIT_ID and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
+                set i1 = 1 + (GetHeroLevel(u) / 100)
+                set i2 = 0
+                loop
+                    exitwhen i2 >= i1
                     call DoomGuardHellfire(u)
-                endif
+                    set i2 = i2 + 1
+                endloop
 
                 //Abomination
-            elseif unitTypeId == ABOMINATION_UNIT_ID then
+            elseif unitTypeId == ABOMINATION_UNIT_ID and not UnitHasBuffBJ(u, SILENCE_BUFF_ID)then
                 if CheckProc(u, 350) then
                     call ElemFuncStart(u, ABOMINATION_UNIT_ID)
                     call AreaDamage(u, GetUnitX(u), GetUnitY(u), 40 * GetHeroLevel(u), 350, false, ABOMINATION_UNIT_ID, true, false)

@@ -214,7 +214,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         if SummonDamage[pid] > 0 then
             call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
         endif
-
+          
         //wild
         if wild != 1 and not (summonTypeId == 'u006' or summonTypeId == 'u007' or summonTypeId == 'o00D' or summonTypeId == 'u005' or summonTypeId == 'n039') then
         call BlzSetUnitBaseDamage(u, R2I(I2R(BlzGetUnitBaseDamage(u, 0)) * wild), 0)

@@ -70,7 +70,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
 
         //Centaur Archer passive
         if DamageSourceTypeId == CENTAUR_ARCHER_UNIT_ID and Damage.index.isAttack then
-            if CheckUnitHitCooldown(DamageTargetId, 'A08T', 2) then
+            if CheckUnitHitCooldown(DamageTargetId, 'A08T', 2) and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID)then
                 if BlzGetUnitAbilityCooldownRemaining(DamageSource, 'A08T') == 0 then
                     call AbilStartCD(DamageSource, 'A08T', 2)
                     call ElemFuncStart(DamageSource,CENTAUR_ARCHER_UNIT_ID)
@@ -91,7 +91,7 @@ library CritDamage requires RandomShit, Vampirism, Gnome, RemoveBuffs
 
             //Cruelty
             set i = GetUnitAbilityLevel(DamageSourceHero,CRUELTY_ABILITY_ID)
-            if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,CRUELTY_ABILITY_ID) == 0 then
+            if i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,CRUELTY_ABILITY_ID) == 0 and not UnitHasBuffBJ(DamageSourceHero, SILENCE_BUFF_ID) then
                 set critDmg = critDmg + (Dmg * (1 + (0.15 * i)))
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl", DamageTarget, "chest"))
                 call AbilStartCD(DamageSourceHero,CRUELTY_ABILITY_ID, 3)

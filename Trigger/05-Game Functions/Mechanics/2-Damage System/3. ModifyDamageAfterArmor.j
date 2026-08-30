@@ -204,14 +204,14 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Heavy Blow
-        if GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 then
+        if GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID) > 0 and IsPhysDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,HEAVY_BLOW_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             call AbilStartCD(DamageSourceHero,HEAVY_BLOW_ABILITY_ID,0.5)
             set Damage.index.amount = Damage.index.amount + 50 * GetUnitAbilityLevel(DamageSourceHero, HEAVY_BLOW_ABILITY_ID)
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Orc\\Devour\\DevourEffectArt.mdl", DamageTarget, "chest"))
         endif
         
         //Combustion
-        if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 then
+        if GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID) > 0 and IsMagicDamage() and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero,COMBUSTION_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             set r1 = 1.0 - 0.7 * (I2R(GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID)) / 30.0)
             call AbilStartCD(DamageSourceHero, COMBUSTION_ABILITY_ID, r1)
             set Damage.index.amount = Damage.index.amount + 30 * GetUnitAbilityLevel(DamageSourceHero, COMBUSTION_ABILITY_ID)
@@ -219,7 +219,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Devastating Blow
-        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') == 0 then
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') == 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.15)
@@ -229,7 +229,7 @@ scope ModifyDamageAfterArmor initializer init
         endif
 
         //Devastating Blow reduced by Heart of a Hero
-        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') > 0 then
+        if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') > 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.075)
@@ -308,7 +308,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Magnetic Oscillation
         set i = GetUnitAbilityLevel(DamageTarget, MAGNET_OSC_ABILITY_ID)
-        if i > 0 then
+        if i > 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             //call BJDebugMsg("dmg sourceid: " + I2S(DamageSourceId) + " time: " + I2S(T32_Tick - MagnetOscHitTick[DamageSourceId]))
             if T32_Tick >= MagnetOscHitTick[DamageSourceId] then
                 //call SetUnitVertexColor(DamageSource, 0, 255, 0, 255)
@@ -470,7 +470,7 @@ scope ModifyDamageAfterArmor initializer init
             endif
 
             //Dark Hunter Bash
-            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and IsUnitIllusion(DamageSource) == false and GetRandomInt(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
+            if DamageSourceTypeId == DARK_HUNTER_UNIT_ID and IsUnitIllusion(DamageSource) == false and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) and GetRandomInt(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                 set r1 = GetHeroLevel(DamageSource) * 50
                 set r2 = DarkHunterStun.real[DamageSourceId]
                 if CheckUnitHitCooldown(DamageTargetId, DARK_HUNTER_UNIT_ID, r2 + 0.4) then
@@ -578,39 +578,12 @@ scope ModifyDamageAfterArmor initializer init
 
         //Murloc Warrior
         if DamageTargetTypeId == MURLOC_WARRIOR_UNIT_ID and GetHeroStr(DamageTarget, true) < 2147483647 then
-
-            if baseStr > baseAgi and baseStr > baseInt then
-                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3 * 3)
-                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + i3 * 3)
-            elseif baseAgi > baseStr and baseAgi > baseInt then
-                call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3 * 3)
-                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + i3 * 3)
-            elseif baseInt > baseStr and baseInt > baseAgi then
-                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3 * 3)
-                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + i3 * 3)
-            elseif baseStr == baseAgi and baseStr > baseInt then
-                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, bonus)
-                call AddUnitBonus(DamageTarget, BONUS_AGILITY, bonus)
-                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + bonus)
-                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + bonus)
-            elseif baseStr == baseInt and baseStr > baseAgi then
-                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, bonus)
-                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, bonus)
-                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + bonus)
-                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + bonus)
-            elseif baseAgi == baseInt and baseAgi > baseStr then
-                call AddUnitBonus(DamageTarget, BONUS_AGILITY, bonus)
-                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, bonus)
-                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + bonus)
-                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + bonus)
-            elseif baseStr == baseAgi and baseStr == baseInt then
-                call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3)
-                call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3)
-                call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3)
-                call SaveInteger(HT, DamageTargetId, 54021, LoadInteger(HT, DamageTargetId, 54021) + i3)
-                call SaveInteger(HT, DamageTargetId, 54022, LoadInteger(HT, DamageTargetId, 54022) + i3)
-                call SaveInteger(HT, DamageTargetId, 54023, LoadInteger(HT, DamageTargetId, 54023) + i3)
-            endif
+            call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3)
+            call AddUnitBonus(DamageTarget, BONUS_AGILITY, i3)
+            call AddUnitBonus(DamageTarget, BONUS_INTELLIGENCE, i3)
+            call SaveInteger(HT, GetHandleId(DamageTarget), 54021, LoadInteger(HT, GetHandleId(DamageTarget), 54021) + i3)
+            call SaveInteger(HT, GetHandleId(DamageTarget), 54022, LoadInteger(HT, GetHandleId(DamageTarget), 54022) + i3)
+            call SaveInteger(HT, GetHandleId(DamageTarget), 54023, LoadInteger(HT, GetHandleId(DamageTarget), 54023) + i3)
         endif
 
 
@@ -640,13 +613,13 @@ scope ModifyDamageAfterArmor initializer init
 
         //Stone Protection
         set i1 = GetUnitAbilityLevel(DamageTarget, STONE_PROTECTION_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,STONE_PROTECTION_ABILITY_ID) == 0 then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,STONE_PROTECTION_ABILITY_ID) == 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             call CastStoneProtect(DamageTarget, DamageSource)
         endif
         
         //Thunder Force
         set i1 = GetUnitAbilityLevel(DamageSource, THUNDER_FORCE_ABILITY_ID)
-        if i1 > 0 and Damage.index.isAttack and BlzGetUnitAbilityCooldownRemaining(DamageSource,THUNDER_FORCE_ABILITY_ID) == 0 then
+        if i1 > 0 and Damage.index.isAttack and BlzGetUnitAbilityCooldownRemaining(DamageSource,THUNDER_FORCE_ABILITY_ID) == 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             call AbilStartCD(DamageSource, THUNDER_FORCE_ABILITY_ID, 0.5)
             call DummyTargetCast1(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif

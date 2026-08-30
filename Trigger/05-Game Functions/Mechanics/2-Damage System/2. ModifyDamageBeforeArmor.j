@@ -169,7 +169,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Divine Bubble
         set i1 = GetUnitAbilityLevel(DamageTarget,DIVINE_BUBBLE_ABILITY_ID)
-        if i1 > 0 or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
+        if i1 > 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) or UnitHasItemType(DamageTarget, LIGHT_RUNESTONE_ITEM_ID) then
             if IsUnitDivineBubbled(DamageTarget) then
                 call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)
 
@@ -225,7 +225,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Shadow dance - start shadow form
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
-        if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not IsOnHitDamage() then
+        if i1 > 0 and  BlzGetUnitAbilityCooldownRemaining(DamageSource,SHADOW_DANCE_ABILITY_ID) <= 0 and Damage.index.isAttack and not IsOnHitDamage() and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             if CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource)) < 230  then
                 call UnitAddForm(DamageSource, FORM_SHADOW, 2.9 + I2R(i1)/ 10)
                 call AbilStartCD(DamageSource,SHADOW_DANCE_ABILITY_ID, 13) 
@@ -329,7 +329,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Shadow Dance
         set i1 = GetUnitAbilityLevel(DamageSource, SHADOW_DANCE_ABILITY_ID)
-        if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 and Damage.index.isAttack then
+        if UnitHasForm(DamageSource, FORM_SHADOW) and i1 > 0 and Damage.index.isAttack and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
             set Damage.index.damage = Damage.index.damage + 50 * i1
             if IsTerrainWalkable(GetWidgetX(DamageTarget) - 65 * CosBJ(GetUnitFacing(DamageTarget) + 180), GetWidgetY(DamageTarget) - 65 * SinBJ(GetUnitFacing(DamageTarget) + 180)) then
                 call SetUnitX(DamageSource, TerrainPathability_X)
@@ -489,7 +489,7 @@ scope ModifyDamageBeforeArmor initializer init
                 endif
             else
                 // Searing Arrows is disabled — fire single shot every 5 seconds
-                if BlzGetUnitAbilityCooldownRemaining(DamageSource, SEARING_ARROWS_ABILITY_ID) <= 0 then
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, SEARING_ARROWS_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
                     // Store attack damage before nullifying it
                     set DamageSourceAbility = SEARING_ARROWS_ABILITY_ID
                     set r2 = Damage.index.damage
@@ -534,7 +534,7 @@ scope ModifyDamageBeforeArmor initializer init
                 endif
             else
                 // Cold Arrows is disabled — fire fallback shot every 5 seconds
-                if BlzGetUnitAbilityCooldownRemaining(DamageSource, COLD_ARROWS_ABILITY_ID) <= 0 then
+                if BlzGetUnitAbilityCooldownRemaining(DamageSource, COLD_ARROWS_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
                     set Damage.index.damage = Damage.index.damage + GetSpellValue(20, 10, i1)
 
                     set Damage.index.damageType = DAMAGE_TYPE_MAGIC
@@ -695,7 +695,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Ice Armor
         set i1 = GetUnitAbilityLevel(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID)
-        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,ICE_ARMOR_SUMMON_ABILITY_ID) <= 0 then
+        if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, ICE_ARMOR_SUMMON_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Other\\FrostBolt\\FrostBoltMissile.mdl", DamageTarget, "chest"))
             set Damage.index.damage = Damage.index.damage * 0.2
             call AbilStartCD(DamageTarget, ICE_ARMOR_SUMMON_ABILITY_ID, 2.05 - (0.05 * i1))
@@ -706,7 +706,7 @@ scope ModifyDamageBeforeArmor initializer init
         set hasRunestone = UnitHasItemType(DamageTarget, COLD_RUNESTONE_ITEM_ID)
 
         if GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
-            if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, ICE_FORCE_ABILITY_ID) <= 0 then
+            if i1 > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, ICE_FORCE_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
                 // Normal Ice Force (enhanced if Cold Runestone is also equipped)
                 set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
 
@@ -723,7 +723,7 @@ scope ModifyDamageBeforeArmor initializer init
                 call AbilStartCD(DamageTarget, ICE_FORCE_ABILITY_ID, 2.05 - (0.05 * i1))
                 call UpdateAbilityDescriptionString(GetAbilityDescription(ICE_FORCE_ABILITY_ID, i1 - 1), Player(DamageTargetPid), GetDummySpell(DamageTarget, ICE_FORCE_ABILITY_ID), ",s01,", R2S((1. - r1) * 100.), i1)
 
-            elseif hasRunestone and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0G4') <= 0 then
+            elseif hasRunestone and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0G4') <= 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
                 // Pure Cold Runestone version (level 20 equivalent reduction, 1 second cooldown on A0G4)
                 set r1 = 500. / (500. + GetHeroInt(DamageTarget, true))
 
@@ -798,7 +798,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Hero Force
         set i1 = GetUnitAbilityLevel(DamageSourceHero, HERO_FORCE_ABILITY_ID)
-        if i1 > 0 and CheckUnitHitCooldown(DamageTargetId, HERO_FORCE_ABILITY_ID, 0.3) then
+        if i1 > 0 and CheckUnitHitCooldown(DamageTargetId, HERO_FORCE_ABILITY_ID, 0.3) and not UnitHasBuffBJ(DamageSourceHero, SILENCE_BUFF_ID) then
             set i2 = GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSourceHero                                                                                                                                                                                                                       , true)
             if GetUnitAbilityLevel(DamageTarget, 'Bams') > 0 or GetUnitAbilityLevel(DamageTarget, ANTI_MAGIC_SHELL_BUFF_ID) > 0  then
 
@@ -818,7 +818,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Grom Hellscream
-        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID and (not IsOnHitDamage()) then
+        if GetUnitTypeId(DamageSourceHero) == ORC_CHAMPION_UNIT_ID and (not IsOnHitDamage()) and not UnitHasBuffBJ(DamageSourceHero, SILENCE_BUFF_ID) then
             set Damage.index.damage = Damage.index.damage + (GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSourceHero, true) * (0.1 + (0.005 * GetHeroLevel(DamageSourceHero))))
             if not IsFxOnCooldownSet(DamageTargetId, ORC_CHAMPION_UNIT_ID, 1) then
                 call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl", DamageTarget, "chest"))		
@@ -884,6 +884,9 @@ scope ModifyDamageBeforeArmor initializer init
         if i1 > 0 and GetUnitMoveSpeed(DamageTarget) == 150 then
             set AbsColdCdBonus.boolean[DamageTargetId] = true
             set Damage.index.damage = Damage.index.damage * 1 + ((0.05 + (0.005 * i1)) * GetUnitElementCount(DamageSource, Element_Cold))
+            if GetPlayerName(GetOwningPlayer(DamageSource)) == "Sneed" then
+                call BJDebugMsg("Absolute Cold triggered for Sneed")
+            endif
             if not IsFxOnCooldownSet(DamageTargetId, ABSOLUTE_COLD_ABILITY_ID, 1) then
                 call DestroyEffect( AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Items\\AIob\\AIobSpecialArt.mdl", DamageTarget, "chest"))
             endif	
@@ -911,7 +914,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Rock Golem
-        if DamageTargetTypeId == ROCK_GOLEM_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0AH') == 0 then
+        if DamageTargetTypeId == ROCK_GOLEM_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0AH') == 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             call AbilStartCD(DamageTarget, 'A0AH', 1)
             call ElementStartAbility(DamageTarget, ROCK_GOLEM_UNIT_ID)
             call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
@@ -1074,7 +1077,7 @@ scope ModifyDamageBeforeArmor initializer init
 
         //Frostbite of the Soul
         set i1 = GetUnitAbilityLevel(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID)
-        if i1 > 0 and IsHeroUnitId(DamageSourceTypeId) then
+        if i1 > 0 and IsHeroUnitId(DamageSourceTypeId) and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             if BlzGetUnitAbilityCooldownRemaining(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID) <= 0 then
                 call AbilStartCD(DamageTarget,FROSTBITE_OF_THE_SOUL_ABILITY_ID, 9)
                 call AddCooldowns(DamageSource,0.95 + I2R(i1)* 0.05)

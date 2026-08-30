@@ -32,7 +32,7 @@ scope LethalDamage initializer init
         endif
 
         // Reincarnation
-        if GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, REINCARNATION_ABILITY_ID) == 0 and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 then
+        if GetUnitAbilityLevel(DamageTarget, REINCARNATION_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, REINCARNATION_ABILITY_ID) == 0 and GetUnitAbilityLevel(DamageTarget, 'A0EP') == 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             set udg_LethalDamageHP = 1
 
             if hpPercent < 0.1 then
@@ -67,9 +67,9 @@ scope LethalDamage initializer init
             call CheckBattleRunestoneCount(DamageSourceHero, GetHandleId(DamageSourceHero))
         endif
 
-        //Last Breath
+        //Last Breaths
         set i = GetUnitAbilityLevel(DamageTarget, LAST_BREATHS_ABILITY_ID)
-        if Damage.index.damageType != DAMAGE_TYPE_ENHANCED and i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 then
+        if Damage.index.damageType != DAMAGE_TYPE_ENHANCED and i > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget,LAST_BREATHS_ABILITY_ID) == 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             set negated = true
             call ActivateLastBreath(DamageTarget, DamageSource, i)
         endif

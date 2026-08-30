@@ -257,8 +257,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNDoomGuard.blp" )
-        call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellfire: Deals |cffff00ffmagic damage|r per second to a random nearby enemy for 8 seconds. 1 second cooldown. [|cff96ffffStable|r]")
-        call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellfire: +25 damage per second." )
+        call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Hellfire: A fire beam deals |cffff00ffmagic damage|r per second to a random nearby enemy for 8 seconds. 1 second cooldown. [|cff96ffffStable|r]")
+        call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Hellfire: +25 damage per second. (|cff68f386Every 100 levels|r) Gains +1 fire beam." )
         call InitHeroDesc(DOOM_GUARD_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(ROCK_GOLEM_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
