@@ -2976,8 +2976,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 endif
         endif
 
-        set RoundCreepTypeId = FURBOLG_CREEP_UNIT_ID
-
         if RoundCreepChanceChaosMagic == 1 then
             set RoundCreepNumber = GetRandomInt(2, 7)
         endif
@@ -3831,10 +3829,6 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
                     if RoundCreepChanceSearingArrows == 1 or RoundCreepChanceColdArrows == 1 then
                         call SetUnitCustomState(creep, BONUS_MAGICPOW, RoundNumber * 2)
-                    endif
-
-                    if RoundCreepTypeId == FURBOLG_CREEP_UNIT_ID then
-                        call UnitAddItemToSlotById(creep, 'I07T', 0)
                     endif
 
                     if RoundCreepTypeId == ARCHMAGE_CREEP_UNIT_ID then
