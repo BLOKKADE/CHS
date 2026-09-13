@@ -317,6 +317,7 @@
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Bear.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Black Arrow Melee Skeleton.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Black Arrow Ranged Skeleton.j"
+//! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Guardian Skeleton.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Carrion Beetle.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\ClockwerkGoblin.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\FaerieDragon.j"

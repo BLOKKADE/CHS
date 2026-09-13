@@ -75,8 +75,9 @@ library HeroLevelup initializer init requires HeroLvlTable, Tinker, WitchDoctor,
             call SetBonus(u, 0, 1 * heroLevel)
 
         elseif uid == STOMP_TREE_UNIT_ID then  
-            set i = prevLevel + 1
-            call SetBonus(u, 1, 50 + 50 * (heroLevel / 175.0))
+            //set i = prevLevel + 1
+            //call SetBonus(u, 1, 50 + 50 * (heroLevel / 175.0))
+            call AddStompStats(u)
             /*loop
                 exitwhen i > heroLevel
 

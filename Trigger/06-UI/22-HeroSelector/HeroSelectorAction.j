@@ -176,7 +176,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[4] = BANSHEE_UNIT_ID
         set HeroSelectorUnitCode[5] = BEAST_MASTER_UNIT_ID
         set HeroSelectorUnitCode[6] = BLADE_MASTER_UNIT_ID
-        //set HeroSelectorUnitCode[7] = BLOOD_MAGE_UNIT_ID
+        //set HeroSelectorUnitCode[51] = BLOOD_MAGE_UNIT_ID
         set HeroSelectorUnitCode[7] = CENTAUR_ARCHER_UNIT_ID
         set HeroSelectorUnitCode[8] = COLD_KNIGHT_UNIT_ID
         set HeroSelectorUnitCode[9] = CRYPT_LORD_UNIT_ID
@@ -209,7 +209,7 @@ library HeroSelectorAction initializer Init uses HeroSelector, HeroInfo, PlayerH
         set HeroSelectorUnitCode[36] = SEER_UNIT_ID
         set HeroSelectorUnitCode[37] = SKELETON_BRUTE_UNIT_ID
         set HeroSelectorUnitCode[38] = SORCERER_UNIT_ID
-        //set HeroSelectorUnitCode[39] = STOMP_TREE_UNIT_ID
+        set HeroSelectorUnitCode[50] = STOMP_TREE_UNIT_ID
         set HeroSelectorUnitCode[39] = TAUREN_UNIT_ID
         set HeroSelectorUnitCode[40] = THUNDER_WITCH_UNIT_ID
         set HeroSelectorUnitCode[41] = TIME_WARRIOR_UNIT_ID

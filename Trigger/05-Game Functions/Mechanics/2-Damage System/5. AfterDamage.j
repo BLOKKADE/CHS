@@ -19,7 +19,7 @@ scope AfterDamage initializer init
         endif
 
         //Carrion Swarm heal
-        if DamageSourceAbility == CARRION_SWARM_ABILITY_ID then
+        if DamageSourceAbility == CARRION_SWARM_ABILITY_ID and GetUnitAbilityLevel(DamageSource, BLOODSTONE_BUFF_ID) <= 0 and GetUnitAbilityLevel(DamageSource, 'B022') <= 0 and not IsUnitDivineBubbled(DamageTarget) then
             call SetUnitState(DamageSource, UNIT_STATE_LIFE, GetUnitState(DamageSource, UNIT_STATE_LIFE) + Damage.index.damage)
         endif
 

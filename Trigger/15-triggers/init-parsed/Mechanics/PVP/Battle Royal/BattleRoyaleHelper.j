@@ -225,6 +225,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
                 call ShowUnit(draftBuilding2, b)
                 call ShowUnit(udg_Draft_UpgradeBuildings[i], b)
                 call SetTextTagVisibility(FloatingTextUpgrade, b)
+                call SetTextTagVisibility(FloatingTextAbsolute, b)
                 set i = i + 1
                 exitwhen i > 9
             endloop

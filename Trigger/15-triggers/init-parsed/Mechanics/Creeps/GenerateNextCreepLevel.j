@@ -2563,7 +2563,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             set RoundCreepChanceReaction                = GetRandomInt(1, 200)  
             set RoundCreepChanceDevotionAura            = GetRandomInt(1, 100) 
             set RoundCreepChanceMagneticOscillation     = GetRandomInt(1, 2000) 
-            set RoundCreepChanceArcaneCarapace          = GetRandomInt(1, 160) 
+            //set RoundCreepChanceArcaneCarapace          = GetRandomInt(1, 160) 
 
             //Chaos magic works in principle, but had one round that froze until an invisible dummy could be killed with fire shield
             //set RoundCreepChanceChaosMagic          = GetRandomInt(1, 35) 
@@ -2941,6 +2941,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set RoundCreepChanceDrunkMaster   = 1
                 elseif RoundCreepTypeId == SASQUATCH_CREEP_UNIT_ID then
                 elseif RoundCreepTypeId == FURBOLG_CREEP_UNIT_ID then
+                    set RoundCreepNumber = 1
+                    set RoundCreepChanceWarStomp = 1 
+                    set RoundCreepChancePulverize = 1
+                    set RoundCreepChanceArcaneAssault = 1
                 elseif RoundCreepTypeId == DARK_TROLL_BERSERKER_CREEP_UNIT_ID then
                     set RoundCreepNumber = 25
                 elseif RoundCreepTypeId == TUSKAR_CREEP_UNIT_ID then
@@ -2971,6 +2975,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set RoundCreepChanceCurse                   = 1
                 endif
         endif
+
+        set RoundCreepTypeId = FURBOLG_CREEP_UNIT_ID
 
         if RoundCreepChanceChaosMagic == 1 then
             set RoundCreepNumber = GetRandomInt(2, 7)
@@ -3825,6 +3831,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
                     if RoundCreepChanceSearingArrows == 1 or RoundCreepChanceColdArrows == 1 then
                         call SetUnitCustomState(creep, BONUS_MAGICPOW, RoundNumber * 2)
+                    endif
+
+                    if RoundCreepTypeId == FURBOLG_CREEP_UNIT_ID then
+                        call UnitAddItemToSlotById(creep, 'I07T', 0)
                     endif
 
                     if RoundCreepTypeId == ARCHMAGE_CREEP_UNIT_ID then

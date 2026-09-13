@@ -1137,12 +1137,12 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SetLastObjectElement(Element_Energy, 1)
 
         //188 - Destruction Block 
-        call SaveAbilData(DESTRUCTION_BLOCK_ABILITY_ID, DESTRUCTION_BLOCK_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
-        call SetLastObjectElement(Element_Dark, 1)
+        //call SaveAbilData(DESTRUCTION_BLOCK_ABILITY_ID, DESTRUCTION_BLOCK_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
+        //call SetLastObjectElement(Element_Dark, 1)
 
         //189 - Dark Seal
-        call SaveAbilData(DARK_SEAL_ABILITY_ID, DARK_SEAL_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
-        call SetLastObjectElement(Element_Dark, 1)
+        //call SaveAbilData(DARK_SEAL_ABILITY_ID, DARK_SEAL_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
+        //call SetLastObjectElement(Element_Dark, 1)
 
         //190 - Shadow Step
         call SaveAbilData(SHADOW_STEP_ABILITY_ID, SHADOW_STEP_ITEM_ID , false, 0, 0, false, Order_None, null)
@@ -1205,8 +1205,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Arcane, 1)
 
         //205 Arcane Carapace
-        call SaveAbilData(ARCANE_CARAPACE_ABILITY_ID, ARCANE_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
-        call SetLastObjectElement(Element_Arcane, 1)
+        //call SaveAbilData(ARCANE_CARAPACE_ABILITY_ID, ARCANE_CARAPACE_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //call SetLastObjectElement(Element_Arcane, 1)
 
         //206 - Chaos Ward 
         //call SaveAbilData(SUMMON_CHAOS_WARD_ABILITY_ID, CHAOS_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
@@ -1323,7 +1323,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetObjectElement(LICH_UNIT_ID, Element_Dark, 1)
         call SetObjectElement(LICH_UNIT_ID, Element_Cold, 1)
         call SetObjectElement(NAGA_SIREN_UNIT_ID, Element_Water, 1)
-        call SetObjectElement(BLOOD_MAGE_UNIT_ID, Element_Water, 1)
+        call SetObjectElement(BLOOD_MAGE_UNIT_ID, Element_Blood, 1)
         call SetObjectElement(SORCERER_UNIT_ID, Element_Arcane, 1)
         call SetObjectElement(THUNDER_WITCH_UNIT_ID, Element_Wind, 1)
         call SetObjectElement(TROLL_BERSERKER_UNIT_ID, Element_Wind, 1)

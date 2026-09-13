@@ -9,8 +9,7 @@ library Stomp requires RandomShit
     function AddStompStats takes unit u returns nothing
     local integer pid   = GetPlayerId(GetOwningPlayer(u))
     local unit    hero  = PlayerHeroes[pid]
-    local real     lvl  = GetHeroLevel(hero)
-    local real  factor  = 0.5 + (0.5 * (lvl / 175.0))
+    local real  factor  = 0.5
 
     if GetUnitTypeId(u) == STOMP_TREE_UNIT_ID then
         // Hit Points

@@ -672,7 +672,7 @@ scope ModifyDamageBeforeArmor initializer init
         endif
 
         //Ursa Warrior
-        if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID and Damage.index.isAttack then
+        if DamageSourceTypeId == URSA_WARRIOR_UNIT_ID or DamageSourceTypeId == FURBOLG_CREEP_UNIT_ID and Damage.index.isAttack then
             //call CastUrsaBleed(DamageSource, DamageTarget, Damage.index.damage, Damage.index.damageType !=  DAMAGE_TYPE_NORMAL)
             call TempAbil.create(DamageTarget, 'A08O', 2)
             call PeriodicDamage.create(DamageSource, DamageTarget, Damage.index.damage/ 3, Damage.index.damageType ==  DAMAGE_TYPE_MAGIC, 1., 2, 0, true, BLEED_BUFF_ID, URSA_WARRIOR_UNIT_ID).addFx(FX_Bleed, "head").addLimit('A0A4', 40, 1).start()
@@ -1106,6 +1106,12 @@ scope ModifyDamageBeforeArmor initializer init
                     call SetUnitState(DamageTarget,UNIT_STATE_MANA,GetUnitState(DamageTarget,UNIT_STATE_MANA)- 750 )
                 endif
             endif
+        endif
+
+        //Blood Mage
+        if DamageTargetTypeId == BLOOD_MAGE_UNIT_ID and DamageSource != null and DamageSource != DamageTarget and Damage.index.damage > 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, LIFE_DRAIN_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) and IsUnitEnemy(DamageTarget, Player(DamageSourcePid)) then
+            call AbilStartCD(DamageTarget, LIFE_DRAIN_ABILITY_ID, 1)
+            call DummyTargetCast2(DamageTarget, DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), LIFE_DRAIN_ABILITY_ID, "lifedrain", 100 + GetHeroLevel(DamageTarget) * 10, 100 + GetHeroLevel(DamageTarget) * 10, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1, ABILITY_RLF_DAMAGE_PER_TARGET_OCL1)
         endif
 
         //Magic Resistance

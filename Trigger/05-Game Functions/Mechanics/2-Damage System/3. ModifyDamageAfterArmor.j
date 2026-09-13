@@ -41,7 +41,7 @@ scope ModifyDamageAfterArmor initializer init
         //call BJDebugMsg("MOD1.2 source: " + GetUnitName(DamageSource) + " target: " + GetUnitName(DamageTarget) + " dmg: " + R2S(Damage.index.damage))
 
         //Fishing Rod
-        if UnitHasItemType(DamageSource, 'I07T') and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
+        if (UnitHasItemType(DamageSource, 'I07T') or GetUnitTypeId(DamageSource) == FURBOLG_CREEP_UNIT_ID) and IsPhysDamage() and GetUnitAbilityLevel(DamageSource, ENTANGLING_ROOTS_BUFF_ID) == 0 then
             if GetUnitAbilityLevel(DamageTarget, HARDENED_SKIN_ABILITY_ID) == 0 and not (UnitHasItemType(DamageTarget, 'I0CV') or UnitHasItemType(DamageTarget, 'I090')) then
                 call FishingRod(DamageSource, DamageTarget)
             endif
@@ -160,6 +160,9 @@ scope ModifyDamageAfterArmor initializer init
             set i = GetHeroLevel(DamageSource)
             //set r2 = BlzGetUnitMaxHP(DamageTarget) * (0.025 + (0.00025 * i))
             set r2 = (GetWidgetLife(DamageTarget)/ 100) * (2.5 + (0.025 * i))
+            if not Damage.index.isAttack then
+                set r2 = r2 * 0.5
+            endif
             set vampAmount = vampAmount + r2
             set vampCount = vampCount + 1
             set Damage.index.amount = Damage.index.amount + r2 
@@ -220,7 +223,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Devastating Blow
         if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') == 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
-            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,16.0 - 12.0 * (I2R(GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID)) / 30.0))
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.15)
             set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID
@@ -230,7 +233,7 @@ scope ModifyDamageAfterArmor initializer init
 
         //Devastating Blow reduced by Heart of a Hero
         if GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) > 0 and BlzGetUnitAbilityCooldownRemaining(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) <= 0 and GetUnitAbilityLevel(DamageTarget, 'B00N') > 0 and not UnitHasBuffBJ(DamageSource, SILENCE_BUFF_ID) then
-            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,4)
+            call AbilStartCD(DamageSourceHero,DEVASTATING_BLOW_ABILITY_ID,16.0 - 12.0 * (I2R(GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID)) / 30.0))
             set r1 = BlzGetUnitMaxHP(DamageTarget)
             set r2 = 50 * GetUnitAbilityLevel(DamageSourceHero, DEVASTATING_BLOW_ABILITY_ID) +  (r1 * 0.075)
             set udg_NextDamageAbilitySource = DEVASTATING_BLOW_ABILITY_ID

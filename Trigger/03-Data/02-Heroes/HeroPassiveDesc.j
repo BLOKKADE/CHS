@@ -114,7 +114,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
         
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNPossession.blp" )
-        call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power.")
+        call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Glow In The Dark: When the Hero has more [|cffd2d2d2Light|r] than [|cff000000Dark|r] abilities it gains bonus armor and attack damage, if it has more [|cff000000Dark|r] than [|cffd2d2d2Light|r] abilities it gains bonus magic protection and magic power. You gain half of each if [element] count is equal.")
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Glow In The Dark: [|cffd2d2d2Light|r] mode: +1% armor, +20 attack damage. [|cff000000Dark|r] mode: +0.8 magic protection, +0.8 magic power." )
         call InitHeroDesc(AVATAR_SPIRIT_UNIT_ID, HeroPassive_SummonLimit, "24")
             
@@ -335,7 +335,7 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cffff0000HARD|r" )
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNMurlocNightCrawler.blp" )
-        call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fish Hook: If his str/agi/int stats are even, he increases all stats by 1 every time the Hero attacks an enemy or takes damage. He gains 1.5* of each stat if two are equally the highest and 3* of a single stat if it is highest. Lasts until the end of the fight. (Max 2 billion)")
+        call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Fish Hook: Increases all stats by 1 every time the Hero attacks an enemy or takes damage. Lasts until the end of the fight. (Max 2 billion)")
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: (|cff68eef3Every 10 levels|r) Fish Hook: +1 stat per attack." )
         call InitHeroDesc(MURLOC_WARRIOR_UNIT_ID, HeroPassive_SummonLimit, "24")
 
@@ -347,8 +347,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cffff0000HARD|r" )
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNGhoul.blp" )
-        call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Cannibal Frenzy: Attacks deal +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it. Targets become immune for 0.35 seconds after being hit. ")
-        call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% attack damage." )
+        call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Cannibal Frenzy: All damage deals +2.5% of the target's current hit points in |cff00ffffpure damage|r, this bonus damage ignores armor and block and has 100% lifesteal on it.  |cffc0c0c0Half as effective with non-attack damage. Targets become immune for 0.35 seconds after being hit. |r")
+        call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: Cannibal Frenzy: +0.025% damage." )
         call InitHeroDesc(GHOUL_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         call InitHeroDesc(BANSHEE_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cfffff200MEDIUM|r" )
@@ -383,8 +383,8 @@ library HeroPassiveDesc initializer init requires HeroLvlTable, EconomyCreepBonu
 
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Difficulty, "Difficulty: |cff00ff4cEASY|r" )
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNCorruptedTreeOfLife.blp" )
-        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Summon upgrades give 50% stats. Receive triple damage from [|cffff0000Fire|r] and cannot buy stat-per-level Tomes and Manuscripts.")
-        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: +0.3% more stats from new summon upgrades.") //(|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Desc, "|cff00ffffPassive|r: Sylvan Construct: As a [|cff9e5d07Summon|r] the Hero is affected by items and abilities that affect summons. Receive triple damage from [|cffff0000Fire|r] and cannot buy stat-per-level Tomes.")
+        call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_Lvlup, "|cffffff00Level Up Bonus|r: The Hero gains 50% of your summon upgrades.") //(|cff68eef3Every 65 levels|r) +1 [|cff008000Wild|r] element. Gains special abilities: Level 125: [|cff9e5d07Summon|r] units can walk through each other. Level 150: Pull/Push Immunity. Level 175: +1.33% Max HP heal per second.")
         call InitHeroDesc(STOMP_TREE_UNIT_ID, HeroPassive_SummonLimit, "24")
 
         //call InitHeroDesc(NYX_UNIT_ID, HeroPassive_Icon, "ReplaceableTextures\\CommandButtons\\BTNBanditMage.blp" )

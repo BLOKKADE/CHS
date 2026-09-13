@@ -34,7 +34,6 @@ library StableSpells initializer init
         set StableSpells.boolean[ANCIENT_RUNES_ABILITY_ID] = true
         set StableSpells.boolean[ANTI_MAGIC_FLAG_ABIL_ID] = true
         set StableSpells.boolean[SCROLL_OF_TRANSFORMATION_ABIL_ID] = true
-        set StableSpells.boolean[DEVASTATING_BLOW_ABILITY_ID] = true
         set StableSpells.boolean[DARK_SEAL_ABILITY_ID] = true
         set StableSpells.boolean[DESTRUCTION_BLOCK_ABILITY_ID] = true
         set StableSpells.boolean[CONTEMPORARY_RUNES_ABILITY_ID] = true

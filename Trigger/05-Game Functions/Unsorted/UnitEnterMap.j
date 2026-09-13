@@ -421,6 +421,10 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             set summonlimit = R2I(summonlimit * 0.50)
         endif
 
+        if summonTypeId == PHOENIX_1_UNIT_ID or summonTypeId == LAVA_SPAWN_1_UNIT_ID or summonTypeId == INFERNAL_1_UNIT_ID then
+            set summonlimit = summonlimit - 3
+        endif
+
         // Spirit Shackle buff overrides everything
         if UnitHasBuffBJ(hero, SPIRIT_SHACKLE_BUFF_ID) then
             set summonlimit = 0

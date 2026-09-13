@@ -81,7 +81,35 @@ library DarkAvatar initializer init requires CustomState, HeroLvlTable, GetObjec
         else
             if AvatarMode[hid][0] != 0 then
                 call ResetAvatar(hid, u, 0)
-            endif 
+            endif
+
+            // When the elements are tied, grant half of each avatar's bonuses.
+            set rBonus = (heroLevel * 0.005) * (BlzGetUnitArmor(u) - AvatarMode[hid].real[1] - LoadReal(HT,GetHandleId(u),11))
+            if rBonus != AvatarMode[hid].real[1] then
+                call BlzSetUnitArmor(u, BlzGetUnitArmor(u) - AvatarMode[hid].real[1] + rBonus)
+                set AvatarMode[hid].real[1] = rBonus
+            endif
+            call SetBonus(u, 1, heroLevel * 0.5)
+
+            set iBonus = heroLevel * 10
+            if iBonus != AvatarMode[hid][2] then
+                call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) - AvatarMode[hid][2] + iBonus, 0)
+                set AvatarMode[hid][2] = iBonus
+                call SetBonus(u, 0, iBonus)
+            endif
+
+            set rBonus = heroLevel * 0.4
+            if rBonus != AvatarMode[hid].real[3] then
+                call AddUnitCustomState(u, BONUS_MAGICPOW, 0 - AvatarMode[hid].real[3] + rBonus)
+                set AvatarMode[hid].real[3] = rBonus
+                call SetBonus(u, 2, rBonus)
+            endif
+
+            if rBonus != AvatarMode[hid].real[4] then
+                call AddUnitCustomState(u, BONUS_MAGICRES, 0 - AvatarMode[hid].real[4] + rBonus)
+                set AvatarMode[hid].real[4] = rBonus
+                call SetBonus(u, 3, rBonus)
+            endif
         endif
     endfunction
 
