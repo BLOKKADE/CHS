@@ -332,6 +332,8 @@
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\PocketFactory.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Quilbeast.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\SerpentWard.j"
+//! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Tentacle.j"
+//! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Prawn.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\Skeleton.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\SpiritWolf.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Summons\WaterElemental.j"

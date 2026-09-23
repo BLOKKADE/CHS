@@ -704,7 +704,8 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.9.3", false) // 55 - Quickfixes of some bugs and rescaling summon upgrades from previous. 28 aug 2026
         call AddGameVersion("CHS v2.9.4", false) // 56 - Silence affects passive abilities. Fixed some bugs. Retuned some stuff. 30 aug 2026
         call AddGameVersion("CHS v2.9.5", false) // 57 - Bugfixes, devblow change, removed one of the power ups shops, and some other minor stuff. 4 sep 2026
-        call AddGameVersion("CHS v2.9.6", false) // 58 - Balance changes, changed ghoul, and returned Stomp. 13 sep 2026
+        call AddGameVersion("CHS v2.9.6", false) // 58 - Balance changes, changed ghoul, and returned Stomp. 14 sep 2026
+        call AddGameVersion("CHS v2.9.7", false) // 59 - Hopefully fixes deyncs. 15 sep 2026
 
     endfunction
 

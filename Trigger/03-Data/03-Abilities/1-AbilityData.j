@@ -1035,9 +1035,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityNotReplaceable()  */
 
         //164 - Blink Strike 
-        //call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
-        //call SetLastObjectElement(Element_Wind, 1)
-        //call SetLastObjectElement(Element_Arcane, 1)
+        call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
+        call SetLastObjectElement(Element_Wind, 1)
+        call SetLastObjectElement(Element_Arcane, 1)
 
         //165 - Extradimensional Co-operation
         call SaveAbilData(EXTRADIMENSIONAL_COOPERATION_ABILITY_ID, EXTRADIMENSIONAL_COOPERATION_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
@@ -1212,7 +1212,46 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SaveAbilData(SUMMON_CHAOS_WARD_ABILITY_ID, CHAOS_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
         //call SetLastObjectElement(Element_Arcane, 1)
         //call SetLastObjectElement(Element_Summon, 1)
-        
+
+        //206 - Righteous Fury
+        call SaveAbilData(RIGHTEOUS_FURY_ABILITY_ID, RIGHTEOUS_FURY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "righteousfury")
+        call SetLastObjectElement(Element_Light, 2)
+
+        //207 - Summon Tentacles
+        call SaveAbilData(SUMMON_TENTACLE_ABILITY_ID, TENTACLE_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
+        call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
+
+        //208 - Elemental Attunement
+        call SaveAbilData(ELEMENTAL_ATTUNEMENT_ABILITY_ID, ELEMENTAL_ATTUNEMENT_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Fire, 1)
+        call SetLastObjectElement(Element_Water, 1)
+        call SetLastObjectElement(Element_Wind, 1)
+        call SetLastObjectElement(Element_Earth, 1)
+        call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Dark, 1)
+        call SetLastObjectElement(Element_Light, 1)
+        call SetLastObjectElement(Element_Cold, 1)
+        call SetLastObjectElement(Element_Poison, 1)
+        call SetLastObjectElement(Element_Blood, 1)
+        call SetLastObjectElement(Element_Arcane, 1)    
+
+        //209 - Summon Prawns 
+        call SaveAbilData(SUMMON_PRAWNS_ABILITY_ID, PRAWNS_ITEM_ID, false, 0, 0, false, Order_Instant, "wateryminion")
+        call SetLastObjectElement(Element_Water, 1)
+        call SetLastObjectElement(Element_Wild, 1)
+        call SetLastObjectElement(Element_Summon, 1)
+
+        //210 - Volcano
+        call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
+        call SetLastObjectElement(Element_Fire, 1)
+        call SetLastObjectElement(Element_Earth, 1)
+
+        //211 - Intrusive Thrusts
+        call SaveAbilData(MAGNET_OSC_ABILITY_ID, MAGNET_OSC_ITEM_ID, false, 0, 0, true, Order_None, "hex")
+        call SetLastObjectElement(Element_Blood, 1)
+        call SetLastAbilityPlain()
+
     endfunction
 
     function InitItemAbilities takes nothing returns nothing

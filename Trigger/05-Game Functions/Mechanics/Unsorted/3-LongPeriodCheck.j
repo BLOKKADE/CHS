@@ -59,6 +59,13 @@ scope LongPeriodCheck initializer init
                 call UseAncientElement(u, i)
             endif
 
+            //Elemental Attunement
+            //set i = GetUnitAbilityLevel(u,ELEMENTAL_ATTUNEMENT_ABILITY_ID)
+            //if i > 0 and BlzGetUnitAbilityCooldownRemaining(u,ELEMENTAL_ATTUNEMENT_ABILITY_ID) <= 0.001 and not UnitHasBuffBJ(u, SILENCE_BUFF_ID) then
+                //call DummyInstantCast4(u,GetUnitX(u),GetUnitY(u),'EABB',"thunderclap", GetSpellValue(75, 10, i), ABILITY_RLF_DAMAGE_INCREASE,0,ABILITY_RLF_CAST_RANGE ,0,ABILITY_RLF_DURATION_HERO,0,ABILITY_RLF_DURATION_NORMAL)
+                //call AbilStartCD(u,ELEMENTAL_ATTUNEMENT_ABILITY_ID,9.0 - (6.0 * (i - 1) / 29.0)) 
+            //endif
+
             //Arcane Strike
             set i = GetUnitAbilityLevel(u, ARCANE_STRIKE_ABILITY_ID)
             if i > 0 and BlzGetUnitAbilityCooldownRemaining(u, ARCANE_STRIKE_ABILITY_ID) <= 0 then

@@ -2,7 +2,44 @@ scope ModifyDamageAfterArmor initializer init
 
     globals
         trigger TrgModifyDamageAfter
+        hashtable IntrusiveThrustsTable
+        integer array IntrusiveThrustsHitTick
     endglobals
+
+    private function IntrusiveThrustsPulse takes nothing returns nothing
+        local timer pulseTimer = GetExpiredTimer()
+        local integer timerId = GetHandleId(pulseTimer)
+        local unit target = LoadUnitHandle(IntrusiveThrustsTable, timerId, 1)
+        local unit source = LoadUnitHandle(IntrusiveThrustsTable, timerId, 2)
+        local integer pulse = LoadInteger(IntrusiveThrustsTable, timerId, 3)
+        local real angle
+
+        if pulse >= 5 or target == null or source == null or GetWidgetLife(target) <= 0 then
+            call FlushChildHashtable(IntrusiveThrustsTable, timerId)
+            call DestroyTimer(pulseTimer)
+        else
+            set angle = GetAngleToTarget(target, source) * bj_RADTODEG
+            if ModuloInteger(pulse, 2) == 0 then
+                set angle = angle + 180
+            endif
+            call KnockbackTarget(target, source, angle, 200, 600, false, false, false, false)
+            call SaveInteger(IntrusiveThrustsTable, timerId, 3, pulse + 1)
+        endif
+
+        set target = null
+        set source = null
+        set pulseTimer = null
+    endfunction
+
+    private function StartIntrusiveThrustsPulse takes unit target, unit source returns nothing
+        local timer pulseTimer = CreateTimer()
+        local integer timerId = GetHandleId(pulseTimer)
+        call SaveUnitHandle(IntrusiveThrustsTable, timerId, 1, target)
+        call SaveUnitHandle(IntrusiveThrustsTable, timerId, 2, source)
+        call SaveInteger(IntrusiveThrustsTable, timerId, 3, 0)
+        call TimerStart(pulseTimer, 0.6, true, function IntrusiveThrustsPulse)
+        set pulseTimer = null
+    endfunction
 
     private function ModifyDamageAfterArmor takes nothing returns nothing
         local real r1 = 0
@@ -334,6 +371,31 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Intrusive Thrusts
+        set i = GetUnitAbilityLevel(DamageTarget, INTRUSIVE_THRUSTS_ABILITY_ID)
+        if i > 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
+            //call BJDebugMsg("dmg sourceid: " + I2S(DamageSourceId) + " time: " + I2S(T32_Tick - MagnetOscHitTick[DamageSourceId]))
+            if T32_Tick >= MagnetOscHitTick[DamageSourceId] then
+                //call SetUnitVertexColor(DamageSource, 0, 255, 0, 255)
+                set r1 = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
+                if r1 < 600 then
+                    //call BJDebugMsg("mosc")
+                    
+                    set udg_NextDamageAbilitySource = INTRUSIVE_THRUSTS_ABILITY_ID
+                    call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+                    if IsAbilityEnabled(DamageTarget, INTRUSIVE_THRUSTS_ABILITY_ID) then
+                        set IntrusiveThrustsHitTick[DamageSourceId] = T32_Tick + 96
+                        call StartIntrusiveThrustsPulse(DamageTarget, DamageSource)
+                    else
+                        if r1 > 150 then
+                            set IntrusiveThrustsHitTick[DamageSourceId] = T32_Tick + 96
+                            call StartIntrusiveThrustsPulse(DamageTarget, DamageSource)
+                        endif
+                    endif
+                endif
+            endif
+        endif
+
         //Spiked Shield bonus dmg
         set i1 = GetUnitAbilityLevel(DamageTarget, SPIKED_SHIELD_ABILITY_ID)
         if i1 > 0 then
@@ -356,7 +418,7 @@ scope ModifyDamageAfterArmor initializer init
                 set i = GetUnitAbilityLevel(DamageSource, PULVERIZE_ABILITY_ID)
                 if i > 0 and GetRandomReal(0, 100) <= (20 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                     call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
-                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 200 * i + GetUnitCustomState(DamageSource, BONUS_BLOCK) / 2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource, PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, PULVERIZE_ABILITY_ID, true, false)
+                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 200 * i + GetUnitCustomState(DamageSourceHero, BONUS_BLOCK) / 2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource, PULVERIZE_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, PULVERIZE_ABILITY_ID, true, false)
                 endif
             endif
 
@@ -365,7 +427,7 @@ scope ModifyDamageAfterArmor initializer init
                 set i = GetUnitAbilityLevel(DamageSource, DESTRUCTION_ABILITY_ID)
                 if i > 0 and GetRandomReal(0, 100) <= (15 + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck then
                     call DestroyEffect(AddLocalizedSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", GetUnitX(DamageTarget), GetUnitY(DamageTarget)))
-                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSource), DamageSource, true) / 2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource, DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
+                    call AreaDamage(DamageSource, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 400 * i + GetHeroStatBJ(GetHeroPrimaryStat(DamageSourceHero), DamageSource, true) / 2, BlzGetAbilityRealLevelField(BlzGetUnitAbility(DamageSource, DESTRUCTION_ABILITY_ID), ABILITY_RLF_AREA_OF_EFFECT, i - 1), true, DESTRUCTION_ABILITY_ID, true, false)
                 endif
             endif
 
@@ -657,6 +719,7 @@ scope ModifyDamageAfterArmor initializer init
     endfunction
     
     private function init takes nothing returns nothing
+        set IntrusiveThrustsTable = InitHashtable()
         set TrgModifyDamageAfter = CreateTrigger()
         call TriggerAddAction(TrgModifyDamageAfter, function ModifyDamageAfterArmor)
         call DamageTrigger.registerTrigger(TrgModifyDamageAfter, "Mod", 4.0)

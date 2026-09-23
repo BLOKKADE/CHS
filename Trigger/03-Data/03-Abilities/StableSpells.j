@@ -50,5 +50,6 @@ library StableSpells initializer init
         set StableSpells.boolean[DOUSING_HEX_ABILITY_ID] = true
         set StableSpells.boolean[PHASE_SHIFT_ABILITY_ID] = true
         set StableSpells.boolean[BLOOD_STONE_ABIL_ID] = true
+        set StableSpells.boolean[VOLCANO_ABILITY_ID] = true
     endfunction
 endlibrary

@@ -39,7 +39,7 @@ library BlinkStrike initializer init requires RandomShit, GetRandomUnit
 
         if IsUnitType(caster, UNIT_TYPE_SNARED) == false then
 
-            set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 600 + (20 * level), GetOwningPlayer(caster), Target_Enemy, true, true)
+            set target = GetRandomUnit(GetUnitX(caster), GetUnitY(caster), 300 + (10 * level), GetOwningPlayer(caster), Target_Enemy, true, true)
             /*set size = BlzGroupGetSize(g)
             loop
                 set target = BlzGroupUnitAt(g, i)
