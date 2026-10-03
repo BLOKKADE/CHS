@@ -1,4 +1,4 @@
-library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, AncientAxe, AncientDagger, AncientStaff, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes, BloodstoneHeal
+library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, AncientAxe, MeteorStrike, AncientDagger, AncientStaff, IntrusiveThrust, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes, BloodstoneHeal, Whiteout
 
     function AbilityChannel takes unit caster, unit hero, unit target, real x, real y, integer abilId, integer lvl returns boolean
         
@@ -81,6 +81,19 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
             call CastDarkSeal(target, lvl)
             call CreateTextTagTimerColor("Dark Seal!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
+        //Whiteout
+        elseif abilId == WHITEOUT_ABILITY_ID then
+            call CastWhiteout(hero, target, lvl)
+            call CreateTextTagTimerColor("Whiteout!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
+
+        //Missile Strike
+        elseif abilId == MISSILE_STRIKE_ABILITY_ID then
+            call CastMissileStrike(hero, x, y, lvl)
+
+        //Rockslide
+        elseif abilId == ROCKSLIDE_ABILITY_ID then
+            call CastRockslide(hero, lvl)
+
         //Destruction of Block
         elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then
             call CastDestrOfBlock(target, lvl)
@@ -89,6 +102,11 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
         //Bloodlust
         elseif abilId == BLOODLUST_ABILITY_ID then
             call CastBloodlust(hero, target, lvl)
+            call CreateTextTagTimerColor("Bloodlust!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 0, 255, 0)
+
+        //Intrusive Thrust
+        elseif abilId == INTRUSIVE_THRUST_ABILITY_ID then
+            call CastIntrusiveThrust(hero, target, lvl)
 
         //Inner Fire
         elseif abilId == INNER_FIRE_ABILITY_ID then
@@ -211,6 +229,14 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
         // Death and Decay
         elseif abilId == DEATH_AND_DECAY_ABILITY_ID then
             call CastDeathAndDecay(hero, x, y, lvl)
+
+        // Meteor Strike
+        elseif abilId == METEOR_STRIKE_ABILITY_ID then
+            call CastMeteorStrike(hero, x, y, lvl)    
+
+        // Tornado
+        elseif abilId == TORNADO_ABILITY_ID then
+            call CastTornado(hero, lvl)
 
         // Spirit Shackle (if you try to add a text tag here, it will cancel the ability's effect)
         //elseif abilId == SPIRIT_SHACKLE_ABILITY_ID then
