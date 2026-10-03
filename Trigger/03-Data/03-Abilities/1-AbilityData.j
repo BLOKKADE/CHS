@@ -339,7 +339,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityManifoldable()
 
         //16 - Serpent Ward 
-        call SaveAbilData(SUMMON_SERPENT_WARD_ABILITY_ID, SERPENT_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
+        call SaveAbilData(SUMMON_SERPENT_WARD_ABILITY_ID, SERPENT_WARD_ITEM_ID, false, Target_Any, 0, true, Order_Point, "ward")
         call SetLastObjectElement(Element_Arcane, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -387,7 +387,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Earth, 1)
 
         //27 - Summon Water Elemental 
-        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID, SUMMON_WATER_ELEMENTAL_ITEM_ID, false, 0, 0, false, Order_Instant, "waterelemental")
+        call SaveAbilData(SUMMON_WATER_ELEMENTAL_ABILITY_ID, SUMMON_WATER_ELEMENTAL_ITEM_ID, false, 0, 0, true, Order_Instant, "waterelemental")
         call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -399,7 +399,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityManifoldable()
 
         //29 - Summon Lava Spawn 
-        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, SUMMON_LAVA_SPAWN_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_LAVA_SPAWN_ABILITY_ID, SUMMON_LAVA_SPAWN_ITEM_ID, false, 0, 0, true, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -512,7 +512,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Cold, 1)
 
         //51 - Inferno 
-        call SaveAbilData(SUMMON_INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, false, Order_Point, "dreadlordinferno")
+        call SaveAbilData(SUMMON_INFERNO_ABILITY_ID, INFERNO_ITEM_ID, false, 0, 0, true, Order_Point, "dreadlordinferno")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Dark, 1)
@@ -547,7 +547,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Dark, 1)
 
         //58 - Summon Mountain Giant 
-        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID, SUMMON_MOUNTAIN_GIANT_ITEM_ID, false, 0, 0, false, Order_Instant, "spiritofvengeance")
+        call SaveAbilData(SUMMON_MOUNTAIN_GIANT_ABILITY_ID, SUMMON_MOUNTAIN_GIANT_ITEM_ID, false, 0, 0, true, Order_Instant, "spiritofvengeance")
         call SetLastObjectElement(Element_Earth, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -558,7 +558,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityNotReplaceable()
 
         //60 - Pocket Factory 
-        call SaveAbilData(SUMMON_POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "summonfactory")
+        call SaveAbilData(SUMMON_POCKET_FACTORY_ABILITY_ID, POCKET_FACTORY_ITEM_ID, false, Target_Any, 0, true, Order_Point, "summonfactory")
         call SetLastObjectElement(Element_Summon, 1)
 
         //61 - Pulverize 
@@ -571,7 +571,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Poison, 1)
 
         //63 - Carrion Beetles 
-        call SaveAbilData(SUMMON_CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_CARRION_BEETLES_ABILITY_ID, CARRION_BEETLES_ITEM_ID, false, 0, 0, true, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Dark, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -633,25 +633,25 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Fire, 1)
 
         //76 - Summon Hawk 
-        call SaveAbilData(SUMMON_HAWK_ABILITY_ID, SUMMON_HAWK_ITEM_ID, false, 0, 0, false, Order_Instant, "summonwareagle")
+        call SaveAbilData(SUMMON_HAWK_ABILITY_ID, SUMMON_HAWK_ITEM_ID, false, 0, 0, true, Order_Instant, "summonwareagle")
         call SetLastObjectElement(Element_Wind, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //77 - Summon Bear 
-        call SaveAbilData(SUMMON_BEAR_ABILITY_ID, SUMMON_BEAR_ITEM_ID, false, 0, 0, false, Order_Instant, "summongrizzly")
+        call SaveAbilData(SUMMON_BEAR_ABILITY_ID, SUMMON_BEAR_ITEM_ID, false, 0, 0, true, Order_Instant, "summongrizzly")
         call SetLastObjectElement(Element_Blood, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //78 - Summon Quilbeast 
-        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, SUMMON_QUILBEAST_ITEM_ID, false, 0, 0, false, Order_Instant, "summonquillbeast")
+        call SaveAbilData(SUMMON_QUILBEAST_ABILITY_ID, SUMMON_QUILBEAST_ITEM_ID, false, 0, 0, true, Order_Instant, "summonquillbeast")
         call SetLastObjectElement(Element_Poison, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
 
         //79 - Phoenix 
-        call SaveAbilData(SUMMON_PHOENIX_ABILITY_ID, PHOENIX_ITEM_ID, false, 0, 0, false, Order_Instant, "summonphoenix")
+        call SaveAbilData(SUMMON_PHOENIX_ABILITY_ID, PHOENIX_ITEM_ID, false, 0, 0, true, Order_Instant, "summonphoenix")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Wild, 1)
         call SetLastObjectElement(Element_Summon, 1)
@@ -1214,13 +1214,12 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SetLastObjectElement(Element_Summon, 1)
 
         //206 - Righteous Fury
-        call SaveAbilData(RIGHTEOUS_FURY_ABILITY_ID, RIGHTEOUS_FURY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "righteousfury")
-        call SetLastObjectElement(Element_Light, 2)
+        //call SaveAbilData(RIGHTEOUS_FURY_ABILITY_ID, RIGHTEOUS_FURY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "righteousfury")
+        //call SetLastObjectElement(Element_Light, 2)
 
-        //207 - Summon Tentacles
-        call SaveAbilData(SUMMON_TENTACLE_ABILITY_ID, TENTACLE_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
-        call SetLastObjectElement(Element_Wild, 1)
-        call SetLastObjectElement(Element_Summon, 1)
+        //207 - Tornado 
+        call SaveAbilData(TORNADO_ABILITY_ID, TORNADO_ITEM_ID, false, 0, 0, false, Order_Instant, "tunnel")
+        call SetLastObjectElement(Element_Wind, 1)
 
         //208 - Elemental Attunement
         call SaveAbilData(ELEMENTAL_ATTUNEMENT_ABILITY_ID, ELEMENTAL_ATTUNEMENT_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1236,21 +1235,39 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Blood, 1)
         call SetLastObjectElement(Element_Arcane, 1)    
 
-        //209 - Summon Prawns 
-        call SaveAbilData(SUMMON_PRAWNS_ABILITY_ID, PRAWNS_ITEM_ID, false, 0, 0, false, Order_Instant, "wateryminion")
-        call SetLastObjectElement(Element_Water, 1)
-        call SetLastObjectElement(Element_Wild, 1)
-        call SetLastObjectElement(Element_Summon, 1)
+        //209 - Meteor Strike
+        call SaveAbilData(METEOR_STRIKE_ABILITY_ID, METEOR_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "flamestrike")
+        call SetLastObjectElement(Element_Fire, 2)
 
         //210 - Volcano
-        call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, true, Order_Point, "volcano")
+        call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, false, Order_Point, "volcano")
         call SetLastObjectElement(Element_Fire, 1)
         call SetLastObjectElement(Element_Earth, 1)
 
-        //211 - Intrusive Thrusts
-        call SaveAbilData(MAGNET_OSC_ABILITY_ID, MAGNET_OSC_ITEM_ID, false, 0, 0, true, Order_None, "hex")
-        call SetLastObjectElement(Element_Blood, 1)
+        //211 - Intrusive Thrusts'
+        call SaveAbilData(INTRUSIVE_THRUST_ABILITY_ID, INTRUSIVE_THRUST_ITEM_ID, false, 0, 0, false, Order_None, "channel")
+        call SetLastObjectElement(Element_Blood, 2)
         call SetLastAbilityPlain()
+
+        //212 - Aura of Sand
+        call SaveAbilData(AURA_OF_SAND_ABILITY_ID, AURA_OF_SAND_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Earth, 1)
+
+        //213 - Whiteout
+        call SaveAbilData(WHITEOUT_ABILITY_ID, WHITEOUT_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
+        call SetLastObjectElement(Element_Cold, 1)
+
+        //214 - Bloodrush
+        call SaveAbilData(BLOODRUSH_ABILITY_ID, BLOODRUSH_ITEM_ID, false, 0, 0, false, Order_None, null)
+        call SetLastObjectElement(Element_Blood, 1)
+
+        //215 - Rockslide 
+        call SaveAbilData(ROCKSLIDE_ABILITY_ID, ROCKSLIDE_ITEM_ID, false, 0, 0, true, Order_Instant, "tunnel")
+        call SetLastObjectElement(Element_Earth, 1)
+
+        //215 - Missile Strike
+        call SaveAbilData(MISSILE_STRIKE_ABILITY_ID, MISSILE_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
+        call SetLastObjectElement(Element_Fire, 1)
 
     endfunction
 
