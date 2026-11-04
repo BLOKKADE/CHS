@@ -26,6 +26,8 @@ library PlayerHeroSelected requires RandomShit, Functions, LoadCommand, ShopInde
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_II_UNIT_ID, -620, 707, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_VI_UNIT_ID, -620, 707 + 248, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_VII_UNIT_ID, -372, 955, 270.00))
+            call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_VIII_UNIT_ID, -124, 955, 270.00))
+            call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_IX_UNIT_ID, 124, 955, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_I_UNIT_ID, -868, 707, 270.00))
             call SetShopIndex(CreateUnit(p, ACTIVE_SPELLS_V_UNIT_ID, -868, 707 + 248, 270.00))  	 	 
             call SetShopIndex(CreateUnit(p, CHRONUS_SPELLS_UNIT_ID, -1116, 707, 270.00))

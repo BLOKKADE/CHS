@@ -2,44 +2,8 @@ scope ModifyDamageAfterArmor initializer init
 
     globals
         trigger TrgModifyDamageAfter
-        hashtable IntrusiveThrustsTable
-        integer array IntrusiveThrustsHitTick
+        private group DeathPactGrp = CreateGroup()
     endglobals
-
-    private function IntrusiveThrustsPulse takes nothing returns nothing
-        local timer pulseTimer = GetExpiredTimer()
-        local integer timerId = GetHandleId(pulseTimer)
-        local unit target = LoadUnitHandle(IntrusiveThrustsTable, timerId, 1)
-        local unit source = LoadUnitHandle(IntrusiveThrustsTable, timerId, 2)
-        local integer pulse = LoadInteger(IntrusiveThrustsTable, timerId, 3)
-        local real angle
-
-        if pulse >= 5 or target == null or source == null or GetWidgetLife(target) <= 0 then
-            call FlushChildHashtable(IntrusiveThrustsTable, timerId)
-            call DestroyTimer(pulseTimer)
-        else
-            set angle = GetAngleToTarget(target, source) * bj_RADTODEG
-            if ModuloInteger(pulse, 2) == 0 then
-                set angle = angle + 180
-            endif
-            call KnockbackTarget(target, source, angle, 200, 600, false, false, false, false)
-            call SaveInteger(IntrusiveThrustsTable, timerId, 3, pulse + 1)
-        endif
-
-        set target = null
-        set source = null
-        set pulseTimer = null
-    endfunction
-
-    private function StartIntrusiveThrustsPulse takes unit target, unit source returns nothing
-        local timer pulseTimer = CreateTimer()
-        local integer timerId = GetHandleId(pulseTimer)
-        call SaveUnitHandle(IntrusiveThrustsTable, timerId, 1, target)
-        call SaveUnitHandle(IntrusiveThrustsTable, timerId, 2, source)
-        call SaveInteger(IntrusiveThrustsTable, timerId, 3, 0)
-        call TimerStart(pulseTimer, 0.6, true, function IntrusiveThrustsPulse)
-        set pulseTimer = null
-    endfunction
 
     private function ModifyDamageAfterArmor takes nothing returns nothing
         local real r1 = 0
@@ -66,12 +30,26 @@ scope ModifyDamageAfterArmor initializer init
         local real currentMana
         local real maxMana
 
+        local unit pactUnit
+        local unit pactCand
+        local real pactLife
+
         if Damage.index.amount == 0 then
             return
         endif
 
         //enhanced damage ignores everything
         if Damage.index.damageType == DAMAGE_TYPE_ENHANCED then
+            return
+        endif
+
+        //Aegis Ward
+        if DamageTargetTypeId == AEGIS_WARD_UNIT_ID then
+            if Damage.index.isAttack then
+                set Damage.index.amount = 1
+            else
+                set Damage.index.amount = 0
+            endif
             return
         endif
 
@@ -112,6 +90,11 @@ scope ModifyDamageAfterArmor initializer init
         //Medal of Honor
         if UnitHasItemType(DamageTargetHero, 'I04U') or (UnitHasItemType(DamageSourceHero, 'I04U') and LoadInteger(HT, GetHandleId(DamageSourceHero), 941561) != 0) then
             set Damage.index.amount = Damage.index.amount * 0.67
+        endif
+
+        //Bloodrush
+        if GetUnitAbilityLevel(DamageSource, BLOODRUSH_ABILITY_ID) > 0 then
+            set Damage.index.damage = Damage.index.damage * (1.0 + (100.0 - GetUnitLifePercent(DamageSource)) * 0.02 * GetUnitAbilityLevel(DamageSource, BLOODRUSH_ABILITY_ID) / 30.0)
         endif
         
         //Decaying Scythe
@@ -371,31 +354,6 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
-        //Intrusive Thrusts
-        set i = GetUnitAbilityLevel(DamageTarget, INTRUSIVE_THRUSTS_ABILITY_ID)
-        if i > 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
-            //call BJDebugMsg("dmg sourceid: " + I2S(DamageSourceId) + " time: " + I2S(T32_Tick - MagnetOscHitTick[DamageSourceId]))
-            if T32_Tick >= MagnetOscHitTick[DamageSourceId] then
-                //call SetUnitVertexColor(DamageSource, 0, 255, 0, 255)
-                set r1 = CalculateDistance(GetUnitX(DamageTarget), GetUnitX(DamageSource), GetUnitY(DamageTarget), GetUnitY(DamageSource))
-                if r1 < 600 then
-                    //call BJDebugMsg("mosc")
-                    
-                    set udg_NextDamageAbilitySource = INTRUSIVE_THRUSTS_ABILITY_ID
-                    call Damage.apply(DamageTarget, DamageSource, GetSpellValue(30, 15, i), false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
-                    if IsAbilityEnabled(DamageTarget, INTRUSIVE_THRUSTS_ABILITY_ID) then
-                        set IntrusiveThrustsHitTick[DamageSourceId] = T32_Tick + 96
-                        call StartIntrusiveThrustsPulse(DamageTarget, DamageSource)
-                    else
-                        if r1 > 150 then
-                            set IntrusiveThrustsHitTick[DamageSourceId] = T32_Tick + 96
-                            call StartIntrusiveThrustsPulse(DamageTarget, DamageSource)
-                        endif
-                    endif
-                endif
-            endif
-        endif
-
         //Spiked Shield bonus dmg
         set i1 = GetUnitAbilityLevel(DamageTarget, SPIKED_SHIELD_ABILITY_ID)
         if i1 > 0 then
@@ -436,6 +394,18 @@ scope ModifyDamageAfterArmor initializer init
                 set i = GetUnitAbilityLevel(DamageSource, BASH_ABILITY_ID)
                 if i > 0 and GetRandomReal(0, 100) <= (I2R(i) + LuckyTriggerBonusChance(DamageSource)) * DamageSourceLuck and GetUnitAbilityLevel(DamageTarget, STUNNED_BUFF_ID) == 0 then
                     call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A06T', "thunderbolt", i * 100 + GetHeroStr(DamageSourceHero, true) * 1.25, ABILITY_RLF_DAMAGE_HTB1)
+                endif
+            endif
+
+            // Feedback
+            if not IsOnHitDamage() and (IsPhysDamage() or IsSeerPassiveActivated(DamageSourceTypeId, DamageSource)) then
+                set i = GetUnitAbilityLevel(DamageSource, FEEDBACK_ABILITY_ID)
+                if i > 0 then
+                    set r1 = FeedbackPrepare(DamageSource, DamageTarget)
+                    if r1 > 0 then
+                        call DummyTargetCast1(DamageSource, DamageTarget, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 'A0FB', "thunderbolt", 0, ABILITY_RLF_DAMAGE_HTB1)
+                        call FeedbackStart(DamageSource, DamageTarget, r1)
+                    endif
                 endif
             endif
 
@@ -615,6 +585,26 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Nether Shield
+        if GetUnitAbilityLevel(DamageTarget, NETHER_SHIELD_ABILITY_ID) > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 and BlzGetUnitAbilityCooldownRemaining(DamageTarget, NETHER_SHIELD_ABILITY_ID) == 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then   
+            call AbilStartCD(DamageSource, NETHER_SHIELD_ABILITY_ID, RMaxBJ(I2R(33 - GetUnitAbilityLevel(DamageTarget, NETHER_SHIELD_ABILITY_ID)), 0))
+            if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
+                if Damage.index.amount > BlzGetUnitMaxHP(DamageTarget)/ 4 then
+                    set Damage.index.amount = BlzGetUnitMaxHP(DamageTarget) / 4
+                endif
+            else
+                if Damage.index.amount > BlzGetUnitMaxMana(DamageTarget)/ 4 then
+                    set Damage.index.amount = BlzGetUnitMaxMana(DamageTarget) / 4
+                endif
+            endif
+            call RemoveUnitBuffs(DamageTarget, BUFFTYPE_NEGATIVE, false)
+        endif
+
+        //Aegis Ward: a unit under a ward's buff has big hits cut down to 10% of max hp (the ward loses 1 hit point doing it)
+        if GetUnitAbilityLevel(DamageTarget, AEGIS_WARD_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then
+            set Damage.index.amount = AegisWardAbsorb(DamageTarget, Damage.index.amount)
+        endif
+
         //Guardian Spirit 15% max hp/mana dmg cap
         if GetUnitAbilityLevel(DamageTarget, GUARDIAN_SPIRIT_BUFF_ID) > 0 and GetUnitAbilityLevel(DamageSource, UNLIMITED_AGON_ABILITY_ID) == 0 then   
             if BlzGetUnitMaxHP(DamageTarget) > BlzGetUnitMaxMana(DamageTarget) then
@@ -641,6 +631,42 @@ scope ModifyDamageAfterArmor initializer init
             endif
         endif
 
+        //Death Pact
+        set i1 = GetUnitAbilityLevel(DamageTarget, DEATH_PACT_ABILITY_ID)
+        if i1 > 0 and GetWidgetLife(DamageTarget) > 0.405 and GetUnitLifePercent(DamageTarget) < 50. and BlzGetUnitAbilityCooldownRemaining(DamageTarget, DEATH_PACT_ABILITY_ID) <= 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
+
+            set pactUnit = null
+            set pactLife = 0.
+            call GroupEnumUnitsInRange(DeathPactGrp, GetUnitX(DamageTarget), GetUnitY(DamageTarget), 500., null)
+            loop
+                set pactCand = FirstOfGroup(DeathPactGrp)
+                exitwhen pactCand == null
+                call GroupRemoveUnit(DeathPactGrp, pactCand)
+
+                if pactCand != DamageTarget and GetWidgetLife(pactCand) > 0.405 and GetWidgetLife(pactCand) > pactLife and IsUnitAlly(pactCand, GetOwningPlayer(DamageTarget)) and not IsUnitType(pactCand, UNIT_TYPE_STRUCTURE) and (IsUnitType(pactCand, UNIT_TYPE_SUMMONED) or GetUnitAbilityLevel(pactCand, 'BTLF') > 0) then
+                    set pactUnit = pactCand
+                    set pactLife = GetWidgetLife(pactCand)
+                endif
+            endloop
+
+            if pactUnit != null then
+                call AbilStartCD(DamageTarget, DEATH_PACT_ABILITY_ID, RMaxBJ(45. - I2R(i1), 1.))
+                call SetUnitState(DamageTarget, UNIT_STATE_MANA, GetUnitState(DamageTarget, UNIT_STATE_MANA) * 0.6)
+
+                // the summon's hit points become the hero's, then the summon dies
+                call SetUnitState(DamageTarget, UNIT_STATE_LIFE, GetUnitState(DamageTarget, UNIT_STATE_LIFE) + pactLife)
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\DeathPact\\DeathPactTarget.mdl", pactUnit, "origin"))
+                call DestroyEffect(AddLocalizedSpecialEffectTarget("Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl", DamageTarget, "origin"))
+                call KillUnit(pactUnit)
+            else
+                // fails: no summon in range. A 1 second cooldown stops it searching again on every single hit
+                call AbilStartCD(DamageTarget, DEATH_PACT_ABILITY_ID, 1.)
+            endif
+
+            set pactUnit = null
+            set pactCand = null
+        endif
+
         //Murloc Warrior
         if DamageTargetTypeId == MURLOC_WARRIOR_UNIT_ID and GetHeroStr(DamageTarget, true) < 2147483647 then
             call AddUnitBonus(DamageTarget, BONUS_STRENGTH, i3)
@@ -650,7 +676,6 @@ scope ModifyDamageAfterArmor initializer init
             call SaveInteger(HT, GetHandleId(DamageTarget), 54022, LoadInteger(HT, GetHandleId(DamageTarget), 54022) + i3)
             call SaveInteger(HT, GetHandleId(DamageTarget), 54023, LoadInteger(HT, GetHandleId(DamageTarget), 54023) + i3)
         endif
-
 
         //Decaying Scythe
         if GetUnitAbilityLevel(DamageSource, DECAYING_SCYTHE_ABILITY_ID) > 0 and T32_Tick - DecayingScytheTick[DamageTargetId] > 192 then
@@ -689,6 +714,18 @@ scope ModifyDamageAfterArmor initializer init
             call DummyTargetCast1(DamageSource,DamageTarget,GetUnitX(DamageSource),GetUnitY(DamageSource),'A02R',"chainlightning",  GetHeroAgi(DamageSource,true) * (0.2 + (0.08 * i1)), ABILITY_RLF_DAMAGE_PER_TARGET_OCL1 )
         endif
 
+        //Prawn execute
+        if DamageSourceTypeId == PRAWN_1_UNIT_ID then
+            if Damage.index.amount > 0 then
+                if 100 *(GetWidgetLife(DamageTarget)- Damage.index.amount)/ GetUnitState(DamageTarget,UNIT_STATE_MAX_LIFE) <= (30) then
+                    set Damage.index.amount = 9999999
+                    if not IsFxOnCooldownSet(DamageTargetId, FINISHING_BLOW_ABILITY_ID, 1) then
+                        call DestroyEffect( AddLocalizedSpecialEffectTarget("Objects\\Spawnmodels\\Orc\\OrcLargeDeathExplode\\OrcLargeDeathExplode.mdl", DamageTarget, "chest"))
+                    endif
+                endif
+            endif
+        endif
+
         //Finishing Blow
         set i1 = GetUnitAbilityLevel(DamageSourceHero, FINISHING_BLOW_ABILITY_ID)
         if Damage.index.amount > 0 and i1 > 0 then
@@ -719,7 +756,6 @@ scope ModifyDamageAfterArmor initializer init
     endfunction
     
     private function init takes nothing returns nothing
-        set IntrusiveThrustsTable = InitHashtable()
         set TrgModifyDamageAfter = CreateTrigger()
         call TriggerAddAction(TrgModifyDamageAfter, function ModifyDamageAfterArmor)
         call DamageTrigger.registerTrigger(TrgModifyDamageAfter, "Mod", 4.0)

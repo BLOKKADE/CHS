@@ -1,4 +1,4 @@
-library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, AncientAxe, MeteorStrike, AncientDagger, AncientStaff, IntrusiveThrust, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes, BloodstoneHeal, Whiteout
+library AbilityChannel requires RandomShit, ShadowBladeItem, Earthrend, BlessedStriders, AncientAxe, MeteorStrike, AncientDagger, AncientStaff, IntrusiveThrust, BlinkStrike, Cyclone, ChaosMagic, FrostBolt, SandOfTime, ResetTime, ExtradimensionalCooperation, Purge, AncientRunes, ShadowBootsHeroForm, HeroForm, Parasite, ContemporaryRunes, BloodstoneHeal, Whiteout
 
     function AbilityChannel takes unit caster, unit hero, unit target, real x, real y, integer abilId, integer lvl returns boolean
         
@@ -86,13 +86,117 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, BlessedStriders, An
             call CastWhiteout(hero, target, lvl)
             call CreateTextTagTimerColor("Whiteout!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
+        //Ring of Brodgar
+        elseif abilId == RING_OF_BRODGAR_ABILITY_ID then
+            call CastRingOfBrodgar(caster, lvl)
+
+        //Chaos Ward
+        elseif abilId == CHAOS_WARD_ABILITY_ID then
+            call CastChaosWard(hero, x, y, lvl)
+
+        //Aegis Ward
+        elseif abilId == AEGIS_WARD_ABILITY_ID then
+            call CastAegisWard(hero, x, y, lvl)
+
+        //Astral Ward
+        elseif abilId == ASTRAL_WARD_ABILITY_ID then
+            call CastAstralWard(caster, x, y, lvl)
+
+        //Tears of Zael
+        //elseif abilId == TEARS_OF_ZAEL_ABILITY_ID then
+            //call CastTearsOfZael(caster, x, y, lvl)
+
+        //Arcane Barrier
+        elseif abilId == ARCANE_BARRIER_ABILITY_ID then
+            call CastArcaneBarrier(caster, x, y, lvl)
+
+        //Mimicry
+        elseif abilId == MIMICRY_ABILITY_ID then
+            call CastMimicry(caster, GetSpellTargetUnit(), lvl)
+
+        //Singularity
+        elseif abilId == SINGULARITY_ABILITY_ID then
+            call CastSingularity(caster, x, y, lvl)
+
+        //Frozen Burst
+        elseif abilId == FROZEN_BURST_ABILITY_ID then
+            call CastFrozenBurst(caster, lvl)
+
+        //Phoenix Fury
+        elseif abilId == PHOENIX_FURY_ABILITY_ID then
+            call CastPhoenixFury(caster, x, y, lvl)
+
+        //Glacial Surge
+        elseif abilId == GLACIAL_SURGE_ABILITY_ID then
+            if target != null then
+                call CastGlacialSurge(caster, GetUnitX(target), GetUnitY(target), lvl)
+            elseif x != 0.00 and y != 0.00 then
+                call CastGlacialSurge(caster, x, y, lvl)
+            endif
+
+        //Time Dilation
+        elseif abilId == TIME_DILATION_ABILITY_ID then
+            call CastTimeDilation(hero)
+
+        //Charge
+        elseif abilId == CHARGE_ABILITY_ID then
+            call CastCharge(caster, x, y, lvl)
+
+        //Thunderslam
+        elseif abilId == THUNDER_SLAM_ABILITY_ID then
+            call CastThunderSlam(hero, x, y)
+
+        //Exsanguinate
+        elseif abilId == EXSANGUINATE_ABILITY_ID then
+            call CastExsanguinate(hero, x, y)
+
+        //Blood Tendrils
+        elseif abilId == BLOOD_TENDRIL_ABILITY_ID then
+            call CastBloodTendrils(hero, x, y, lvl)
+
+        //Whirlpool
+        elseif abilId == WHIRLPOOL_ABILITY_ID then
+            call CastWhirlpool(hero, x, y, lvl)
+
+        //Lightning Ball
+        elseif abilId == LIGHTNING_BALL_ABILITY_ID then
+            call CastLightningBall(caster, GetSpellTargetUnit(), lvl)
+
         //Missile Strike
         elseif abilId == MISSILE_STRIKE_ABILITY_ID then
             call CastMissileStrike(hero, x, y, lvl)
 
+        //Spawn Tentacles
+        elseif abilId == SUMMON_TENTACLE_ABILITY_ID then
+            call CastTentacleLine(hero, x, y, lvl)
+
+        //Marine Drop
+        elseif abilId == MARINE_DROP_ABILITY_ID then
+            call CastMarineDrop(hero, x, y)
+
         //Rockslide
         elseif abilId == ROCKSLIDE_ABILITY_ID then
             call CastRockslide(hero, lvl)
+
+        //Charged Beam
+        elseif abilId == CHARGED_BEAM_ABILITY_ID then
+            call CastChargedBeam(hero, x, y, lvl)
+
+        //Mud Slide
+        elseif abilId == MUD_SLIDE_ABILITY_ID then
+            call CastMudSlide(hero, x, y, lvl)
+
+        //Subterfuge
+        elseif abilId == SUBTERFUGE_ABILITY_ID then
+            call CastSubterfuge(hero, GetSpellTargetUnit(), lvl)
+
+        //Void Rip
+        elseif abilId == VOID_RIP_ABILITY_ID then
+            call CastVoidRip(hero, GetSpellTargetUnit(), lvl)
+
+        //Earthrend
+        elseif abilId == EARTHREND_ABILITY_ID then
+            call CastEarthrend(caster, lvl)
 
         //Destruction of Block
         elseif abilId == DESTRUCTION_BLOCK_ABILITY_ID then

@@ -44,6 +44,8 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELLS_V_UNIT_ID                        = 'n02O'
         constant integer ACTIVE_SPELLS_VI_UNIT_ID                       = 'n033'
         constant integer ACTIVE_SPELLS_VII_UNIT_ID                      = 'n069'
+        constant integer ACTIVE_SPELLS_VIII_UNIT_ID                     = 'n03M'
+        constant integer ACTIVE_SPELLS_IX_UNIT_ID                       = 'n03N'
 
         constant integer PASSIVE_SPELLS_I_UNIT_ID                       = 'n001'
         constant integer PASSIVE_SPELLS_II_UNIT_ID                      = 'n012'
@@ -93,6 +95,7 @@ library IdLibrary initializer init
         constant integer PHOENIX_1_UNIT_ID                              = 'h009'
         constant integer POCKET_FACTORY_1_UNIT_ID                       = 'n010'
         constant integer CRYPT_LORD_LOCUST_UNIT_ID                      = 'u008'
+        constant integer MARINE_UNIT_ID                                 = 'zcso'
         
         constant integer SKELETON_BATTLEMASTER_1_UNIT_ID                = 'n015'
         constant integer SKELETON_MAGE_1_UNIT_ID                        = 'uskm'
@@ -106,12 +109,14 @@ library IdLibrary initializer init
         constant integer LAVA_SPAWN_1_UNIT_ID                           = 'nlv1'
         constant integer QUILBEAST_1_UNIT_ID                            = 'nqb1'
         constant integer SERPENT_WARD_1_UNIT_ID                         = 'osp1'
-        constant integer TENTACLE_1_UNIT_ID                             = 'BBTE'
-        constant integer CHAOS_WARD_1_UNIT_ID                           = 'o00F'
+        constant integer TENTACLE_1_UNIT_ID                             = 'nfgt'
         constant integer WATER_ELEMENTAL_1_UNIT_ID                      = 'hwat'
         constant integer FAERIE_DRAGON_UNIT_ID                          = 'e001'
         constant integer INFERNAL_1_UNIT_ID                             = 'n01N'
-        constant integer PRAWN_1_UNIT_ID                                = 'BBPR'
+        constant integer PRAWN_1_UNIT_ID                                = 'nlpr'
+
+        // Summon Abilities
+        constant integer CLEAVING_TENTACLE_ABILITY_ID                   = 'clBB'
         
         // Raise Dead Units
         StaticIdGroup SKELLIESCAPTAINS
@@ -337,7 +342,7 @@ library IdLibrary initializer init
         constant integer FAERIE_FIRE_ABILITY_ID                         = 'Afae'
         constant integer FAN_OF_KNIVES_ABILITY_ID                       = 'AEfk'
         constant integer FAST_MAGIC_ABILITY_ID                          = 'A03P'
-        constant integer FATAL_FLAW_ABILITY_ID                           = 'A0AA'
+        constant integer FATAL_FLAW_ABILITY_ID                          = 'A0AA'
         constant integer FEARLESS_DEFENDERS_ABILITY_ID                  = 'A041'
         constant integer FERAL_SPIRIT_ABILITY_ID                        = 'A0CA'
         constant integer FINGER_OF_DEATH_ABILITY_ID                     = 'Afod'
@@ -442,7 +447,6 @@ library IdLibrary initializer init
         constant integer SUMMON_POCKET_FACTORY_ABILITY_ID               = 'ANsy'
         constant integer SUMMON_SERPENT_WARD_ABILITY_ID                 = 'AOsw'
         constant integer SUMMON_TENTACLE_ABILITY_ID                     = 'TEBB'
-        constant integer SUMMON_CHAOS_WARD_ABILITY_ID                   = 'A0G6'
         constant integer SUMMON_QUILBEAST_ABILITY_ID                    = 'Arsq'
         constant integer SUMMON_WATER_ELEMENTAL_ABILITY_ID              = 'AHwe'
         constant integer SUMMON_PRAWNS_ABILITY_ID                       = 'PRBB'
@@ -481,7 +485,34 @@ library IdLibrary initializer init
         constant integer OVERLOAD_ABILITY_ID                            = 'BBAO'
         constant integer TORNADO_ABILITY_ID                             = 'BBTO'
         constant integer MISSILE_STRIKE_ABILITY_ID                      = 'STBB'
-        
+        constant integer MARINE_DROP_ABILITY_ID                         = 'MDBB'
+        constant integer THUNDER_SLAM_ABILITY_ID                        = 'THBB'
+        constant integer CHARGE_ABILITY_ID                              = 'CHBB'
+        constant integer LIGHTNING_BALL_ABILITY_ID                      = 'LBBB'
+        constant integer EXSANGUINATE_ABILITY_ID                        = 'EXBB'
+        constant integer TIME_DILATION_ABILITY_ID                       = 'TDBB'
+        constant integer GLACIAL_SURGE_ABILITY_ID                       = 'gsBB'
+        constant integer PHOENIX_FURY_ABILITY_ID                        = 'pfBB'
+        constant integer SINGULARITY_ABILITY_ID                         = 'siBB'
+        constant integer FROZEN_BURST_ABILITY_ID                        = 'fbBB'
+        constant integer MUD_SLIDE_ABILITY_ID                           = 'msBB'
+        constant integer CHARGED_BEAM_ABILITY_ID                        = 'pcBB'
+        constant integer SUBTERFUGE_ABILITY_ID                          = 'suBB'
+        constant integer VOID_RIP_ABILITY_ID                            = 'vrBB'
+        constant integer ARCANE_BARRIER_ABILITY_ID                      = 'abBB'
+        constant integer MIMICRY_ABILITY_ID                             = 'miBB'
+        constant integer ASTRAL_WARD_ABILITY_ID                         = 'awBB'
+        constant integer AEGIS_WARD_ABILITY_ID                          = 'agBB'
+        constant integer CHAOS_WARD_ABILITY_ID                          = 'cwBB'
+        constant integer FEEDBACK_ABILITY_ID                            = 'FBBB'
+        constant integer RING_OF_BRODGAR_ABILITY_ID                     = 'rbBB'
+        constant integer BLOOD_TENDRIL_ABILITY_ID                       = 'tbBB'
+        constant integer WHIRLPOOL_ABILITY_ID                           = 'wpBB'
+        constant integer NETHER_SHIELD_ABILITY_ID                       = 'nsBB'
+        constant integer EARTHREND_ABILITY_ID                           = 'erBB'
+        constant integer TOXIN_WARD_ABILITY_ID                          = 'twBB'
+        constant integer TEARS_OF_ZAEL_ABILITY_ID                       = 'tzBB'
+
         // Dummy Abilities
         constant integer STUN_ABILITY_ID                                = 'A0C2'
         constant integer ERUPTION_IMMUNE_ABILITY_ID                     = 'A0D9'
@@ -541,6 +572,9 @@ library IdLibrary initializer init
         constant integer ACTIVE_SPELL_DUMMY_7                           = 'A0BP'
         constant integer ACTIVE_SPELL_DUMMY_8                           = 'A0BK'
         constant integer ACTIVE_SPELL_DUMMY_9                           = 'A0BL'
+        constant integer AEGIS_WARD_UNIT_ID                             = 'h00O'
+        constant integer ASTRAL_WARD_UNIT_ID                            = 'hdhw'
+        constant integer BLOOD_TENDRIL_DEBUFF_ABILITY_ID                = 'bBBt'
 
         // --- Item Ability IDs ---
         constant integer CONTRACT_LIVING_ABIL_ID                        = 'A02P'
@@ -699,7 +733,7 @@ library IdLibrary initializer init
         constant integer MAGIC_CRITICAL_HIT_ITEM_ID                     = 'I081'
         constant integer MANA_BONUS_ITEM_ID                             = 'I057'
         constant integer MANA_SHIELD_ITEM_ID                            = 'I03F'
-        constant integer MANA_STARVATION_ITEM_ID                         = 'I0AO'
+        constant integer MANA_STARVATION_ITEM_ID                        = 'I0AO'
         constant integer MARTIAL_RETRIBUTION_ITEM_ID                    = 'I09L'
         constant integer MEGA_LUCK_ITEM_ID                              = 'I085'
         constant integer MEGA_SPEED_ITEM_ID                             = 'I051'
@@ -735,7 +769,6 @@ library IdLibrary initializer init
         constant integer SERPENT_WARD_ITEM_ID                           = 'I00E'
         constant integer TENTACLE_ITEM_ID                               = 'BTEB'
         constant integer PRAWNS_ITEM_ID                                 = 'PBBR'
-        constant integer CHAOS_WARD_ITEM_ID                             = 'I0EB'
         constant integer SHADOW_STRIKE_ITEM_ID                          = 'I00F'
         constant integer SHOCKWAVE_ITEM_ID                              = 'I00R'
         constant integer SILENCE_ITEM_ID                                = 'I03C'
@@ -782,6 +815,33 @@ library IdLibrary initializer init
         constant integer LUCKY_TRIGGER_ITEM_ID                          = 'BBLT' 
         constant integer TORNADO_ITEM_ID                                = 'TOBB' 
         constant integer MISSILE_STRIKE_ITEM_ID                         = 'BBST'
+        constant integer MARINE_DROP_ITEM_ID                            = 'BBMD'
+        constant integer THUNDER_SLAM_ITEM_ID                           = 'BBTH'
+        constant integer CHARGE_ITEM_ID                                 = 'BBCH'
+        constant integer LIGHTNING_BALL_ITEM_ID                         = 'BBLB'
+        constant integer EXSANGUINATE_ITEM_ID                           = 'BBEX'
+        constant integer TIME_DILATION_ITEM_ID                          = 'BBTD'
+        constant integer GLACIAL_SURGE_ITEM_ID                          = 'BBgs'
+        constant integer PHOENIX_FURY_ITEM_ID                           = 'BBpf'
+        constant integer SINGULARITY_ITEM_ID                            = 'BBsi'
+        constant integer FROZEN_BURST_ITEM_ID                           = 'BBfb'
+        constant integer MUD_SLIDE_ITEM_ID                              = 'BBms'
+        constant integer CHARGED_BEAM_ITEM_ID                           = 'BBpc'
+        constant integer SUBTERFUGE_ITEM_ID                             = 'BBsu'
+        constant integer VOID_RIP_ITEM_ID                               = 'BBvr'
+        constant integer ARCANE_BARRIER_ITEM_ID                         = 'BBab'
+        constant integer MIMICRY_ITEM_ID                                = 'BBmi'
+        constant integer ASTRAL_WARD_ITEM_ID                            = 'BBaw'
+        constant integer AEGIS_WARD_ITEM_ID                             = 'BBag'
+        constant integer CHAOS_WARD_ITEM_ID                             = 'BBcw'
+        constant integer FEEDBACK_ITEM_ID                               = 'BBBF'
+        constant integer RING_OF_BRODGAR_ITEM_ID                        = 'BBrb'
+        constant integer BLOOD_TENDRIL_ITEM_ID                          = 'BBtb'
+        constant integer WHIRLPOOL_ITEM_ID                              = 'BBwp'
+        constant integer NETHER_SHIELD_ITEM_ID                          = 'BBns'
+        constant integer EARTHREND_ITEM_ID                              = 'BBer'
+        constant integer TOXIN_WARD_ITEM_ID                             = 'BBtw'
+        constant integer TEARS_OF_ZAEL_ITEM_ID                          = 'BBtz'
 
         // --- Shop Item IDs ---
         constant integer CONQ_BAMBOO_STICK_ITEM_ID                      = 'I0C2' 
@@ -948,6 +1008,7 @@ library IdLibrary initializer init
         constant integer CORROSIZE_BREATH_BUFF_ID                       = 'Bcor'
         constant integer CRIPPLE_BUFF_ID                                = 'Bcri'
         constant integer CURSE_BUFF_ID                                  = 'Bcrs'
+        constant integer BLOOD_TENDRIL_BUFF_ID                         = 'tBBb'
         constant integer DEATH_AND_DECAY_BUFF_ID                        = 'BUdd'
         constant integer DISEASE_BUFF_ID                                = 'Bapl'
         constant integer DISEASE_CLOUD_BUFF_ID                          = 'Bplg'
@@ -1033,6 +1094,8 @@ library IdLibrary initializer init
         constant integer HERO_BUFF_BUFF_ID                              = 'B00T'
         constant integer STORMHORN_BUFF_ID                              = 'B00B'
         constant integer FEAR_AURA2_BUFF_ID                             = 'B00C' //regular fear aura ability buff
+        constant integer AEGIS_WARD_AURA_ABILITY_ID                     = 'WBBA'
+        constant integer AEGIS_WARD_BUFF_ID                             = 'ABBW'
 
         StaticIdGroup RUNESTONE_ITEM_ABILITIES
 
@@ -1353,6 +1416,9 @@ library IdLibrary initializer init
         call SUMMONS.add(HAWK_1_UNIT_ID)
         call SUMMONS.add(INFERNAL_1_UNIT_ID)
         call SUMMONS.add(LAVA_SPAWN_1_UNIT_ID)
+        call SUMMONS.add(TENTACLE_1_UNIT_ID)
+        call SUMMONS.add(PRAWN_1_UNIT_ID)
+        call SUMMONS.add(MARINE_UNIT_ID)
         call SUMMONS.add(QUILBEAST_1_UNIT_ID)
         call SUMMONS.add(SERPENT_WARD_1_UNIT_ID)
         call SUMMONS.add(WATER_ELEMENTAL_1_UNIT_ID)

@@ -15,22 +15,15 @@ library MissileStrike initializer Init
 
         private constant real    INTERVAL               = 0.03125
 
-        // Impact effect - swap this once we find one that actually renders
-        private constant string  SFX_IMPACT             = "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl"
-
-        // ---- DIAGNOSTIC MODE ----
-        // Set true to spawn copies of SFX_IMPACT at different heights (below/level/above
-        // ground), plus a plain control case, instead of the normal single impact effect.
-        // Set back to false once you've confirmed what works.
-        private constant boolean TEST_THREE_HEIGHTS = true
+        // Confirmed-working impact effect (same one used by the marine drop-in's landing)
+        private constant string  SFX_IMPACT             = "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl"
 
         // ---- Launch sound ----
         // Placeholder - replace with a verified sound path from the Object Editor
-        // (check a hero's Sound - Attack / Sound - What fields for the exact file path).
         private constant string  SFX_LAUNCH_SOUND       = "Units\\Orc\\TaurenChieftain\\TaurenChieftainYesAttack1.wav"
         private constant boolean PLAY_LAUNCH_SOUND      = true
 
-        private constant boolean DEBUG_MODE = true
+        private constant boolean DEBUG_MODE = false
         // ====================================================
 
         // Travel time is always identical since spawn distance and speed are both fixed constants.
@@ -69,53 +62,6 @@ library MissileStrike initializer Init
     endfunction
 
     //==================================================================
-    // Diagnostic: spawns copies of SFX_IMPACT at different heights
-    // (below ground, ground level, above ground), plus one plain
-    // AddSpecialEffect control case, side by side, so you can see
-    // which one(s) actually render. Each lingers briefly then cleans up.
-    //==================================================================
-    private function TestThreeHeights takes real x, real y returns nothing
-        local unit lowDummy
-        local unit midDummy
-        local unit highDummy
-        local effect fx
-
-        call DebugMsg("Running height diagnostic test at (" + R2S(x) + ", " + R2S(y) + ")")
-
-        // Below ground level
-        set lowDummy = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), MISSILE_DUMMY_ID, x - 200., y, 0)
-        call SetUnitFlyHeight(lowDummy, -100., 0.)
-        call ShowUnit(lowDummy, false)
-        set fx = AddSpecialEffectTarget(SFX_IMPACT, lowDummy, "origin")
-        call DestroyEffect(fx)
-
-        // Ground level (normal)
-        set midDummy = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), MISSILE_DUMMY_ID, x, y, 0)
-        call SetUnitFlyHeight(midDummy, 0., 0.)
-        call ShowUnit(midDummy, false)
-        set fx = AddSpecialEffectTarget(SFX_IMPACT, midDummy, "origin")
-        call DestroyEffect(fx)
-
-        // Above ground level
-        set highDummy = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), MISSILE_DUMMY_ID, x + 200., y, 0)
-        call SetUnitFlyHeight(highDummy, 200., 0.)
-        call ShowUnit(highDummy, false)
-        set fx = AddSpecialEffectTarget(SFX_IMPACT, highDummy, "origin")
-        call DestroyEffect(fx)
-
-        // Plain AddSpecialEffect at ground level, no dummy involved - simplest control case
-        call DestroyEffect(AddSpecialEffect(SFX_IMPACT, x - 400., y))
-
-        call RemoveUnit(lowDummy)
-        call RemoveUnit(midDummy)
-        call RemoveUnit(highDummy)
-
-        set lowDummy = null
-        set midDummy = null
-        set highDummy = null
-    endfunction
-
-    //==================================================================
     // Separate, independently-timed explosion effect. Scheduled once
     // at cast time for exactly MISSILE_TRAVEL_TIME seconds later.
     //==================================================================
@@ -149,11 +95,7 @@ library MissileStrike initializer Init
 
             call DebugMsg("ExplosionInstance.onExpire fired at (" + R2S(.targetX) + ", " + R2S(.targetY) + ")")
 
-            if TEST_THREE_HEIGHTS then
-                call TestThreeHeights(.targetX, .targetY)
-            else
-                call DestroyEffect(AddSpecialEffect(SFX_IMPACT, .targetX, .targetY))
-            endif
+            call DestroyEffect(AddSpecialEffect(SFX_IMPACT, .targetX, .targetY))
 
             call GroupEnumUnitsInRange(g, .targetX, .targetY, IMPACT_RADIUS, null)
             loop
@@ -222,7 +164,6 @@ library MissileStrike initializer Init
 
             call PingForAllPlayers(launchX, launchY, PING_DURATION)
 
-            // Launch sound - plays once, right as the missile is fired
             if PLAY_LAUNCH_SOUND then
                 call PlaySoundAtPointRaw(SFX_LAUNCH_SOUND, GetUnitX(caster), GetUnitY(caster))
             endif

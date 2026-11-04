@@ -51,5 +51,13 @@ library StableSpells initializer init
         set StableSpells.boolean[PHASE_SHIFT_ABILITY_ID] = true
         set StableSpells.boolean[BLOOD_STONE_ABIL_ID] = true
         set StableSpells.boolean[VOLCANO_ABILITY_ID] = true
+        set StableSpells.boolean[INTRUSIVE_THRUST_ABILITY_ID] = true
+        set StableSpells.boolean[TORNADO_ABILITY_ID] = true
+        set StableSpells.boolean[THUNDER_SLAM_ABILITY_ID] = true
+        set StableSpells.boolean[EARTHREND_ABILITY_ID] = true
+        set StableSpells.boolean[AEGIS_WARD_ABILITY_ID] = true
+        set StableSpells.boolean[ASTRAL_WARD_ABILITY_ID] = true
+        set StableSpells.boolean[EXSANGUINATE_ABILITY_ID] = true
+        set StableSpells.boolean[TEARS_OF_ZAEL_ABILITY_ID] = true
     endfunction
 endlibrary

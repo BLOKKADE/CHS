@@ -1035,9 +1035,9 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastAbilityNotReplaceable()  */
 
         //164 - Blink Strike 
-        call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
-        call SetLastObjectElement(Element_Wind, 1)
-        call SetLastObjectElement(Element_Arcane, 1)
+        //call SaveAbilData(BLINK_STRIKE_ABILITY_ID, BLINK_STRIKE_ITEM_ID, false, 0, 0, true, Order_Instant, "acolyteharvest")
+        //call SetLastObjectElement(Element_Wind, 1)
+        //call SetLastObjectElement(Element_Arcane, 1)
 
         //165 - Extradimensional Co-operation
         call SaveAbilData(EXTRADIMENSIONAL_COOPERATION_ABILITY_ID, EXTRADIMENSIONAL_COOPERATION_ITEM_ID, false, 0, 0, true, Order_Instant, "absorb")
@@ -1209,17 +1209,26 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SetLastObjectElement(Element_Arcane, 1)
 
         //206 - Chaos Ward 
-        //call SaveAbilData(SUMMON_CHAOS_WARD_ABILITY_ID, CHAOS_WARD_ITEM_ID, false, Target_Any, 0, false, Order_Point, "ward")
-        //call SetLastObjectElement(Element_Arcane, 1)
-        //call SetLastObjectElement(Element_Summon, 1)
+        //call SaveAbilData(CHAOS_WARD_ABILITY_ID, CHAOS_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+        //call SetLastObjectElement(Element_Fire, 1)
+        //call SetLastObjectElement(Element_Water, 1)
+        //call SetLastObjectElement(Element_Wind, 1)
+        //call SetLastObjectElement(Element_Earth, 1)
+        //call SetLastObjectElement(Element_Wild, 1)
+        //call SetLastObjectElement(Element_Dark, 1)
+        //call SetLastObjectElement(Element_Light, 1)
+        //call SetLastObjectElement(Element_Cold, 1)
+        //call SetLastObjectElement(Element_Poison, 1)
+        //call SetLastObjectElement(Element_Blood, 1)
+        //call SetLastObjectElement(Element_Arcane, 1)    
 
-        //206 - Righteous Fury
-        //call SaveAbilData(RIGHTEOUS_FURY_ABILITY_ID, RIGHTEOUS_FURY_ITEM_ID, false, Target_Any, 0, false, Order_Point, "righteousfury")
-        //call SetLastObjectElement(Element_Light, 2)
+        //206 - Feedback
+        //call SaveAbilData(FEEDBACK_ABILITY_ID, FEEDBACK_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //call SetLastObjectElement(Element_Arcane, 1)
 
         //207 - Tornado 
-        call SaveAbilData(TORNADO_ABILITY_ID, TORNADO_ITEM_ID, false, 0, 0, false, Order_Instant, "tunnel")
-        call SetLastObjectElement(Element_Wind, 1)
+       // call SaveAbilData(TORNADO_ABILITY_ID, TORNADO_ITEM_ID, false, 0, 0, false, Order_Instant, "tunnel")
+        //call SetLastObjectElement(Element_Wind, 1)
 
         //208 - Elemental Attunement
         call SaveAbilData(ELEMENTAL_ATTUNEMENT_ABILITY_ID, ELEMENTAL_ATTUNEMENT_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -1236,13 +1245,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Arcane, 1)    
 
         //209 - Meteor Strike
-        call SaveAbilData(METEOR_STRIKE_ABILITY_ID, METEOR_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "flamestrike")
-        call SetLastObjectElement(Element_Fire, 2)
+        //call SaveAbilData(METEOR_STRIKE_ABILITY_ID, METEOR_STRIKE_ITEM_ID, false, 0, 0, false, Order_Point, "flamestrike")
+        //call SetLastObjectElement(Element_Fire, 2)
 
         //210 - Volcano
-        call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, false, Order_Point, "volcano")
-        call SetLastObjectElement(Element_Fire, 1)
-        call SetLastObjectElement(Element_Earth, 1)
+        //call SaveAbilData(VOLCANO_ABILITY_ID, VOLCANO_ITEM_ID, false, 0, 0, false, Order_Point, "volcano")
+        //call SetLastObjectElement(Element_Fire, 1)
+        //call SetLastObjectElement(Element_Earth, 1)
 
         //211 - Intrusive Thrusts'
         call SaveAbilData(INTRUSIVE_THRUST_ABILITY_ID, INTRUSIVE_THRUST_ITEM_ID, false, 0, 0, false, Order_None, "channel")
@@ -1254,20 +1263,132 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SetLastObjectElement(Element_Earth, 1)
 
         //213 - Whiteout
-        call SaveAbilData(WHITEOUT_ABILITY_ID, WHITEOUT_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
-        call SetLastObjectElement(Element_Cold, 1)
+        //call SaveAbilData(WHITEOUT_ABILITY_ID, WHITEOUT_ITEM_ID, false, 0, 0, false, Order_Target, "transmute")
+        //call SetLastObjectElement(Element_Cold, 1)
 
         //214 - Bloodrush
         call SaveAbilData(BLOODRUSH_ABILITY_ID, BLOODRUSH_ITEM_ID, false, 0, 0, false, Order_None, null)
         call SetLastObjectElement(Element_Blood, 1)
 
         //215 - Rockslide 
-        call SaveAbilData(ROCKSLIDE_ABILITY_ID, ROCKSLIDE_ITEM_ID, false, 0, 0, true, Order_Instant, "tunnel")
+        //call SaveAbilData(ROCKSLIDE_ABILITY_ID, ROCKSLIDE_ITEM_ID, false, 0, 0, false, Order_Instant, "tunnel")
+        //call SetLastObjectElement(Element_Earth, 1)
+
+        //216 - Missile Strike
+        //call SaveAbilData(MISSILE_STRIKE_ABILITY_ID, MISSILE_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
+        //call SetLastObjectElement(Element_Fire, 1)
+
+        //217 - Marine Drop
+        call SaveAbilData(MARINE_DROP_ABILITY_ID, MARINE_DROP_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
+
+        //218 - Summon Tentacles
+        //call SaveAbilData(SUMMON_TENTACLE_ABILITY_ID, TENTACLE_ITEM_ID, false, 0, 0, false, Order_Point, "monsoon")
+        //call SetLastObjectElement(Element_Wild, 1)
+
+        //219 - Summon Prawns
+        //call SaveAbilData(SUMMON_PRAWNS_ABILITY_ID, PRAWNS_ITEM_ID, false, 0, 0, true, Order_Instant, "wateryminion")
+        //call SetLastObjectElement(Element_Water, 1)
+        //call SetLastObjectElement(Element_Wild, 1)
+
+        //220 - Thunderslam
+        //call SaveAbilData(THUNDER_SLAM_ABILITY_ID, THUNDER_SLAM_ITEM_ID, false, 0, 0, false, Order_Point, "blink")
+        //call SetLastObjectElement(Element_Wind, 1)
+
+        //221 - Charge
+        //call SaveAbilData(CHARGE_ABILITY_ID, CHARGE_ITEM_ID, false, 0, 0, false, Order_Instant, "channel")
+        //call SetLastObjectElement(Element_Blood, 1)
+        //call SetLastObjectElement(Element_Earth, 1)
+
+        //222 - Lightning Ball
+        //call SaveAbilData(LIGHTNING_BALL_ABILITY_ID, LIGHTNING_BALL_ITEM_ID, false, 0, 0, true, Order_Target, "transmute")
+        //call SetLastObjectElement(Element_Wind, 1)
+
+        //223 - Exsanguinate
+        call SaveAbilData(EXSANGUINATE_ABILITY_ID, EXSANGUINATE_ITEM_ID, false, 0, 0, true, Order_Point, "drain")
+        call SetLastObjectElement(Element_Blood, 2)
+
+        //224 - Time Dilation
+        //call SaveAbilData(TIME_DILATION_ABILITY_ID, TIME_DILATION_ITEM_ID, false, 0, 0, false, Order_Instant, "channel")
+        //call SetLastObjectElement(Element_Arcane, 1)
+
+        //225 - Glacial Surge
+        call SaveAbilData(GLACIAL_SURGE_ABILITY_ID, GLACIAL_SURGE_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
+        call SetLastObjectElement(Element_Cold, 1)
+
+        //226 - Phoenix Fury
+        //call SaveAbilData(PHOENIX_FURY_ABILITY_ID, PHOENIX_FURY_ITEM_ID, false, 0, 0, false, Order_Point, "channel")
+        //call SetLastObjectElement(Element_Fire, 1)
+
+        //227 - Singularity
+        //call SaveAbilData(SINGULARITY_ABILITY_ID, SINGULARITY_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+        //call SetLastObjectElement(Element_Arcane, 1)
+
+        //228 - Frozen Burst
+        //call SaveAbilData(FROZEN_BURST_ABILITY_ID, FROZEN_BURST_ITEM_ID, false, 0, 0, true, Order_Instant, "channel")
+        //call SetLastObjectElement(Element_Cold, 1)
+
+        //229 - Mudslide
+        //call SaveAbilData(MUD_SLIDE_ABILITY_ID, MUD_SLIDE_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+        //call SetLastObjectElement(Element_Earth, 1)
+        //call SetLastObjectElement(Element_Water, 1)
+
+        //230 - Charged Beam
+        //call SaveAbilData(CHARGED_BEAM_ABILITY_ID, CHARGED_BEAM_ITEM_ID, false, 0, 0, false, Order_Point, "channel")
+        //call SetLastObjectElement(Element_Fire, 1)
+
+        //231 - Subterfuge
+        //call SaveAbilData(SUBTERFUGE_ABILITY_ID, SUBTERFUGE_ITEM_ID, false, 0, 0, false, Order_Target, "channel")
+        //call SetLastObjectElement(Element_Arcane, 1)
+
+        //232 - Void Rip
+        //call SaveAbilData(VOID_RIP_ABILITY_ID, VOID_RIP_ITEM_ID, false, 0, 0, false, Order_Target, "channel")
+        //call SetLastObjectElement(Element_Dark, 1)
+
+        //233 - Arcane Barrier
+        //call SaveAbilData(ARCANE_BARRIER_ABILITY_ID, ARCANE_BARRIER_ITEM_ID, false, 0, 0, false, Order_Point, "channel")
+        //call SetLastObjectElement(Element_Arcane, 1)
+
+        //234 - Mimicry
+        //call SaveAbilData(MIMICRY_ABILITY_ID, MIMICRY_ITEM_ID, false, 0, 0, false, Order_Target, "channel")
+        //call SetLastObjectElement(Element_Arcane, 1)
+
+        //235 - Astral Ward
+        call SaveAbilData(ASTRAL_WARD_ABILITY_ID, ASTRAL_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+        call SetLastObjectElement(Element_Fire, 1)
+        call SetLastObjectElement(Element_Arcane, 1)
+
+        //236 - Aegis Ward
+        call SaveAbilData(AEGIS_WARD_ABILITY_ID, AEGIS_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+        call SetLastObjectElement(Element_Light, 1)
+
+        //237 - Ring of Brodgar
+        //call SaveAbilData(RING_OF_BRODGAR_ABILITY_ID, RING_OF_BRODGAR_ITEM_ID, false, 0, 0, false, Order_Instant, "channel")
+        //call SetLastObjectElement(Element_Wild, 1)
+
+        //238 - Blood Tendrils
+        //call SaveAbilData(BLOOD_TENDRIL_ABILITY_ID, BLOOD_TENDRIL_ITEM_ID, false, 0, 0, false, Order_Instant, "channel")
+        //call SetLastObjectElement(Element_Blood, 1)
+
+        //239 - Whirlpool
+        //call SaveAbilData(WHIRLPOOL_ABILITY_ID, WHIRLPOOL_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+        //call SetLastObjectElement(Element_Water, 1)
+
+        //240 - Nether Shield
+        //call SaveAbilData(NETHER_SHIELD_ABILITY_ID, NETHER_SHIELD_ITEM_ID, false, 0, 0, false, Order_None, null)
+        //call SetLastObjectElement(Element_Dark, 1)
+
+        //241 - Earthrend
+        call SaveAbilData(EARTHREND_ABILITY_ID, EARTHREND_ITEM_ID, false, 0, 0, true, Order_Instant, "channel")
         call SetLastObjectElement(Element_Earth, 1)
 
-        //215 - Missile Strike
-        call SaveAbilData(MISSILE_STRIKE_ABILITY_ID, MISSILE_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
-        call SetLastObjectElement(Element_Fire, 1)
+        //242 - Toxin Ward
+        //call SaveAbilData(TOXIN_WARD_ABILITY_ID, TOXIN_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
+       // call SetLastObjectElement(Element_Poison, 1)
+
+        //243 - Tears of Zael
+        //call SaveAbilData(TEARS_OF_ZAEL_ABILITY_ID, TEARS_OF_ZAEL_ITEM_ID, false, 0, 0, false, Order_Instant, "burrow")
+        //call SetLastObjectElement(Element_Cold, 1)
+ 
 
     endfunction
 

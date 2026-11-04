@@ -64,11 +64,6 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call SetUnitAbilityLevel(u, 'A0FD', R2I(GetHeroLevel(hero) * 1))
         endif
 
-        //Stomp ethereal summons
-        /*if GetUnitTypeId(hero) == STOMP_TREE_UNIT_ID and GetHeroLevel(hero) >= 125 then
-            call UnitAddAbility(u, 'Aeth')    
-        endif*/
-
         //Polar Bear skin
         if summonTypeId == BEAR_1_UNIT_ID then
             call BlzSetUnitSkin(u, 'PBBB')
@@ -157,7 +152,7 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
         endif
 
         //Druid of the Claw
-        if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID then
+        if GetUnitTypeId(hero) == DRUID_OF_THE_CLAY_UNIT_ID and GetUnitTypeId(u) != 'hdhw' and GetUnitTypeId(u) != 'h00O' then
             set r1 = GetHeroLevel(hero) * 0.01
             call AddUnitCustomState(u, BONUS_MAGICPOW, (GetUnitCustomState(hero, BONUS_MAGICPOW) * r1))
             call AddUnitCustomState(u, BONUS_MAGICRES, (GetUnitCustomState(hero, BONUS_MAGICRES) * r1))
@@ -202,24 +197,26 @@ library UnitEnterMap initializer init requires RandomShit, Functions, SummonInfo
             call AddSummonAbility(u, WILD_DEFENSE_SUMMON_ABILITY_ID, i2)
         endif
 
-        if SummonHitPoints[pid] > 0 then
-            call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
-            call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
-        endif
+        if summonTypeId != 'h00O' and summonTypeId != 'hdhw' then
+            if SummonHitPoints[pid] > 0 then
+                call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) + SummonHitPoints[pid] * 200)
+                call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
+            endif
 
-        if SummonArmor[pid] > 0 then
-            call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 2))
-        endif
+            if SummonArmor[pid] > 0 then
+                call BlzSetUnitArmor(u, BlzGetUnitArmor(u) + (SummonArmor[pid] * 2))
+            endif
 
-        if SummonDamage[pid] > 0 then
-            call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
-        endif
-          
-        //wild
-        if wild != 1 and not (summonTypeId == 'u006' or summonTypeId == 'u007' or summonTypeId == 'o00D' or summonTypeId == 'u005' or summonTypeId == 'n039') then
-        call BlzSetUnitBaseDamage(u, R2I(I2R(BlzGetUnitBaseDamage(u, 0)) * wild), 0)
-        call BlzSetUnitMaxHP(u, R2I(I2R(BlzGetUnitMaxHP(u)) * wild))
-        call SetWidgetLife(u, BlzGetUnitMaxHP(u))
+            if SummonDamage[pid] > 0 then
+                call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0) + (20 * SummonDamage[pid]), 0)
+            endif
+
+            //wild
+            if wild != 1 and not (summonTypeId == 'u006' or summonTypeId == 'u007' or summonTypeId == 'o00D' or summonTypeId == 'u005' or summonTypeId == 'n039') then
+                call BlzSetUnitBaseDamage(u, R2I(I2R(BlzGetUnitBaseDamage(u, 0)) * wild), 0)
+                call BlzSetUnitMaxHP(u, R2I(I2R(BlzGetUnitMaxHP(u)) * wild))
+                call SetWidgetLife(u, BlzGetUnitMaxHP(u))
+            endif
         endif
 
         //Vampirism

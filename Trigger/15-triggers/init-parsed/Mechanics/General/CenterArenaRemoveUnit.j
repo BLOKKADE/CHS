@@ -3,7 +3,7 @@ library CenterArenaRemoveUnit initializer init requires RandomShit, IdLibrary
     private function CenterArenaRemoveUnitActions takes nothing returns boolean
         local unit u = GetTriggerUnit()
 
-        if (not IsUnitExcluded(u)) then
+        if (not IsUnitExcluded(u)) and (GetUnitTypeId(u) != MARINE_UNIT_ID) and (GetUnitTypeId(u) != 'uban') then
             call DeleteUnit(u)
         endif
 

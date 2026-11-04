@@ -17,6 +17,7 @@ library BuffRepositoryData initializer init requires BuffRepository
         call SetupBuffInfo1(ANTI_MAGIC_SHELL_BUFF_ID, ANTI_MAGIC_SHEL_ABILITY_ID, BUFFTYPE_POSITIVE, true)
         call SetupBuffInfo1(AVATAR_BUFF_ID, ACTIVATE_AVATAR_ABILITY_ID, BUFFTYPE_POSITIVE, true) //unused?
         call SetupBuffInfo1('BHds', DIVINE_SHIELD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
+        call SetupBuffInfo1('ABBW', AEGIS_WARD_ABILITY_ID, BUFFTYPE_POSITIVE, true)
 
         call SetupBuffInfo2(MANA_STARVATION_BUFF_ID, 'A09R', MANA_STARVATION_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)
         call SetupBuffInfo2('B02H', ANCIENT_BLOOD_BUFF_ABILITY_ID, ANCIENT_BLOOD_ABILITY_ID, BUFFTYPE_POSITIVE, false, true)

@@ -913,6 +913,13 @@ scope ModifyDamageBeforeArmor initializer init
             endif
         endif
 
+        //Depleted Uranium Shells - Marine Drop
+        if IsPhysDamage() and DamageSourceTypeId == MARINE_UNIT_ID and GetUnitAbilityLevel(DamageSource, DEPLETED_URANIUM_ABILITY_ID) > 0 then
+            if Damage.index.damage > 0 then
+                set Damage.index.damage = Damage.index.damage + DepletedUraniumHit(DamageTarget)
+            endif
+        endif
+
         //Rock Golem
         if DamageTargetTypeId == ROCK_GOLEM_UNIT_ID and BlzGetUnitAbilityCooldownRemaining(DamageTarget, 'A0AH') == 0 and not UnitHasBuffBJ(DamageTarget, SILENCE_BUFF_ID) then
             call AbilStartCD(DamageTarget, 'A0AH', 1)
