@@ -1363,10 +1363,6 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         call SaveAbilData(AEGIS_WARD_ABILITY_ID, AEGIS_WARD_ITEM_ID, false, 0, 0, false, Order_Point, "deathanddecay")
         call SetLastObjectElement(Element_Light, 1)
 
-        //237 - Ring of Brodgar
-        //call SaveAbilData(RING_OF_BRODGAR_ABILITY_ID, RING_OF_BRODGAR_ITEM_ID, false, 0, 0, false, Order_Instant, "channel")
-        //call SetLastObjectElement(Element_Wild, 1)
-
         //238 - Blood Tendrils
         //call SaveAbilData(BLOOD_TENDRIL_ABILITY_ID, BLOOD_TENDRIL_ITEM_ID, false, 0, 0, false, Order_Instant, "channel")
         //call SetLastObjectElement(Element_Blood, 1)

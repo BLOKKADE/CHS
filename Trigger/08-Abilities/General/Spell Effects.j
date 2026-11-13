@@ -86,10 +86,6 @@ library AbilityChannel requires RandomShit, ShadowBladeItem, Earthrend, BlessedS
             call CastWhiteout(hero, target, lvl)
             call CreateTextTagTimerColor("Whiteout!", 0.8, GetUnitX(target), GetUnitY(target), 80, 2, 180, 0, 255)
 
-        //Ring of Brodgar
-        elseif abilId == RING_OF_BRODGAR_ABILITY_ID then
-            call CastRingOfBrodgar(caster, lvl)
-
         //Chaos Ward
         elseif abilId == CHAOS_WARD_ABILITY_ID then
             call CastChaosWard(hero, x, y, lvl)

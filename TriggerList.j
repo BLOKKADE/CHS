@@ -301,7 +301,6 @@
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\TearsOfZael.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\PhoenixFury.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\SpiritLink.j"
-//! import "C:\CHS\CHS/Trigger\08-Abilities\Active\RingOfBrodgar.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Starfall.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Whirlpool.j"
 //! import "C:\CHS\CHS/Trigger\08-Abilities\Active\Earthrend.j"
