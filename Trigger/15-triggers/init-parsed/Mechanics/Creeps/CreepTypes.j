@@ -57,30 +57,31 @@ library CreepTypes initializer init requires RandomShit
         set CreepUnitTypeIds[36] = CENTAUR_IMPALER_CREEP_UNIT_ID        //ranged
         set CreepUnitTypeIds[37] = SKELETON_ARCHER_CREEP_UNIT_ID        //ranged
         set CreepUnitTypeIds[38] = FOREST_SPIDER_CREEP_UNIT_ID          //ranged
+        set CreepUnitTypeIds[39] = HIPPOGRYPH_RIDER_CREEP_UNIT_ID       //ranged
 
         //magic creeps:
-        set CreepUnitTypeIds[39] = DRAENEI_MAGE_CREEP_UNIT_ID           //ranged
-        set CreepUnitTypeIds[40] = SLUDGE_MINION_CREEP_UNIT_ID     
-        set CreepUnitTypeIds[41] = WIND_SERPENT_CREEP_UNIT_ID           //ranged
-        set CreepUnitTypeIds[42] = WRAITH_CREEP_UNIT_ID                 //ranged
+        set CreepUnitTypeIds[40] = DRAENEI_MAGE_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[41] = SLUDGE_MINION_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[42] = WIND_SERPENT_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[43] = WRAITH_CREEP_UNIT_ID                 //ranged
 
         //mini bosses
-        set CreepUnitTypeIds[43] = OGRE_LORD_CREEP_UNIT_ID     
-        set CreepUnitTypeIds[44] = HARPY_QUEEN_CREEP_UNIT_ID            //ranged
-        set CreepUnitTypeIds[45] = ARCHMAGE_CREEP_UNIT_ID               //ranged magic
+        set CreepUnitTypeIds[44] = OGRE_LORD_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[45] = HARPY_QUEEN_CREEP_UNIT_ID            //ranged
+        set CreepUnitTypeIds[46] = ARCHMAGE_CREEP_UNIT_ID               //ranged 
 
 
         //boss creeps:
-        set CreepUnitTypeIds[46] = MAGNATAUR_CREEP_UNIT_ID   
-        set CreepUnitTypeIds[47] = BURNING_ARCHER_CREEP_UNIT_ID         //ranged
-        set CreepUnitTypeIds[45] = HOLY_DEFENDER_CREEP_UNIT_ID   
-        set CreepUnitTypeIds[46] = DRAGON_TURTLE_CREEP_UNIT_ID     
-        set CreepUnitTypeIds[47] = CHAOS_WARLORD_CREEP_UNIT_ID    
-        set CreepUnitTypeIds[48] = THUNDER_LIZARD_CREEP_UNIT_ID         //ranged
-        set CreepUnitTypeIds[49] = BLACK_DRAGON_CREEP_UNIT_ID           //ranged 
-        set CreepUnitTypeIds[50] = GREEN_DRAGON_CREEP_UNIT_ID           //ranged
+        set CreepUnitTypeIds[47] = MAGNATAUR_CREEP_UNIT_ID   
+        set CreepUnitTypeIds[48] = BURNING_ARCHER_CREEP_UNIT_ID         //ranged
+        set CreepUnitTypeIds[49] = HOLY_DEFENDER_CREEP_UNIT_ID   
+        set CreepUnitTypeIds[50] = DRAGON_TURTLE_CREEP_UNIT_ID     
+        set CreepUnitTypeIds[51] = CHAOS_WARLORD_CREEP_UNIT_ID    
+        set CreepUnitTypeIds[52] = THUNDER_LIZARD_CREEP_UNIT_ID         //ranged
+        set CreepUnitTypeIds[53] = BLACK_DRAGON_CREEP_UNIT_ID           //ranged 
+        set CreepUnitTypeIds[54] = GREEN_DRAGON_CREEP_UNIT_ID           //ranged
         
-        set MaxCreepUnitTypes = 42
+        set MaxCreepUnitTypes = 46
     endfunction
 
     function IsSpellcasterCreep takes integer unitId returns boolean
@@ -169,6 +170,8 @@ library CreepTypes initializer init requires RandomShit
         elseif unitId == SKELETON_ARCHER_CREEP_UNIT_ID then
             return true
         elseif unitId == FOREST_SPIDER_CREEP_UNIT_ID then
+            return true
+        elseif unitId == HIPPOGRYPH_RIDER_CREEP_UNIT_ID then
             return true
         endif
         return false

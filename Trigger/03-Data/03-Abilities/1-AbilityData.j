@@ -321,8 +321,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //12 - Frost Nova 
         call SaveAbilData(FROST_NOVA_ABILITY_ID, FROST_NOVA_ITEM_ID, false, 0, 0, true, Order_Target, "frostnova")
-        call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
+        call SetLastObjectElement(Element_Water, 1)
 
         //13 - Incinerate 
         call SaveAbilData(INCINERATE_ABILITY_ID, INCINERATE_ITEM_ID, false, 0, 0, false, Order_None, null)
@@ -440,6 +440,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //37 - Cluster Rockets 
         call SaveAbilData(CLUSTER_ROCKETS_ABILITY_ID, CLUSTER_ROCKETS_ITEM_ID, false, 0, 0, true, Order_Point, "clusterrockets")
+        call SetLastObjectElement(Element_Fire, 1)
         //call SaveDummyAbilOrder(CLUSTER_ROCKETS_DUMMY_ABILITY_ID, "clusterrockets")
 
         //38 - Wind Walk 
@@ -487,13 +488,13 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //46 - Frost Armor 
         call SaveAbilData(FROST_ARMOR_ABILITY_ID, FROST_ARMOR_ITEM_ID, false, 1, 1, true, Order_Target, "frostarmor")
-        call SetLastObjectElement(Element_Water, 1)
         call SetLastObjectElement(Element_Cold, 1)
+        call SetLastObjectElement(Element_Water, 1)
 
         //47 - Blizzard 
         call SaveAbilData(BLIZZARD_ABILITY_ID, BLIZZARD_ITEM_ID, false, 0, 0, true, Order_Point, "blizzard")
-        call SetLastObjectElement(Element_Water, 2)
         call SetLastObjectElement(Element_Cold, 2)
+        call SetLastObjectElement(Element_Water, 2)
         //call SaveDummyAbilOrder(BLIZZARD_DUMMY_ABILITY_ID, "blizzard")
 
         //48 - Rain of Fire 
@@ -700,6 +701,7 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //93 - Blink 
         call SaveAbilData(BLINK_ABILITY_ID, BLINK_ITEM_ID, false, 0, 0, false, Order_Point, "blink")
+        call SetLastObjectElement(Element_Arcane, 1)
         call SetLastAbilityNotReplaceable()
         call SetLastAbilityPlain()
 
@@ -839,8 +841,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
 
         //127 - Big Bad Voodoo 
         call SaveAbilData(BIG_BAD_VOODOO_ABILITY_ID, BIG_BAD_VOODOO_ITEM_ID, false, 0, 0, false, Order_Instant, "voodoo")
-        call SetLastObjectElement(Element_Arcane, 2)
         call SetLastObjectElement(Element_Dark, 2)
+        call SetLastObjectElement(Element_Arcane, 2)
         call SetLastAbilityPlain()
 
         //128 - Icy Breath 
@@ -1275,8 +1277,8 @@ library AbilityData initializer init requires Table, IdLibrary, Utility
         //call SetLastObjectElement(Element_Earth, 1)
 
         //216 - Missile Strike
-        //call SaveAbilData(MISSILE_STRIKE_ABILITY_ID, MISSILE_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
-        //call SetLastObjectElement(Element_Fire, 1)
+        call SaveAbilData(MISSILE_STRIKE_ABILITY_ID, MISSILE_STRIKE_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")
+        call SetLastObjectElement(Element_Fire, 1)
 
         //217 - Marine Drop
         call SaveAbilData(MARINE_DROP_ABILITY_ID, MARINE_DROP_ITEM_ID, false, 0, 0, true, Order_Point, "deathanddecay")

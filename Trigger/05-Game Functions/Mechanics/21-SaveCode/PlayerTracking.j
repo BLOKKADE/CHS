@@ -707,6 +707,7 @@ library PlayerTracking initializer init requires GameInit, Table
         call AddGameVersion("CHS v2.9.6", false) // 58 - Balance changes, changed ghoul, and returned Stomp. 14 sep 2026
         call AddGameVersion("CHS v2.9.7", false) // 59 - Hopefully fixes deyncs. 15 sep 2026
         call AddGameVersion("CHS v3.0.0", false) // 60 - 10 new abilities. summons can be created with chaos magic. 4 nov 2026
+        call AddGameVersion("CHS v3.0.1", false) // 61 - 10 new abilities. summons can be created with chaos magic. 4 nov 2026
     endfunction
 
     private function init takes nothing returns nothing

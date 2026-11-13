@@ -52,8 +52,13 @@ library CreepDeath initializer init requires RandomShit, MidasTouch, ArenaMaster
         else
         // Multiplier goes from 0.6 at Round 1 to 1.4 at Round 25, normalized to keep total equal
             set goldBounty = R2I(RoundNumber * 11 * (0.6 + 0.8 * (I2R(RoundNumber - 1) / 24.0)) * (2145.0 / 2431.0))
-        endif    
+        endif   
         
+        if RoundCreepTypeId == OGRE_LORD_CREEP_UNIT_ID or RoundCreepTypeId == HARPY_QUEEN_CREEP_UNIT_ID or RoundCreepTypeId == ARCHMAGE_CREEP_UNIT_ID then
+            set goldBounty = R2I(goldBounty * 2)
+            set expBounty = R2I(expBounty * 2)
+        endif
+
         //Midas Touch
         if GetMidasTouch(GetHandleId(dyingUnit)) != 0 then
             set goldBounty = goldBounty + GetMidasTouch(GetHandleId(dyingUnit)).bonus

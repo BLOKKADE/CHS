@@ -409,18 +409,30 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 
 	public function UpdateAbilityIcons takes player p returns nothing
 		local integer i = 1
-        local integer pid = GetPlayerId(p)
-        local integer abilId = 0
-        local integer abilLevel = 0
-        local string abilIcon = ""
-        local integer selectedUnitPid = SelectedUnitPid[pid]
-        local integer unitTypeId = 0
+		local integer pid = GetPlayerId(p)
+		local integer abilId = 0
+		local integer abilLevel = 0
+		local string abilIcon = ""
+		local integer selectedUnitPid = SelectedUnitPid[pid]
+		local integer unitTypeId = 0
 		local PlayerStats ps
 		local string iconPath
+		local unit shownUnit = null
+		local boolean hideAbilities = false
 
-        if selectedUnitPid == 27 then
-            set selectedUnitPid = pid
-        endif
+		if selectedUnitPid == 27 then
+			set selectedUnitPid = pid
+		endif
+
+		// Work out which unit's abilities are being displayed
+		if selectedUnitPid == 11 then
+			set shownUnit = SelectedUnit[pid]
+		else
+			set shownUnit = PlayerHeroes[selectedUnitPid]
+		endif
+
+		// Melchin has no ability icons shown in the top left
+		set hideAbilities = (GetUnitTypeId(shownUnit) == ABOMINATION_UNIT_ID)
 
 		set ps = PlayerStats.forPlayer(Player(selectedUnitPid))
 
@@ -444,18 +456,20 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 			call BlzFrameSetVisible(ButtonIndicatorParentId[40], PlayerIsAlwaysReady[selectedUnitPid])
 		endif
 
-        // Updates the ability icons displayed in top left
-        loop
-            exitwhen i > 21
+		// Updates the ability icons displayed in top left
+		loop
+			exitwhen i > 21
 
-            if selectedUnitPid == 11 then
-                set abilId = roundAbilities.integer[i]
-            else
-                set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid], i)
-            endif
+			if hideAbilities then
+				set abilId = 0 // Falls into the "hide" branch below
+			elseif selectedUnitPid == 11 then
+				set abilId = roundAbilities.integer[i]
+			else
+				set abilId = GetHeroSpellAtPosition(PlayerHeroes[selectedUnitPid], i)
+			endif
 
-            if abilId != 0 then
-                set abilIcon = BlzGetAbilityIcon(abilId)
+			if abilId != 0 then
+				set abilIcon = BlzGetAbilityIcon(abilId)
 				
 				if selectedUnitPid == 11 then
 					set abilLevel = GetUnitAbilityLevel(SelectedUnit[pid], abilId)
@@ -475,14 +489,14 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 						call BlzFrameSetSize(AbilityButtonParentId[100 + i], 0.0125, 0.0128)
 					endif
 				endif
-            else
+			else
 				if (GetLocalPlayer() == p) then
 					call BlzFrameSetVisible(ButtonParentId[100 + i], false)
 					call BlzFrameSetVisible(AbilityButtonParentId[100 + i], false)
 				endif
-            endif
-            set i = i + 1
-        endloop
+			endif
+			set i = i + 1
+		endloop
 
 		// Hero info
 		set unitTypeId = GetUnitTypeId(PlayerHeroes[selectedUnitPid])
@@ -505,9 +519,12 @@ library IconFrames initializer init requires TooltipFrame, ItemStock, Achievemen
 				call BlzFrameSetVisible(ButtonParentId[39], false) // Win Counts
 				call BlzFrameSetVisible(ButtonParentId[40], false) // Player ready status
 				call BlzFrameSetVisible(ButtonParentId[100], false) // Hero passive/description
-                call BlzFrameSetVisible(ButtonParentId[200], false) //bottom right hero info
+				call BlzFrameSetVisible(ButtonParentId[200], false) //bottom right hero info
 			endif
 		endif
+
+		// Cleanup
+		set shownUnit = null
 	endfunction
 
 	private function UpdateAbilityIconsEvent takes EventInfo eventInfo returns nothing

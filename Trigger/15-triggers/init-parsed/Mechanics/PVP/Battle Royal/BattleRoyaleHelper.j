@@ -220,6 +220,18 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
                     call ShowUnit(udg_Draft_DraftBuildings[i], b)
                     call SetTextTagVisibility(FloatingTextBuy, b)
                 endif
+       
+                call SetTextTagVisibility(FloatingTextActiveSpells, b)
+                call SetTextTagVisibility(FloatingTextPassiveSpells, b)
+                call SetTextTagVisibility(FloatingTextAbsoluteShop, b)
+                call SetTextTagVisibility(FloatingTextGloryShops, b)
+                call SetTextTagVisibility(FloatingTextStarterItems, b)
+                call SetTextTagVisibility(FloatingTextOffensiveItems, b)
+                call SetTextTagVisibility(FloatingTextDefensiveItems, b)
+                call SetTextTagVisibility(FloatingTextPvEItems, b)
+                call SetTextTagVisibility(FloatingTextTomes, b)
+                call SetTextTagVisibility(FloatingTextMagicItems, b)
+                call SetTextTagVisibility(FloatingTextOtherItems, b)
                 
                 call ShowUnit(circle2, b)
                 call ShowUnit(draftBuilding2, b)
@@ -227,7 +239,7 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
                 call SetTextTagVisibility(FloatingTextUpgrade, b)
                 call SetTextTagVisibility(FloatingTextAbsolute, b)
                 set i = i + 1
-                exitwhen i > 9
+                exitwhen i > 20
             endloop
         endif
     endfunction
@@ -323,6 +335,8 @@ library BattleRoyaleHelper initializer init requires ItemStock, RandomShit, Star
         call PlaySoundBJ(udg_sound10)
 
         call SetShopVisibility(false)
+
+
 
         call SetForceAllianceStateBJ(BRObservers, BRObservers, bj_ALLIANCE_ALLIED)
 

@@ -12,7 +12,7 @@ library Earthrend initializer Init requires AbilityCooldown
         private constant real    END_DIST        = 80.     // rock counts as "home" this close to the hero
 
         private constant real    ROCK_HEIGHT     = 40.
-        private constant real    ROCK_SCALE      = 1.5
+        private constant real    ROCK_SCALE      = 3.0
 
         private constant real    CHAIN_SCALE     = 2.0
         private constant real    CHAIN_SPACING   = 48.
@@ -21,7 +21,7 @@ library Earthrend initializer Init requires AbilityCooldown
         private constant integer CHAIN_BLUE      = 130
         private constant integer MAX_LINKS       = 47
 
-        private constant string  ROCK_MODEL      = "Doodads\\Terrain\\RockChunks\\RockChunks.mdl"
+        private constant string  ROCK_MODEL      = "Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdx"
         private constant string  CHAIN_MODEL     = "Abilities\\Weapons\\WardenMissile\\WardenMissile.mdl"
         private constant string  SFX_HIT         = "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl"
 

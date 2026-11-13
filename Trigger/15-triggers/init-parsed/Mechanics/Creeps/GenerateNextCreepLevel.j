@@ -598,7 +598,7 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
             call AddRoundAbility(CHARM_ABILITY_ID)
         endif
 
-        if RoundCreepChanceCleave == 1 and DamageSourceTypeId != SLUDGE_MINION_CREEP_UNIT_ID and DamageSourceTypeId != DRAENEI_MAGE_CREEP_UNIT_ID and DamageSourceTypeId != WIND_SERPENT_CREEP_UNIT_ID and RoundCreepTypeId != WRAITH_CREEP_UNIT_ID and RoundCreepTypeId != CENTAUR_IMPALER_CREEP_UNIT_ID and RoundCreepTypeId != 'n01g' and RoundCreepTypeId != BANDIT_SPEAR_THROWER_CREEP_UNIT_ID and RoundCreepTypeId != HARPY_CREEP_UNIT_ID and RoundCreepTypeId != SKELETON_ARCHER_CREEP_UNIT_ID and RoundCreepTypeId != 'n006' then
+        if RoundCreepChanceCleave == 1 and DamageSourceTypeId != SLUDGE_MINION_CREEP_UNIT_ID and DamageSourceTypeId != DRAENEI_MAGE_CREEP_UNIT_ID and DamageSourceTypeId != WIND_SERPENT_CREEP_UNIT_ID and RoundCreepTypeId != WRAITH_CREEP_UNIT_ID and RoundCreepTypeId != CENTAUR_IMPALER_CREEP_UNIT_ID and RoundCreepTypeId != 'n01g' and RoundCreepTypeId != BANDIT_SPEAR_THROWER_CREEP_UNIT_ID and RoundCreepTypeId != HARPY_CREEP_UNIT_ID and RoundCreepTypeId != HIPPOGRYPH_RIDER_CREEP_UNIT_ID and RoundCreepTypeId != SKELETON_ARCHER_CREEP_UNIT_ID and RoundCreepTypeId != 'n006' then
             set s = ConcatAbility(s, "|cffff00ffCleave")
             call AddRoundAbility(CLEAVE_CREEP_ABILITY_ID)
         endif
@@ -2293,6 +2293,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         local real CreepScaleDamage = 0
         local integer goldcount = 0
         local integer xpcount = 0
+        local integer spawnRoll
+        local integer spawnCornerPick
+        local integer spawnSidePick
+        local real spawnDist
+        local real spawnAngle
 
         set RoundCreepInfo[0] = ""
         set RoundCreepInfo[1] = ""
@@ -2309,7 +2314,11 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
         call ResetRoundCreepChances()
 
         //generate creep type
-        set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1, (MaxCreepUnitTypes - 4))]
+        if RoundNumber > 10 then
+            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1, (MaxCreepUnitTypes))]
+        else
+            set RoundCreepTypeId = CreepUnitTypeIds[GetRandomInt(1, (MaxCreepUnitTypes - 3))]
+        endif
 
         //set movement and attack speeds
         set RoundCreepMoveSpeed = GetRandomInt(GetRandomInt(150, 150 + RoundNumber * 2), 422 + RoundNumber * 2)
@@ -2949,6 +2958,30 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set RoundCreepNumber = 25
                 elseif RoundCreepTypeId == TUSKAR_CREEP_UNIT_ID then
 
+                //mini boss creeps
+                elseif RoundCreepTypeId == HARPY_QUEEN_CREEP_UNIT_ID then
+                        call PlaySoundBJ(rescuesound)
+                        set RoundCreepNumber = 3
+                        set RoundCreepChanceCharm = 1
+                        set RoundCreepChanceCurse = 1
+                        set RoundCreepChanceDousingHex = 1
+                        set RoundCreepChanceFrenzy = 1
+                        set RoundCreepChanceEvasion = 1
+                elseif RoundCreepTypeId == OGRE_LORD_CREEP_UNIT_ID then
+                        call PlaySoundBJ(rescuesound)
+                        set RoundCreepNumber = 3
+                        set RoundCreepChanceWarStomp = 1
+                        set RoundCreepChanceArcaneAssault = 1
+                        set RoundCreepChancePulverize = 1
+                elseif RoundCreepTypeId == ARCHMAGE_CREEP_UNIT_ID then
+                        call PlaySoundBJ(rescuesound)
+                        set RoundCreepNumber = 1
+                        set RoundCreepChanceWizardbane     = 1
+                        set RoundCreepChanceArcaneAssault  = 1
+                        set RoundCreepChanceTrueShotAura   = 1
+                        set RoundCreepChanceEnduranceAura  = 1
+                        set RoundCreepChanceLiquidFire     = 1
+
                 //ranged auto attacker creeps:
                 elseif RoundCreepTypeId == HARPY_CREEP_UNIT_ID then
                     set RoundCreepChanceFaerieFire  = 1
@@ -2963,6 +2996,9 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                     set RoundCreepChanceCutting = 1
                 elseif RoundCreepTypeId == FOREST_SPIDER_CREEP_UNIT_ID then
                     set RoundCreepChanceSlowPoison = 1
+                elseif RoundCreepTypeId == HIPPOGRYPH_RIDER_CREEP_UNIT_ID then
+                    set RoundCreepChanceEnduranceAura = 1
+                    set RoundCreepChanceTrueShotAura = 1
 
                 //magic creeps:
                 elseif RoundCreepTypeId == DRAENEI_MAGE_CREEP_UNIT_ID then
@@ -2974,6 +3010,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 elseif RoundCreepTypeId == WRAITH_CREEP_UNIT_ID then 
                     set RoundCreepChanceCurse                   = 1
                 endif
+        endif
+
+        if RoundCreepTypeId == FURBOLG_CREEP_UNIT_ID or RoundCreepTypeId == ARCHMAGE_CREEP_UNIT_ID then
+            set RoundCreepNumber = 1
         endif
 
         if RoundCreepChanceChaosMagic == 1 then
@@ -3004,6 +3044,10 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
 
             set g = NewGroup()
             set RoundGenCreepIndex = 1
+
+            set spawnRoll = GetRandomInt(1, 100)
+            set spawnCornerPick = GetRandomInt(0, 1)
+            set spawnSidePick = GetRandomInt(0, 1)
 
             loop
                 exitwhen RoundGenCreepIndex > RoundCreepNumber
@@ -3089,7 +3133,56 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                 //endif
     
                 if (GetPlayerSlotState(Player(playerId)) != PLAYER_SLOT_STATE_EMPTY and IsPlayerInForce(Player(playerId), DefeatedPlayers) != true) then
-                    set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-750.00, 750.00), GetRandomReal(-750.00, 750.00))
+                    if spawnRoll <= 3 then
+                        // 3%: bottom strip, full width
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, 850.00), GetRandomReal(-850.00, -550.00))
+                    elseif spawnRoll <= 6 then
+                        // 3%: top strip, full width
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, 850.00), GetRandomReal(550.00, 850.00))
+                    elseif spawnRoll <= 9 then
+                        // 3%: left strip, full height
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, -550.00), GetRandomReal(-850.00, 850.00))
+                    elseif spawnRoll <= 12 then
+                        // 3%: right strip, full height
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(550.00, 850.00), GetRandomReal(-850.00, 850.00))
+                    elseif spawnRoll <= 14 then
+                        // 2%: top-left OR bottom-right 300x300 corner (same corner all wave)
+                        if spawnCornerPick == 0 then
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, -550.00), GetRandomReal(550.00, 850.00))
+                        else
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(550.00, 850.00), GetRandomReal(-850.00, -550.00))
+                        endif
+                    elseif spawnRoll <= 16 then
+                        // 2%: top-right OR bottom-left 300x300 corner (same corner all wave)
+                        if spawnCornerPick == 0 then
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(550.00, 850.00), GetRandomReal(550.00, 850.00))
+                        else
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, -550.00), GetRandomReal(-850.00, -550.00))
+                        endif
+                    elseif spawnRoll <= 17 then
+                        // 1%: within 400 units of center
+                        set spawnDist = SquareRoot(GetRandomReal(0.00, 1.00)) * 400.00
+                        set spawnAngle = GetRandomReal(0.00, 360.00) * bj_DEGTORAD
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], spawnDist * Cos(spawnAngle), spawnDist * Sin(spawnAngle))
+                    elseif spawnRoll <= 19 then
+                        // 2%: left OR right strip (same side all wave)
+                        if spawnSidePick == 0 then
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, -550.00), GetRandomReal(-850.00, 850.00))
+                        else
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(550.00, 850.00), GetRandomReal(-850.00, 850.00))
+                        endif
+                    elseif spawnRoll <= 21 then
+                        // 2%: top OR bottom strip (same side all wave)
+                        if spawnSidePick == 0 then
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, 850.00), GetRandomReal(550.00, 850.00))
+                        else
+                            set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, 850.00), GetRandomReal(-850.00, -550.00))
+                        endif
+                    elseif RoundCreepTypeId == CENTAUR_IMPALER_CREEP_UNIT_ID then
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(650.00, 850.00) * (2 * GetRandomInt(0, 1) - 1), GetRandomReal(650.00, 850.00) * (2 * GetRandomInt(0, 1) - 1))
+                    else
+                        set unitSpawnOffset = OffsetLocation(PlayerArenaRectCenters[playerId], GetRandomReal(-850.00, 850.00), GetRandomReal(-850.00, 850.00))
+                    endif
                     set creep = CreateUnitAtLocSaveLast(Player(11), RoundCreepTypeId, unitSpawnOffset, GetRandomDirectionDeg())
 
                     call GroupAddUnit(g, creep)
@@ -3872,6 +3965,8 @@ library GenerateNextCreepLevel initializer init requires RandomShit, Functions, 
                         //call BJDebugMsg("a")
                         if (GameModeShort == true and RoundNumber > 24) or (GameModeShort == false and RoundNumber > 49) then
                             set RoundCreepTitle = "|cffff0000Boss Round|r (+300% gold/xp|r): |cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
+                        elseif RoundCreepTypeId == OGRE_LORD_CREEP_UNIT_ID or RoundCreepTypeId == HARPY_QUEEN_CREEP_UNIT_ID or RoundCreepTypeId == ARCHMAGE_CREEP_UNIT_ID then
+                            set RoundCreepTitle = "|cffff0000Mini Boss Round|r (+200% gold/xp|r): |cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"    
                         else
                             set RoundCreepTitle = "|cffdd9bf1" + I2S(RoundCreepNumber) + " |r|cff77d2fc" + GetObjectName(RoundCreepTypeId) + "|r"
                         endif

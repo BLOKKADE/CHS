@@ -33,33 +33,37 @@ library IdLibrary initializer init
 
         // --- Shops ---
         constant integer ABSOLUTE_SHOP_UNIT_ID                          = 'n031'
-        constant integer AUTOCAST_TOGGLE_SPELLS_UNIT_ID                 = 'n013'
         constant integer CHRONUS_SPELLS_UNIT_ID                         = 'n02M'
-        constant integer SUMMON_SPELLS_UNIT_ID                          = 'n014'
+        constant integer SUMMON_SPELLS_1_UNIT_ID                        = 'n014'
+        constant integer SUMMON_SPELLS_2_UNIT_ID                        = 'n03O'
 
-        constant integer ACTIVE_SPELLS_I_UNIT_ID                        = 'n00D'
-        constant integer ACTIVE_SPELLS_II_UNIT_ID                       = 'n003'
-        constant integer ACTIVE_SPELLS_III_UNIT_ID                      = 'n00U'
-        constant integer ACTIVE_SPELLS_IV_UNIT_ID                       = 'n00Y'
-        constant integer ACTIVE_SPELLS_V_UNIT_ID                        = 'n02O'
-        constant integer ACTIVE_SPELLS_VI_UNIT_ID                       = 'n033'
-        constant integer ACTIVE_SPELLS_VII_UNIT_ID                      = 'n069'
-        constant integer ACTIVE_SPELLS_VIII_UNIT_ID                     = 'n03M'
-        constant integer ACTIVE_SPELLS_IX_UNIT_ID                       = 'n03N'
+        constant integer ACTIVE_SPELLS_1_UNIT_ID                        = 'n00D'
+        constant integer ACTIVE_SPELLS_2_UNIT_ID                        = 'n003'
+        constant integer ACTIVE_SPELLS_3_UNIT_ID                        = 'n00U'
+        constant integer ACTIVE_SPELLS_4_UNIT_ID                        = 'n00Y'
+        constant integer ACTIVE_SPELLS_5_UNIT_ID                        = 'n013'
+        constant integer ACTIVE_SPELLS_6_UNIT_ID                        = 'n02O'
+        constant integer ACTIVE_SPELLS_7_UNIT_ID                        = 'n033'
+        constant integer ACTIVE_SPELLS_8_UNIT_ID                        = 'n069'
+        constant integer ACTIVE_SPELLS_9_UNIT_ID                        = 'n03M'
+        constant integer ACTIVE_SPELLS_10_UNIT_ID                       = 'n03N'
+        constant integer ACTIVE_SPELLS_11_UNIT_ID                       = 'n03P'
+        constant integer ACTIVE_SPELLS_12_UNIT_ID                       = 'n03Q'
 
-        constant integer PASSIVE_SPELLS_I_UNIT_ID                       = 'n001'
-        constant integer PASSIVE_SPELLS_II_UNIT_ID                      = 'n012'
-        constant integer PASSIVE_SPELLS_III_UNIT_ID                     = 'n02X'
-        constant integer PASSIVE_SPELLS_IV_UNIT_ID                      = 'n02N'
-        constant integer PASSIVE_SPELLS_V_UNIT_ID                       = 'n00S'
-        constant integer PASSIVE_SPELLS_VI_UNIT_ID                      = 'n032'
-        constant integer PASSIVE_SPELLS_VII_UNIT_ID                     = 'n01E'
-        constant integer PASSIVE_SPELLS_VIII_UNIT_ID                    = 'n01U'
+        constant integer PASSIVE_SPELLS_1_UNIT_ID                       = 'n001'
+        constant integer PASSIVE_SPELLS_2_UNIT_ID                       = 'n012'
+        constant integer PASSIVE_SPELLS_3_UNIT_ID                       = 'n02X'
+        constant integer PASSIVE_SPELLS_4_UNIT_ID                       = 'n02N'
+        constant integer PASSIVE_SPELLS_5_UNIT_ID                       = 'n01U'
+        constant integer PASSIVE_SPELLS_6_UNIT_ID                       = 'n01E'
+        constant integer PASSIVE_SPELLS_7_UNIT_ID                       = 'n032'
+        constant integer PASSIVE_SPELLS_8_UNIT_ID                       = 'n00S'
 
         constant integer BASIC_ITEMS_SHOP_UNIT_ID                       = 'n00Z'
         constant integer OFFENSIVE_ITEMS_1_SHOP_UNIT_ID                 = 'n01D'
         constant integer OFFENSIVE_ITEMS_2_SHOP_UNIT_ID                 = 'n02I'
         constant integer MAGIC_ITEMS_SHOP_UNIT_ID                       = 'n02J'
+        constant integer MAGIC_ITEMS_2_SHOP_UNIT_ID                     = 'n030'
         constant integer SUMMONER_ITEMS_SHOP_UNIT_ID                    = 'n02Q'
         constant integer DEFENSIVE_ITEMS_1_SHOP_UNIT_ID                 = 'n02Y'
         constant integer DEFENSIVE_ITEMS_2_SHOP_UNIT_ID                 = 'n01P'
@@ -67,7 +71,6 @@ library IdLibrary initializer init
         constant integer MISC_ITEMS_SHOP_UNIT_ID                        = 'n0BB'
 
         constant integer RUNESTONE_SHOP_UNIT_ID                         = 'n02Z'
-        constant integer ELEMENTAL_ITEM_SHOP_UNIT_ID                    = 'n030'
         constant integer GLORY_SHOP_UNIT_ID                             = 'n02U'
         constant integer SUMMON_BUFFS_SHOP_UNIT_ID                      = 'n02H'
         
@@ -224,6 +227,7 @@ library IdLibrary initializer init
         constant integer DRYAD_CREEP_UNIT_ID                            = 'n006'
         constant integer BANDIT_SPEAR_THROWER_CREEP_UNIT_ID             = 'n01t'
         constant integer CENTAUR_IMPALER_CREEP_UNIT_ID                  = 'n01p'
+        constant integer HIPPOGRYPH_RIDER_CREEP_UNIT_ID                 = 'n03R'
         constant integer SKELETON_ARCHER_CREEP_UNIT_ID                  = 'n01A'
         constant integer FOREST_SPIDER_CREEP_UNIT_ID                    = 'n03G'
 
@@ -246,7 +250,7 @@ library IdLibrary initializer init
         //mini boss creeps
         constant integer OGRE_LORD_CREEP_UNIT_ID                        = 'n029'
         constant integer HARPY_QUEEN_CREEP_UNIT_ID                      = 'n03D'
-        constant integer ARCHMAGE_CREEP_UNIT_ID                         = 'n03H'
+        constant integer ARCHMAGE_CREEP_UNIT_ID                         = 'n03S'
         // --- Unit IDs ---
 
         // --- Ability IDs ---

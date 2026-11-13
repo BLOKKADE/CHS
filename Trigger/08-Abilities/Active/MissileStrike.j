@@ -4,7 +4,7 @@ library MissileStrike initializer Init
         // ===================== CONFIG =====================
         private constant integer MISSILE_DUMMY_ID         = 'uban' // large missile dummy unit-type (Locust = FALSE, needs sight radius, non-hero base)
 
-        private constant real    MISSILE_SPAWN_DIST     = 5000.  // spawns this far away, in a random direction
+        private constant real    MISSILE_SPAWN_DIST     = 5250.  // spawns this far away, in a random direction
         private constant real    MISSILE_SPEED          = 750.   // units/second, fixed
 
         private constant real    IMPACT_RADIUS          = 300.
